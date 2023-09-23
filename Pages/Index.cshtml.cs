@@ -39,7 +39,7 @@ namespace Assignment1v3.Pages
                     //SUCCESS
                     //await this.SignIn(UNameList.First());
                     //pass ID through URL possibly or ...
-                    return RedirectToPage("Index");
+                    return RedirectToPage("Index");//TODO: this should be changed to HomePage once it's made.
                 }
                 else return NotFound();
             }
