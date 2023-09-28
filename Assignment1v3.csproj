@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\uploadedPhotos\" />
     <Folder Include="wwwroot\ProfileImages\" />
   </ItemGroup>
 

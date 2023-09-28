@@ -1,0 +1,12 @@
+﻿@page
+@model Assignment1v3.Pages.FileUploadModel
+@{
+    ViewData["Title"] = "File Upload";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <span>Select File:</span>
+    <input type="file" name="postedFiles" asp-for="Photo" />
+    <input type="submit" value="Upload" asp-page-asp-page-handler="Upload" />
+</form>
