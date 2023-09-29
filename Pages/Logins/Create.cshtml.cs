@@ -26,20 +26,48 @@ namespace Assignment1v3.Pages.Logins
 
         [BindProperty]
         public Login Login { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Login == null || Login == null)
+            if (!ModelState.IsValid || _context.Login == null || Login == null)
             {
                 return Page();
             }
+            
+            // Access the checkbox value through the IsInstructor property
+            bool signUpAsInstructor = Login.IsInstructor;
 
+            if (signUpAsInstructor)
+            {
+                // User has chosen to sign up as an instructor
+                // Handle instructor-specific logic here
+            }
+            else
+            {
+                // User has not chosen to sign up as an instructor
+                // Handle logic for other roles or scenarios
+            }
+            bool signUpAsIsStudent = Login.IsStudent;
+
+            if (signUpAsIsStudent)
+            {
+                // User has chosen to sign up as an instructor
+                // Handle instructor-specific logic here
+            }
+            else
+            {
+                // User has not chosen to sign up as an instructor
+                // Handle logic for other roles or scenarios
+            }
+
+            // Add the Login entity to the database
             _context.Login.Add(Login);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("../Index");
         }
+
     }
 }
