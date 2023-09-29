@@ -30,7 +30,7 @@ namespace Assignment1v3.Pages
                 return Page();
             }
 
-            var UNameList = _context.Login.Where(x => x.Email_Username == Login.Email_Username).ToList();
+            var UNameList =  _context.Login.Where(x => x.Email_Username == Login.Email_Username).ToList();
             if (UNameList.Count <= 0) { return NotFound(); }
             else{ 
                 var PassList = UNameList.Where(x => x.Password == Login.Password).ToList();
@@ -39,7 +39,7 @@ namespace Assignment1v3.Pages
                     //SUCCESS
                     //await this.SignIn(UNameList.First());
                     //pass ID through URL possibly or ...
-                    return RedirectToPage("Index");
+                    return RedirectToPage("/profile", new {id = UNameList[0].Id });
                 }
                 else return NotFound();
             }
