@@ -35,17 +35,28 @@ namespace Assignment1v3.Models
 
         [Display(Name = "Confirm Password")]
         [Required]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        [DataType(DataType.Password)]
-        public string Confirm_Password { get; set; }
 
-        [Display(Name = "Role")]
-        [Required(ErrorMessage = "Please select a role.")]
-        public string Role { get; set; } // This property will hold the selected role ("Student" or "Instructor")
+        public string Password { get; set; } = string.Empty;
 
+        [StringLength(1000)]
+        public string? Bio { get; set; }
 
+        [StringLength(100)]
+        public string? AddressLine1 { get; set; }
 
+        [StringLength(100)]
+        public string? AddressLine2 { get; set; }
 
+        [StringLength(100)]
+        public string? City { get; set; }
 
+        [StringLength(100)]
+        public string? State { get; set; }
+
+        [StringLength(5)]
+        public string? PostalCode { get; set; }
+
+        [StringLength(20)]
+        public string? PhoneNumber { get; set; }
     }
 }
