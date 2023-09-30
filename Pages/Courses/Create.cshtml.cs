@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 
-namespace Assignment1v3.Pages.Logins
+namespace Assignment1v3.Pages.Courses
 {
     public class CreateModel : PageModel
     {
@@ -25,23 +25,21 @@ namespace Assignment1v3.Pages.Logins
         }
 
         [BindProperty]
-        public Login Login { get; set; } = default!;
-
+        public Course Course { get; set; } = default!;
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || _context.Login == null || Login == null)
+          if (!ModelState.IsValid || _context.Course == null || Course == null)
             {
                 return Page();
             }
- 
-            // Add the Login entity to the database
-            _context.Login.Add(Login);
+
+            _context.Course.Add(Course);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../Index");
+            return RedirectToPage("./Index");
         }
-
     }
 }
