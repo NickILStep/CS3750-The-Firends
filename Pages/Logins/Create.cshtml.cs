@@ -26,20 +26,22 @@ namespace Assignment1v3.Pages.Logins
 
         [BindProperty]
         public Login Login { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Login == null || Login == null)
+            if (!ModelState.IsValid || _context.Login == null || Login == null)
             {
                 return Page();
             }
-
+ 
+            // Add the Login entity to the database
             _context.Login.Add(Login);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("../Index");
         }
+
     }
 }
