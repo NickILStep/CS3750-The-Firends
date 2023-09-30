@@ -39,12 +39,9 @@ namespace Assignment1v3.Models
         [DataType(DataType.Password)]
         public string Confirm_Password { get; set; }
 
-        [Display(Name = "Sign up as Instructor")]
-        [BindProperty]
-        public bool IsInstructor { get; set; } // This property will hold the checkbox value
-        [Display(Name = "Sign up as Student")]
-        [BindProperty]
-        public bool IsStudent { get; set; } // This property will hold the checkbox value
+        [Display(Name = "Role")]
+        [Required(ErrorMessage = "Please select a role.")]
+        public string Role { get; set; } // This property will hold the selected role ("Student" or "Instructor")
 
 
 
