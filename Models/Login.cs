@@ -36,8 +36,6 @@ namespace Assignment1v3.Models
         [Display(Name = "Confirm Password")]
         [Required]
 
-        public string Password { get; set; } = string.Empty;
-
         [StringLength(1000)]
         public string? Bio { get; set; }
 
@@ -58,5 +56,8 @@ namespace Assignment1v3.Models
 
         [StringLength(20)]
         public string? PhoneNumber { get; set; }
+
+        [StringLength(20)]
+        public string? Role { get; set; }
     }
 }
