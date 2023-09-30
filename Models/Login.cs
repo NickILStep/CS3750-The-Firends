@@ -20,5 +20,26 @@ namespace Assignment1v3.Models
 
         [Required]
         public string Password { get; set; } = string.Empty;
+
+        [StringLength(1000)]
+        public string? Bio { get; set; }
+
+        [StringLength(100)]
+        public string? AddressLine1 { get; set; }
+
+        [StringLength(100)]
+        public string? AddressLine2 { get; set; }
+
+        [StringLength(100)]
+        public string? City { get; set; }
+
+        [StringLength(100)]
+        public string? State { get; set; }
+
+        [StringLength(5)]
+        public string? PostalCode { get; set; }
+
+        [StringLength(20)]
+        public string? PhoneNumber { get; set; }
     }
 }

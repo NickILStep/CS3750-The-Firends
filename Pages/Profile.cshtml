@@ -1,0 +1,106 @@
+﻿@page
+@model Assignment1v3.Pages.ProfileModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+<h4>Login</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Login.Id" />
+            <div class="form-group">
+                <label asp-for="Login.Name_First" class="control-label"></label>
+                <input readonly asp-for="Login.Name_First" class="form-control" />
+                <span asp-validation-for="Login.Name_First" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.Name_Last" class="control-label"></label>
+                <input readonly asp-for="Login.Name_Last" class="form-control" />
+                <span asp-validation-for="Login.Name_Last" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.Email_Username" class="control-label"></label>
+                <input readonly asp-for="Login.Email_Username" class="form-control" />
+                <span asp-validation-for="Login.Email_Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.Password" class="control-label"></label>
+                <input readonly asp-for="Login.Password" class="form-control" />
+                <span asp-validation-for="Login.Password" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label asp-for="Login.Bio" class="control-label"></label>
+                <input readonly asp-for="Login.Bio" class="form-control" />
+                <span asp-validation-for="Login.Bio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.AddressLine1" class="control-label"></label>
+                <input readonly asp-for="Login.AddressLine1" class="form-control" />
+                <span asp-validation-for="Login.AddressLine1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.AddressLine2" class="control-label"></label>
+                <input readonly asp-for="Login.AddressLine2" class="form-control" />
+                <span asp-validation-for="Login.AddressLine2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.City" class="control-label"></label>
+                <input readonly asp-for="Login.City" class="form-control" />
+                <span asp-validation-for="Login.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.State" class="control-label"></label>
+                <input readonly asp-for="Login.State" class="form-control" />
+                <span asp-validation-for="Login.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.PostalCode" class="control-label"></label>
+                <input readonly asp-for="Login.PostalCode" class="form-control" />
+                <span asp-validation-for="Login.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login.PhoneNumber" class="control-label"></label>
+                <input readonly asp-for="Login.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Login.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" id="saveButton" value="Save" class="btn btn-primary" style="display:none"/>
+            </div>
+            <div class="form-group">
+                <input type="button" id="editButton" value="Edit" class="btn btn-primary" />
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // When the "Edit" button is clicked
+            $("#editButton").click(function () {                
+                $("input[readonly]").removeAttr("readonly");                
+                $("#saveButton").show();
+                $(this).hide();
+            });
+        });
+    </script>
+}
