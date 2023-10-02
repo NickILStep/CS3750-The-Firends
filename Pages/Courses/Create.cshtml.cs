@@ -13,6 +13,7 @@ namespace Assignment1v3.Pages.Courses
     public class CreateModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
+        public SelectList Options { get; set; }
 
         public CreateModel(Assignment1v3.Data.Assignment1v3Context context)
         {

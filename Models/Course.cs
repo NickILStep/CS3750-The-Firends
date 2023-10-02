@@ -5,6 +5,7 @@ namespace Assignment1v3.Models
     public class Course
     {
         public int Id { get; set; }
+        public Schools School { get; set; }
         public int CourseNumber { get; set; }
         public string CourseName { get; set; }
         public int CreditHours { get; set; }
