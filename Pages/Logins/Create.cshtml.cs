@@ -35,11 +35,21 @@ namespace Assignment1v3.Pages.Logins
             {
                 return Page();
             }
- 
+            // Create a new user record in the database
+            var newUser = new Login
+            {
+                Name_First = Login.Name_First,
+                Name_Last = Login.Name_Last,
+                Email_Username = Login.Email_Username,
+                Password = Login.Password,
+                // Set other properties as needed.
+            };
+
             // Add the Login entity to the database
             _context.Login.Add(Login);
             await _context.SaveChangesAsync();
 
+            // Save the new user to the database.
             return RedirectToPage("../Index");
         }
 
