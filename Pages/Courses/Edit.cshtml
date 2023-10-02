@@ -1,4 +1,5 @@
 ﻿@page
+@using Assignment1v3.Models;
 @model Assignment1v3.Pages.Courses.EditModel
 
 @{
@@ -14,6 +15,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Course.Id" />
+            <div class="form-group">
+                <select asp-for="Course.School" asp-items="Html.GetEnumSelectList<Schools>()">
+                    <option value="">Choose one of the following</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label asp-for="Course.CourseNumber" class="control-label"></label>
                 <input asp-for="Course.CourseNumber" class="form-control" />
