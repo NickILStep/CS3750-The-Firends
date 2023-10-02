@@ -1,5 +1,6 @@
 ﻿@page
 @model Assignment1v3.Pages.Courses.CreateModel
+@using Assignment1v3.Models
 
 @{
     ViewData["Title"] = "Create";
@@ -15,8 +16,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Course.School" class="control-label"></label>
-                <input asp-for="Course.School" class="form-control" />
-                <select name="courseSchool" asp-items="Model.Options"></select>
+                <select name="courseSchool" asp-items="Html.GetEnumSelectList<Schools>()"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Course.CourseNumber" class="control-label"></label>
