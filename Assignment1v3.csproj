@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\ProfileImages\**" />
+    <Compile Remove="wwwroot\uploadedPhotos\**" />
+    <Content Remove="wwwroot\ProfileImages\**" />
+    <Content Remove="wwwroot\uploadedPhotos\**" />
+    <EmbeddedResource Remove="wwwroot\ProfileImages\**" />
+    <EmbeddedResource Remove="wwwroot\uploadedPhotos\**" />
+    <None Remove="wwwroot\ProfileImages\**" />
+    <None Remove="wwwroot\uploadedPhotos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,9 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\uploadedPhotos\" />
+    <Folder Include="wwwroot\profilePictures\" />
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\ProfileImages\" />
   </ItemGroup>
 
 </Project>
