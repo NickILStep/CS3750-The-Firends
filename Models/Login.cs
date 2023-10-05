@@ -33,6 +33,11 @@ namespace Assignment1v3.Models
         [DataType(DataType.Password)] // This makes the input field a password input
         public string Password { get; set; }
 
+        [Display(Name = "ConfirmPassword")]
+        [Required]
+        [DataType(DataType.Password)] // This makes the input field a password input
+        public string ConfirmPassword { get; set; }
+
         [StringLength(1000)]
         public string? Bio { get; set; }
 
