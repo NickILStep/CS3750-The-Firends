@@ -35,6 +35,7 @@ namespace Assignment1v3.Pages.Logins
             if (Login.ConfirmPassword != Login.Password)
             {
                 //add error message "confirm Password didn't match password"
+                ModelState.AddModelError("Login.ConfirmPassword", "Confirm Password didn't match password");
                 return Page();
             }
             if (!ModelState.IsValid || _context.Login == null || Login == null)
