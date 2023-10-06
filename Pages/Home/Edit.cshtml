@@ -1,11 +1,11 @@
 ﻿@page
-@model Assignment1v3.Pages.Home.CreateModel
+@model Assignment1v3.Pages.Home.EditModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>Course</h4>
 <hr />
@@ -13,15 +13,10 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Course.Id" />
             <div class="form-group">
                 <label asp-for="Course.School" class="control-label"></label>
-
-                <select asp-for="Course.School" class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
+                <select asp-for="Course.School" class="form-control"></select>
                 <span asp-validation-for="Course.School" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,14 +55,14 @@
                 <span asp-validation-for="Course.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
