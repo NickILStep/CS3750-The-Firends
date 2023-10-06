@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Assignment1v3.styles.css" asp-append-version="true" />
+
+    <style>
+        .custom-card {
+            background-color: #20211f;
+            color: #fff; 
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,9 +25,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 mr-auto">
+                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Home/Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Logins/Create">Sign Up</a>
@@ -38,6 +46,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Profile">Profile</a>
                         </li>
                     </ul>
+                    <div class="ml-auto">
+                        <a class="nav-link text-dark navbar-text" asp-area="" asp-page="/Index">Sign In</a>
+                    </div>
+                    
                 </div>
             </div>
         </nav>
