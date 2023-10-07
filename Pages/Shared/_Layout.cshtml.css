@@ -12,9 +12,10 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    margin: 2px;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -46,3 +47,4 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+

@@ -10,47 +10,27 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
-    <grid>
-           <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-                <h5 class="card-title">Class Number</h5>
-            <p class="card-text">Class Title.</p>
-            <p class="card-text">Class Location.</p>
-            <p class="card-text">Class Time</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Class Number</h5>
-            <p class="card-text">Class Title.</p>
-            <p class="card-text">Class Location.</p>
-            <p class="card-text">Class Time</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Class Number</h5>
-            <p class="card-text">Class Title.</p>
-            <p class="card-text">Class Location.</p>
-            <p class="card-text">Class Time</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Class Number</h5>
-            <p class="card-text">Class Title.</p>
-            <p class="card-text">Class Location.</p>
-            <p class="card-text">Class Time</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+
+<div class="row">
+    @foreach (var course in Model.Course)
+    {
+        <div class="col-md-3 mb-3">
+            <div class="card custom-card" style="width: 18rem;">
+                <img class="card-img-top" src="/profilePictures\800px_COLOURBOX3959772.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@course.CourseNumber</h5>
+                    <p class="card-text">@course.CourseName</p>
+                    <p class="card-text">@course.Location</p>
+                    <p class="card-text">@course.StartTime</p>
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@course.Id">Details</a>
+                
+                </div>
+            </div>
+         </div>
+    }
+</div>
+
     </div>
     </grid>
 </table>
+
