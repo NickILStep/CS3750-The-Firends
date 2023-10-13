@@ -10,6 +10,7 @@ using Assignment1v3.Models;
 
 namespace Assignment1v3.Pages.Home
 {
+    //[Authorize(Policy = "MustBeStudent")] 
     public class StudentDetailsModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;

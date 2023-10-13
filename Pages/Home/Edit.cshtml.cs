@@ -11,6 +11,7 @@ using Assignment1v3.Models;
 
 namespace Assignment1v3.Pages.Home
 {
+    //[Authorize(Policy = "MustBeInstructor")] 
     public class EditModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
