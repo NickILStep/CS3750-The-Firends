@@ -17,5 +17,7 @@ namespace Assignment1v3.Data
         public DbSet<Assignment1v3.Models.Login> Login { get; set; }
 
         public DbSet<Assignment1v3.Models.Course> Course { get; set; }
+
+        public DbSet<Assignment1v3.Models.Event> Event { get; set; }
     }
 }
