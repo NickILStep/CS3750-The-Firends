@@ -32,26 +32,45 @@ namespace Assignment1v3.Pages.Account
             }
 
             var UNameList = _context.Login.Where(x => x.Email_Username == Credential.Username).ToList();
-            if (UNameList.Count <= 0) { return NotFound(); }
+            if (UNameList.Count <= 0)
+            {
+                return NotFound();
+            }
             else
             {
                 var PassList = UNameList.Where(x => x.Password == Credential.Password).ToList();
                 if (PassList.Count == 1)
                 {
                     var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, UNameList.First().Name_First),
-                        new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
-                        new Claim("Role" , UNameList.First().Role),
-                        new Claim("id", UNameList.First().Id.ToString())
-                    };
+            {
+                new Claim(ClaimTypes.Name, UNameList.First().Name_First),
+                new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
+                new Claim("Role" , UNameList.First().Role),
+                new Claim("id", UNameList.First().Id.ToString())
+            };
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
-                    return RedirectToPage("/home/InstructorDashBoard");
+
+                    // Role-based redirection
+                    if (User.IsInRole("student"))
+                    {
+                        return RedirectToAction("StudentDashboard", "Home");
+                    }
+                    else if (User.IsInRole("instructor"))
+                    {
+                        return RedirectToAction("InstructorDashboard", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account"); // Redirect to the login screen
+                    }
                 }
-                else return NotFound();
+                else
+                {
+                    return NotFound();
+                }
             }
         }
     }

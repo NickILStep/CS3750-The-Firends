@@ -27,9 +27,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 mr-auto">
                         
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Dashboard</a>
-                        </li>
+                        @if (User.IsInRole("student"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
+                            </li>
+                        }
+                        else if (User.IsInRole("instructor"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Logins/Create">Sign Up</a>
                         </li>
