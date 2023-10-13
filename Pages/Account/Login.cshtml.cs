@@ -49,7 +49,7 @@ namespace Assignment1v3.Pages.Account
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
-                    return RedirectToPage("/home/Index");
+                    return RedirectToPage("/home/InstructorDashBoard");
                 }
                 else return NotFound();
             }

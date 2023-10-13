@@ -39,7 +39,7 @@ namespace Assignment1v3.Pages.Home
             _context.Course.Add(Course);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorDashboard");
         }
     }
 }

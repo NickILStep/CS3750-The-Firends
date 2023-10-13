@@ -66,7 +66,7 @@ namespace Assignment1v3.Pages.Home
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorDashboard");
         }
 
         private bool CourseExists(int id)

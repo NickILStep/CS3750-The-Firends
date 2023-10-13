@@ -1,11 +1,16 @@
 ﻿@page
-@model Assignment1v3.Pages.Home.DetailsModel
+@model Assignment1v3.Pages.Home.StudentDetailsModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
+<style>
+    .red-link {
+        color: red;
+    }
+</style>
 
 <div>
     <h4>Course</h4>
@@ -62,6 +67,8 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Course?.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+
+    <!--Need the drop stuff-->
+    <a class="red-link" asp-page="./Edit" asp-route-id="@Model.Course?.Id">Drop</a> |
+    <a asp-page="./StudentDashboard">Back to List</a>
 </div>

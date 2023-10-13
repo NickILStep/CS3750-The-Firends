@@ -10,11 +10,11 @@ using Assignment1v3.Models;
 
 namespace Assignment1v3.Pages.Home
 {
-    public class DetailsModel : PageModel
+    public class InstructorDetailsModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
 
-        public DetailsModel(Assignment1v3.Data.Assignment1v3Context context)
+        public InstructorDetailsModel(Assignment1v3.Data.Assignment1v3Context context)
         {
             _context = context;
         }
