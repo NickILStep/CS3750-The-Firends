@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = "Course";
 }
-
 <h1>Registrations</h1>
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
@@ -75,7 +74,19 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <button type="button">Add</button>
+             <!-- foreach (var check in Model.StudSched){
+                  ///int check1 = item.CourseNumber;
+                               ///int check2 = check.CourseNum;-->
+                @if(item.CourseNumber!=null){
+                        <form method="post">
+                            <button type="button">Add</button>
+                        </form>
+                    }
+                    else
+                    {
+                        
+                    }
+                }
             </td>
         </tr>
 }

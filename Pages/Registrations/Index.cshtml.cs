@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment1v3.Pages.Registrations
 {
+    //[Authorize(policy: "MustBeStudent")]
     public class IndexModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
@@ -25,10 +27,14 @@ namespace Assignment1v3.Pages.Registrations
 
         public IList<Course> Course { get; set; } = default!;
 
-        public IList<StudSched> StudSched { get; set; }
+        public IList<StudSched> StudSched { get; set; } = default!;
 
         public async Task OnGetAsync(string sortOrder,  string searchString)
         {
+            if (_context.StudSched != null)
+            {
+                StudSched = await _context.StudSched.ToListAsync();
+            }
             // using System;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
