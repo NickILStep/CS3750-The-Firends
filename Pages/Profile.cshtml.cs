@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Assignment1v3.Pages
 {
-    
+    [Authorize]
     public class ProfileModel : PageModel
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

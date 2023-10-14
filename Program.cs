@@ -10,6 +10,7 @@ builder.Services.AddDbContext<Assignment1v3Context>(options =>
 builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options =>
 {
     options.Cookie.Name = "AuthCookie";
+    options.LoginPath = "/Account/Login";
 }) ;
 
 builder.Services.AddAuthorization(options =>
@@ -34,9 +35,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints => {  endpoints.MapRazorPages(); });
 
 app.MapRazorPages();
