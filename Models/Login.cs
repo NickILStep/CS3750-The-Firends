@@ -39,27 +39,40 @@ namespace Assignment1v3.Models
         public string ConfirmPassword { get; set; }
 
         [StringLength(1000)]
-        public string? Bio { get; set; }
+        public string? Bio { get; set; } = string.Empty;
 
         [StringLength(100)]
-        public string? AddressLine1 { get; set; }
+        public string? AddressLine1 { get; set; } = string.Empty;
 
         [StringLength(100)]
-        public string? AddressLine2 { get; set; }
+        public string? AddressLine2 { get; set; } = string.Empty;
 
         [StringLength(100)]
-        public string? City { get; set; }
+        public string? City { get; set; } = string.Empty;
 
         [StringLength(100)]
-        public string? State { get; set; }
+        public string? State { get; set; } = string.Empty;
 
         [StringLength(5)]
-        public string? PostalCode { get; set; }
+        public string? PostalCode { get; set; } = string.Empty;
 
         [StringLength(20)]
-        public string? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; } = string.Empty;
 
         [StringLength(20)]
-        public string? Role { get; set; }
+        public string? Role { get; set; } = string.Empty;
+
+        [StringLength(100)]
+        public string? Link1 { get; set; } = string.Empty;
+
+        [StringLength(100)]
+        public string? Link2 { get; set;} = string.Empty;
+
+        [StringLength(100)]
+        public string? Link3 { get; set;} = string.Empty;
+
+        [StringLength(150)]
+        public string? ProfilePicturePath { get; set; } = "6334C1B1-4492-4628-A52C-99D884A3E248.jpeg";
+
     }
 }

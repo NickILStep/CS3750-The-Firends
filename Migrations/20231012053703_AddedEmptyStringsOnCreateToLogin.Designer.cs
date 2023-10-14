@@ -4,6 +4,7 @@ using Assignment1v3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1v3.Migrations
 {
     [DbContext(typeof(Assignment1v3Context))]
-    partial class Assignment1v3ContextModelSnapshot : ModelSnapshot
+    [Migration("20231012053703_AddedEmptyStringsOnCreateToLogin")]
+    partial class AddedEmptyStringsOnCreateToLogin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,26 +149,6 @@ namespace Assignment1v3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Login");
-                });
-
-            modelBuilder.Entity("Assignment1v3.Models.StudSched", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseNum")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email_Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StudSched");
                 });
 #pragma warning restore 612, 618
         }
