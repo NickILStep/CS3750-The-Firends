@@ -54,11 +54,11 @@ namespace Assignment1v3.Pages.Account
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
                     // Role-based redirection
-                    if (User.IsInRole("student"))
+                    if (User.IsInRole("Student"))
                     {
                         return RedirectToAction("StudentDashboard", "Home");
                     }
-                    else if (User.IsInRole("instructor"))
+                    else if (User.IsInRole("Instructor"))
                     {
                         return RedirectToAction("InstructorDashboard", "Home");
                     }

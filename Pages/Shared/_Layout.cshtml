@@ -26,20 +26,28 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 mr-auto">
-                        
-                        @if (User.IsInRole("student"))
+
+
+                        <!--Does not work yet....-->
+                        @if (User.IsInRole("Student"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
                             </li>
                         }
-                        else if (User.IsInRole("instructor"))
+                        else if (User.IsInRole("Instructor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
                             </li>
                         }
-
+                        <!--Testing-->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Logins/Create">Sign Up</a>
                         </li>

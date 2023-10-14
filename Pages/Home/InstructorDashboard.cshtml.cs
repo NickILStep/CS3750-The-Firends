@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment1v3.Pages.Home
 {
-    [Authorize(Policy = "MustBeInstructor")] 
+    //[Authorize(Policy = "MustBeInstructor")] 
     public class InstructorDashboardModel : PageModel
     {
         private readonly Assignment1v3Context _context;
