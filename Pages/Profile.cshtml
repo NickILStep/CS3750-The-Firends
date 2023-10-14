@@ -4,8 +4,49 @@
 @{
     ViewData["Title"] = "Profile";
 }
+<style>
+    .DispProfPic{
+        float: right;
+        margin: 5px;
+        width: 150px;
+        height: 150px;
+        border: 2px solid #20211f;
+    }
 
+    .ProfPicUpdate{
+        float:right;
+    }
+
+    .link-text {
+        color: blue;
+        text-decoration: underline;
+    }
+
+    
+    .link-input {
+        display: none; /* Initially hide the inputs */
+    }
+
+    
+    .link-field.editable .link-text {
+        display: none;
+    }
+
+    .link-field.editable .link-input {
+        display: block;
+    }
+</style>
 <h1>Profile</h1>
+
+<div>
+    <img src="@Url.Content("~/profilePictures/" + Model.Login.ProfilePicturePath)" class="DispProfPic" />
+    <br />
+    <label for="fileInput">Update Picture</label>
+    <form method="post" enctype="multipart/form-data" class="ProfPicUpdate" >
+        <input type="file" id="fileInput" name="imageFile" accept="image/*" />
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
 
 <h4>Login</h4>
 <hr />
@@ -14,6 +55,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Login.Id" />
+            
             <div class="form-group">
                 <label asp-for="Login.Name_First" class="control-label"></label>
                 <input readonly asp-for="Login.Name_First" class="form-control" />
@@ -26,7 +68,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Login.Email_Username" class="control-label"></label>
-                <input readonly asp-for="Login.Email_Username" class="form-control" />
+                <input id="email" readonly asp-for="Login.Email_Username" class="form-control" />
                 <span asp-validation-for="Login.Email_Username" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -72,6 +114,26 @@
                 <input readonly asp-for="Login.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Login.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-group link-field">
+                <label asp-for="Login.Link1" class="control-label"></label>
+                <a readonly asp-for="Login.Link1" class="form-control link-text">@Model.Login.Link1</a>
+                <input readonly asp-for="Login.Link1" class="form-control link-input" />
+                <span asp-validation-for="Login.Link1" class="text-danger"></span>
+            </div>
+
+            <div class="form-group link-field">
+                <label asp-for="Login.Link2" class="control-label"></label>
+                <a readonly asp-for="Login.Link2" class="form-control link-text">@Model.Login.Link2</a>
+                <input readonly asp-for="Login.Link2" class="form-control link-input" />
+                <span asp-validation-for="Login.Link2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group link-field">
+                <label asp-for="Login.Link3" class="control-label"></label>
+                <a readonly asp-for="Login.Link3" class="form-control link-text">@Model.Login.Link3</a>
+                <input readonly asp-for="Login.Link3" class="form-control link-input" />
+                <span asp-validation-for="Login.Link3" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <input type="submit" id="saveButton" value="Save" class="btn btn-primary" style="display:none"/>
@@ -96,10 +158,12 @@
     <script>
         $(document).ready(function () {
             // When the "Edit" button is clicked
-            $("#editButton").click(function () {                
+            $("#editButton").click(function () {
+                $(".link-field").addClass("editable");
                 $("input[readonly]").removeAttr("readonly");                
                 $("#saveButton").show();
-                $(this).hide();
+                $("#email").setAttr("readonly");
+                $("#editButton").hide();
             });
         });
     </script>

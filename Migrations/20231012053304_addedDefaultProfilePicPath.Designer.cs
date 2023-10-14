@@ -4,6 +4,7 @@ using Assignment1v3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1v3.Migrations
 {
     [DbContext(typeof(Assignment1v3Context))]
-    partial class Assignment1v3ContextModelSnapshot : ModelSnapshot
+    [Migration("20231012053304_addedDefaultProfilePicPath")]
+    partial class addedDefaultProfilePicPath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
