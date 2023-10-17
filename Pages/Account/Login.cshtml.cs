@@ -1,5 +1,6 @@
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -58,13 +59,9 @@ namespace Assignment1v3.Pages.Account
                     {
                         return RedirectToAction("StudentDashboard", "Home");
                     }
-                    else if (User.IsInRole("Instructor"))
-                    {
-                        return RedirectToAction("InstructorDashboard", "Home");
-                    }
                     else
                     {
-                        return RedirectToAction("Login", "Account"); // Redirect to the login screen
+                        return RedirectToAction("InstructorDashboard", "Home");
                     }
                 }
                 else

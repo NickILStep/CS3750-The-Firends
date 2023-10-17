@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,20 +29,20 @@
                     <ul class="navbar-nav flex-grow-1 mr-auto">
 
 
-                        <!--Does not work yet....-->
-                        @if (User.IsInRole("Student"))
-                        {
-                            <li class="nav-item">
+                        <li class="nav-item">
+                            @if (User.IsInRole("Student"))
+                            {
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
-                            </li>
-                        }
-                        else if (User.IsInRole("Instructor"))
-                        {
-                            <li class="nav-item">
+                            }
+                            else if (User.IsInRole("Instructor"))
+                            {
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
-                            </li>
-                        }
-                        <!--Testing-->
+                            }
+                        </li>
+
+                        <!-- Display user roles for debugging -->
+                        <p>User Roles: @string.Join(", ", ((ClaimsIdentity)User.Identity).FindAll(ClaimTypes.Role).Select(c => c.Value))</p>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
                         </li>
