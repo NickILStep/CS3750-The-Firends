@@ -47,6 +47,7 @@
         </tr>
     </thead>
     <tbody>
+
 @foreach (var item in Model.Course) {
         <tr>
             <td>
@@ -74,21 +75,38 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-             <!-- foreach (var check in Model.StudSched){
-                  ///int check1 = item.CourseNumber;
-                               ///int check2 = check.CourseNum;-->
-                @if(item.CourseNumber!=null){
+                    @if (item.CourseNumber != null) {
+                        var cournum = item.CourseNumber;
+                        bool iscourse = false;
+                        var cookieValue = this.User.Claims.ElementAt(1).ToString();
+                        @foreach (var coursec in Model.studScheds)
+                        {
+                            @if (cookieValue == coursec.Email_Username)
+                            {
+                                @if (item.CourseNumber == coursec.CourseNum)
+                                {
+                                    iscourse = true;
+                                    
+                                break;
+                            }
+                }
+                        }
+                        
                         <form method="post">
-                            <button type="button">Add</button>
+                            
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="course.CourseNumber" value="@cournum" >
+                            <span asp-validation-for="course.CourseNumber" class="text-danger"></span>
+                            <button type="submit" disabled="@(iscourse)"> Add </button>
                         </form>
                     }
-                    else
-                    {
-                        
-                    }
-                }
-            </td>
+                </td>
         </tr>
 }
     </tbody>
 </table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
