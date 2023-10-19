@@ -39,10 +39,11 @@
 <h1>Profile</h1>
 
 <div>
-    <img src="@Url.Content("~/profilePictures/" + Model.Login.ProfilePicturePath)" class="DispProfPic" />
-    <br />
-    <label for="fileInput">Update Picture</label>
-    <form method="post" enctype="multipart/form-data" class="ProfPicUpdate" >
+    <img src="@Url.Content("~/profilePictures/" + Model.Login.ProfilePicturePath)" class="DispProfPic" />        
+    
+</div>
+<div>
+    <form method="post" enctype="multipart/form-data" class="ProfPicUpdate">
         <input type="file" id="fileInput" name="imageFile" accept="image/*" />
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
