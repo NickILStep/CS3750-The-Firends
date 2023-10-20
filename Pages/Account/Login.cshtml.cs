@@ -71,7 +71,7 @@ namespace Assignment1v3.Pages.Account
                             return RedirectToPage("/Home/InstructorDashboard");
                         }
                     }
-                    else
+                    else if (this.User.Claims.ElementAt(2).Value.ToString() == "Instructor")
                     {
                         return NotFound();
                     }
