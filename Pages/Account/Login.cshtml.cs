@@ -75,6 +75,7 @@ namespace Assignment1v3.Pages.Account
                     {
                         return NotFound();
                     }
+                    //return NotFound();
                     return RedirectToPage("/Logins/Index");  
                 }
                 else
