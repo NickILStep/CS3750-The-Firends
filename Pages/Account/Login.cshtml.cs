@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+//using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System.ComponentModel.DataAnnotations;
@@ -43,26 +44,37 @@ namespace Assignment1v3.Pages.Account
                 if (PassList.Count == 1)
                 {
                     var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, UNameList.First().Name_First),
-                new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
-                new Claim("Role" , UNameList.First().Role),
-                new Claim("id", UNameList.First().Id.ToString())
-            };
+    {
+        new Claim(ClaimTypes.Name, UNameList.First().Name_First),
+        new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
+        new Claim("Role" , UNameList.First().Role),
+        new Claim("id", UNameList.First().Id.ToString())
+    };
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
-                    // Role-based redirection
-                    if (User.IsInRole("Student"))
+                    // "/Home/InstructorDashboard"
+                    // "/Home/StudentDashboard"
+                    if (this.User.HasClaim(c => c.Type == "Role"))
                     {
-                        return RedirectToAction("StudentDashboard", "Home");
+                        var roleClaim = this.User.Claims.First(c => c.Type == "Role").Value;
+
+                        if (roleClaim == "Student")
+                        {
+                            return RedirectToPage("Home/StudentDashboard");
+                        }
+                        else if (roleClaim == "Instructor")
+                        {
+                            return RedirectToPage("/Home/InstructorDashboard");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("InstructorDashboard", "Home");
+                        return NotFound();
                     }
+                    return RedirectToPage("/Logins/Index");  
                 }
                 else
                 {

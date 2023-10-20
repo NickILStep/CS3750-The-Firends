@@ -10,11 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Assignment1v3Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Assignment1v3Context") ?? throw new InvalidOperationException("Connection string 'Assignment1v3Context' not found.")));
-/*
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<Assignment1v3Context>();
-*/
 ;
 builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options =>
 {
@@ -52,22 +47,7 @@ app.UseEndpoints(endpoints => {  endpoints.MapRazorPages(); });
 
 app.MapRazorPages();
 
-/*
-using(var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    
-    var roles = new[]{"Student", "Instructor"};
 
-    foreach(var role in roles)
-    {
-        if(!await roleManager.RoleExistsAsync(role))
-            await roleManager.CreateAsync(new IdentityRole(role));
-
-    }
-
-}
-*/
 
 
 app.Run();
