@@ -57,6 +57,7 @@ namespace Assignment1v3.Pages.Account
 
                     // "/Home/InstructorDashboard"
                     // "/Home/StudentDashboard"
+                    //Redirect Base on user role
                     if (this.User.HasClaim(c => c.Type == "Role"))
                     {
                         var roleClaim = this.User.Claims.First(c => c.Type == "Role").Value;
