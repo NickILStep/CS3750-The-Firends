@@ -14,7 +14,7 @@ namespace Assignment1v3.Pages.Home
     public class EditModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
-
+        public List<SelectListItem> Items { get; set; }
         public EditModel(Assignment1v3.Data.Assignment1v3Context context)
         {
             _context = context;
@@ -25,6 +25,13 @@ namespace Assignment1v3.Pages.Home
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            Schools list = new Schools();
+            Items = list.strings.Select(a =>
+                                          new SelectListItem
+                                          {
+                                              Value = a.ToString(),
+                                              Text = a
+                                          }).ToList();
             if (id == null || _context.Course == null)
             {
                 return NotFound();
