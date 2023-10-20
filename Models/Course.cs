@@ -9,7 +9,6 @@ namespace Assignment1v3.Models
         public int CourseNumber { get; set; }
         public string CourseName { get; set; }
         public int CreditHours { get; set; }
-        public string DaysOfWeek { get; set; }
         [DataType(DataType.Time)]
         public DateTime StartTime { get; set; }
         [DataType(DataType.Time)]
