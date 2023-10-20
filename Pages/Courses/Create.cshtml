@@ -16,7 +16,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Course.School" class="control-label"></label>
-                <select name="courseSchool" asp-items="Html.GetEnumSelectList<Schools>()"></select>
+                <select asp-for="Course.School" asp-items="Model.Items"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Course.CourseNumber" class="control-label"></label>
@@ -32,6 +32,11 @@
                 <label asp-for="Course.CreditHours" class="control-label"></label>
                 <input asp-for="Course.CreditHours" class="form-control" />
                 <span asp-validation-for="Course.CreditHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Course.DaysOfWeek" class="control-label"></label>
+                <input asp-for="Course.DaysOfWeek" class="form-control" />
+                <span asp-validation-for="Course.DaysOfWeek" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Course.StartTime" class="control-label"></label>

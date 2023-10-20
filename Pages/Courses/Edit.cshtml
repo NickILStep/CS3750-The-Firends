@@ -15,7 +15,7 @@
 		<form method="post">
 			<div class="form-group">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <select name="courseSchool" asp-items="Html.GetEnumSelectList<Schools>()"></select>
+                <select asp-for="Course.School" asp-items="Model.Items"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Course.CourseNumber" class="control-label"></label>
