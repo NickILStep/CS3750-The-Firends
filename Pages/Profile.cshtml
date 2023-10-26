@@ -14,7 +14,7 @@
     }
 
     .ProfPicUpdate{
-        float:right;
+        margin: 5px;
     }
 
     .link-text {
@@ -35,21 +35,28 @@
     .link-field.editable .link-input {
         display: block;
     }
+
+    .btn{
+        margin: 5px;
+    }
+
+    .col-md-4{
+        float: left;
+    }
 </style>
 <h1>Profile</h1>
 
-<div>
+<div class="DispProfPic">
     <img src="@Url.Content("~/profilePictures/" + Model.Login.ProfilePicturePath)" class="DispProfPic" />        
     
-</div>
-<div>
     <form method="post" enctype="multipart/form-data" class="ProfPicUpdate">
         <input type="file" id="fileInput" name="imageFile" accept="image/*" />
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <br/>
+        <button type="submit" class="btn btn-primary ProfPicUpdate">Upload</button>
     </form>
 </div>
 
-<h4>Login</h4>
+<h4>Welcome, @Model.Login.Name_First !</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
