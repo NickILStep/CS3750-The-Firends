@@ -1,0 +1,72 @@
+﻿@page
+@model Assignment1v3.Pages.Assignments.InstructorCourseViewModel
+
+@{
+    ViewData["Title"] = "Assignments";
+}
+
+<h1> Instructor  Assignments</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page= "Create"> Create Assignment</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Course
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Points
+            </th>
+            <th>
+                Open Date
+            </th>
+            <th>
+                Due Date
+            </th>
+            <th>
+                Upload Type
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Assignment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.course)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.maxPoints)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.uploadType)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.ID">Detail</a> |
+                <a asp-page="./Edit" asp-route-id="@item.ID">Grade</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

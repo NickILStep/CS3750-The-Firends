@@ -21,5 +21,7 @@ namespace Assignment1v3.Data
         public DbSet<Assignment1v3.Models.StudSched>? StudSched { get; set; }
 
         public DbSet<Assignment1v3.Models.Assignment>? Assignment { get; set; }
+        public object Courses { get; internal set; }
+        public IEnumerable<object> Assignments { get; internal set; }
     }
 }
