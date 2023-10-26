@@ -51,7 +51,7 @@ namespace Assignment1v3.Pages.Account
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
-                    return RedirectToPage("/Registrations/Index");
+                    return RedirectToPage("/Home/Index");
                 }
                 else return NotFound();
             }
