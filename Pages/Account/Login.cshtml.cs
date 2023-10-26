@@ -44,20 +44,17 @@ namespace Assignment1v3.Pages.Account
                 if (PassList.Count == 1)
                 {
                     var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, UNameList.First().Name_First),
-        new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
-        new Claim("Role" , UNameList.First().Role),
-        new Claim("id", UNameList.First().Id.ToString())
-    };
+            {
+                new Claim(ClaimTypes.Name, UNameList.First().Name_First),
+                new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
+                new Claim("Role", UNameList.First().Role),
+                new Claim("id", UNameList.First().Id.ToString())
+            };
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
-                    // "/Home/InstructorDashboard"
-                    // "/Home/StudentDashboard"
-                    //Redirect Base on user role
                     if (this.User.HasClaim(c => c.Type == "Role"))
                     {
                         var roleClaim = this.User.Claims.First(c => c.Type == "Role").Value;
@@ -71,12 +68,12 @@ namespace Assignment1v3.Pages.Account
                             return RedirectToPage("/Home/InstructorDashboard");
                         }
                     }
-                    else if (this.User.Claims.ElementAt(2).Value.ToString() == "Instructor")
+                    else if (this.User.Claims.Count() >= 3 && this.User.Claims.ElementAt(2).Value == "Instructor")
                     {
                         return NotFound();
                     }
-                    //return NotFound();
-                    return RedirectToPage("/Logins/Index");  
+
+                    return RedirectToPage("/Logins/Index");
                 }
                 else
                 {
@@ -84,6 +81,7 @@ namespace Assignment1v3.Pages.Account
                 }
             }
         }
+
     }
     public class Credential
     {
