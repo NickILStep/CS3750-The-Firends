@@ -1,0 +1,62 @@
+﻿@page
+@model Assignment1v3.Pages.Assignments.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Assignment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Assignment.course" class="control-label">Course</label>
+                <select asp-for="Assignment.course" asp-items="Model.Items"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.name" class="control-label">Assignment Name</label>
+                <input asp-for="Assignment.name" class="form-control" />
+                <span asp-validation-for="Assignment.name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.description" class="control-label">Description</label>
+                <input asp-for="Assignment.description" class="form-control" />
+                <span asp-validation-for="Assignment.description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.maxPoints" class="control-label">Points</label>
+                <input asp-for="Assignment.maxPoints" class="form-control" />
+                <span asp-validation-for="Assignment.maxPoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.startDate" class="control-label">Open Date</label>
+                <input asp-for="Assignment.startDate" class="form-control" />
+                <span asp-validation-for="Assignment.startDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.dueDate" class="control-label">Due Date</label>
+                <input asp-for="Assignment.dueDate" class="form-control" />
+                <span asp-validation-for="Assignment.dueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="radio" asp-for="Assignment.uploadType" value="File Upload" />File Upload<br />
+                <input type="radio" asp-for="Assignment.uploadType" value="Text Box" />Text Box<br />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

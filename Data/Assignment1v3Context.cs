@@ -18,6 +18,10 @@ namespace Assignment1v3.Data
 
         public DbSet<Assignment1v3.Models.Course> Course { get; set; }
 
-        public DbSet<Assignment1v3.Models.Event> Event { get; set; }
+        public DbSet<Assignment1v3.Models.Event>? Event { get; set; }
+        
+        public DbSet<Assignment1v3.Models.StudSched>? StudSched { get; set; }
+
+        public DbSet<Assignment1v3.Models.Assignment>? Assignment { get; set; }
     }
 }

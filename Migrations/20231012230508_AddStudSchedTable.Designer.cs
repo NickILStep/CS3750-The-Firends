@@ -4,6 +4,7 @@ using Assignment1v3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1v3.Migrations
 {
     [DbContext(typeof(Assignment1v3Context))]
-    partial class Assignment1v3ContextModelSnapshot : ModelSnapshot
+    [Migration("20231012230508_AddStudSchedTable")]
+    partial class AddStudSchedTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,44 +24,6 @@ namespace Assignment1v3.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Assignment1v3.Models.Assignment", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("course")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("dueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("maxPoints")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("startDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("uploadType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Assignment");
-                });
 
             modelBuilder.Entity("Assignment1v3.Models.Course", b =>
                 {
@@ -135,18 +100,6 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Link1")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Link2")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Link3")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Name_First")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -168,10 +121,6 @@ namespace Assignment1v3.Migrations
                     b.Property<string>("PostalCode")
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
-
-                    b.Property<string>("ProfilePicturePath")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Role")
                         .HasMaxLength(20)

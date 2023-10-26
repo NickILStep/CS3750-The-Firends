@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 
-namespace Assignment1v3.Pages.Courses
+namespace Assignment1v3.Pages.Assignments
 {
     public class EditModel : PageModel
     {
@@ -22,28 +22,28 @@ namespace Assignment1v3.Pages.Courses
         }
 
         [BindProperty]
-        public Course Course { get; set; } = default!;
+        public Assignment Assignment { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Course == null)
+            if (id == null || _context.Assignment == null)
             {
                 return NotFound();
             }
 
-            var course =  await _context.Course.FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            var assignment =  await _context.Assignment.FirstOrDefaultAsync(m => m.ID == id);
+            if (assignment == null)
             {
                 return NotFound();
             }
-            Course = course;
+            Assignment = assignment;
 
-            Schools list = new Schools();
-            Items = list.strings.Select(a =>
+
+            Items = _context.Course.Select(a =>
                                           new SelectListItem
                                           {
-                                              Value = a.ToString(),
-                                              Text = a
+                                              Value = a.CourseName.ToString(),
+                                              Text = a.CourseName
                                           }).ToList();
             return Page();
         }
@@ -57,7 +57,7 @@ namespace Assignment1v3.Pages.Courses
                 return Page();
             }
 
-            _context.Attach(Course).State = EntityState.Modified;
+            _context.Attach(Assignment).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +65,7 @@ namespace Assignment1v3.Pages.Courses
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CourseExists(Course.Id))
+                if (!AssignmentExists(Assignment.ID))
                 {
                     return NotFound();
                 }
@@ -78,9 +78,9 @@ namespace Assignment1v3.Pages.Courses
             return RedirectToPage("./Index");
         }
 
-        private bool CourseExists(int id)
+        private bool AssignmentExists(int id)
         {
-          return (_context.Course?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Assignment?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

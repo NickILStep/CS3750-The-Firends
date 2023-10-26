@@ -8,12 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 
-namespace Assignment1v3.Pages.Courses
+namespace Assignment1v3.Pages.Registrations
 {
     public class CreateModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
-        public List<SelectListItem> Items { get; set; }
 
         public CreateModel(Assignment1v3.Data.Assignment1v3Context context)
         {
@@ -22,13 +21,6 @@ namespace Assignment1v3.Pages.Courses
 
         public IActionResult OnGet()
         {
-            Schools list = new Schools();
-            Items = list.strings.Select(a =>
-                                          new SelectListItem
-                                          {
-                                              Value = a.ToString(),
-                                              Text = a
-                                          }).ToList();
             return Page();
         }
 

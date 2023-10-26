@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using Microsoft.Extensions.Options;
 
-namespace Assignment1v3.Pages.Courses
+namespace Assignment1v3.Pages.Assignments
 {
     public class CreateModel : PageModel
     {
@@ -22,29 +23,28 @@ namespace Assignment1v3.Pages.Courses
 
         public IActionResult OnGet()
         {
-            Schools list = new Schools();
-            Items = list.strings.Select(a =>
+            Items = _context.Course.Select(a =>
                                           new SelectListItem
                                           {
-                                              Value = a.ToString(),
-                                              Text = a
+                                              Value = a.CourseName.ToString(),
+                                              Text = a.CourseName
                                           }).ToList();
             return Page();
         }
 
         [BindProperty]
-        public Course Course { get; set; } = default!;
+        public Assignment Assignment { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Course == null || Course == null)
+          if (!ModelState.IsValid || _context.Assignment == null || Assignment == null)
             {
                 return Page();
             }
 
-            _context.Course.Add(Course);
+            _context.Assignment.Add(Assignment);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

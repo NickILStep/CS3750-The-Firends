@@ -1,0 +1,112 @@
+﻿@page
+@model Assignment1v3.Pages.Registrations.IndexModel
+
+@{
+    ViewData["Title"] = "Course";
+}
+<h1>Registrations</h1>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].School)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].CourseNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].CreditHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model.Course) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.School)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                    @if (item.CourseNumber != null) {
+                        var cournum = item.CourseNumber;
+                        bool iscourse = false;
+                        var cookieValue = this.User.Claims.ElementAt(1).ToString();
+                        @foreach (var coursec in Model.studScheds)
+                        {
+                            @if (cookieValue == coursec.Email_Username)
+                            {
+                                @if (item.CourseNumber == coursec.CourseNum)
+                                {
+                                    iscourse = true;
+                                    
+                                break;
+                            }
+                }
+                        }
+                        
+                        <form method="post">
+                            
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="course.CourseNumber" value="@cournum" >
+                            <span asp-validation-for="course.CourseNumber" class="text-danger"></span>
+                            <button type="submit" disabled="@(iscourse)"> Add </button>
+                        </form>
+                    }
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

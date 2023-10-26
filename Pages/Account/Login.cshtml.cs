@@ -1,5 +1,6 @@
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -43,13 +44,15 @@ namespace Assignment1v3.Pages.Account
                         new Claim(ClaimTypes.Name, UNameList.First().Name_First),
                         new Claim(ClaimTypes.Email, UNameList.First().Email_Username),
                         new Claim("Role" , UNameList.First().Role),
-                        new Claim("id", UNameList.First().Id.ToString())
+                        new Claim("id", UNameList.First().Id.ToString()),
+                        
                     };
+                 
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
-                    return RedirectToPage("/home/Index");
+                    return RedirectToPage("/Home/Index");
                 }
                 else return NotFound();
             }

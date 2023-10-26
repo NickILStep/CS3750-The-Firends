@@ -9,12 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 
-namespace Assignment1v3.Pages.Courses
+namespace Assignment1v3.Pages.Registrations
 {
     public class EditModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
-        public List<SelectListItem> Items { get; set; }
 
         public EditModel(Assignment1v3.Data.Assignment1v3Context context)
         {
@@ -37,14 +36,6 @@ namespace Assignment1v3.Pages.Courses
                 return NotFound();
             }
             Course = course;
-
-            Schools list = new Schools();
-            Items = list.strings.Select(a =>
-                                          new SelectListItem
-                                          {
-                                              Value = a.ToString(),
-                                              Text = a
-                                          }).ToList();
             return Page();
         }
 
