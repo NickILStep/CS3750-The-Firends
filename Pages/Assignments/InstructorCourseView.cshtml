@@ -2,10 +2,10 @@
 @model Assignment1v3.Pages.Assignments.InstructorCourseViewModel
 
 @{
-    ViewData["Title"] = "Assignments";
+    ViewData["Title"] = "Assignments for " + Model.SelectedCourse.CourseName;
 }
 
-<h1> Instructor  Assignments</h1>
+<h1> Instructor Assignments @Model.SelectedCourse.CourseName</h1>
 
 <p>
     <a class="btn btn-primary" asp-page= "Create"> Create Assignment</a>
@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.uploadType)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.ID">Detail</a> |
+                <a asp-page="./InstructorCourseViewDetails" asp-route-id="@item.ID">Detail</a> |
                 <a asp-page="./Edit" asp-route-id="@item.ID">Grade</a> |
                  <a class="red-link" asp-page="./Delete" asp-route-id="@item.ID" style="color: red;">Delete</a>
 
