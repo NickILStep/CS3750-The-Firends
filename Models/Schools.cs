@@ -2,21 +2,20 @@
 
 namespace Assignment1v3.Models
 {
-    public enum Schools
+    public class Schools
     {
-        [Display(Name = "Computer Science")]
-        CS,
+        public List<string> strings = new List<string>();
+        public Schools()
+        {
+            strings.AddRange(new string[]
+            {
+                "Computer Science",
+                "Electric Engineering",
+                "Math",
+                "Data Science",
+                "Pyrotechnics"
+            });
+        }
 
-        [Display(Name = "Electric Engineering")]
-        EE,
-
-        [Display(Name = "Math")]
-        MATH,
-
-        [Display(Name = "Data Science")]
-        DS,
-
-        [Display(Name = "Pyrotechnics")]
-        PT
     }
 }

@@ -34,6 +34,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
                         </li>
+                        <!--/Assignments/StudentCourseView?courseId=1-->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Assignments/StudentCourseView" asp-route-courseId="1">StudentCourseView</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Assignments/InstructorCourseView" asp-route-courseId="1">InstructorCourseView</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Logins/Create">Sign Up</a>
                         </li>
@@ -44,7 +51,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Calendar">Calendar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/FileUpload">File Upload</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="./Charts/ChartsTab">Chart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Payment/Payment">Tuition Payment</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Profile">Profile</a>
