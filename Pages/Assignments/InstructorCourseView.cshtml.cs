@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment1v3.Pages.Assignments
 {
+    [Authorize(Policy = "MustBeInstructor")]
     public class InstructorCourseViewModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
