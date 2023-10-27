@@ -42,12 +42,7 @@ namespace Assignment1v3.Pages.Charts
             //binds data
             Login = login;
 
-            //var course = await _context.Course.FirstOrDefaultAsync(m => m.Id == id);
-            //if (course == null)
-            //{
-            //    return NotFound();
-            //}
-            //Course = course;
+            
             return Page();
         }
 

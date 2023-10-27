@@ -10,17 +10,31 @@
     <link rel="stylesheet" href="~/Assignment1v3.styles.css" asp-append-version="true" />
 
     <style>
-        .custom-card {
-            background-color: #20211f;
-            color: #fff; 
+        .nav-item {
+            background-color: #05445E;
+            margin:3px;
+            border-radius: 25px;
+
+        }
+        .cust-contain{
+            max-width: 100%;
+            width: 100%;
+            margin-right: 2px;
+            margin-left: 2px;
+            min-height: 70px;
+            background-color: #D4F1F4;
+            
+        }
+        .footer{
+            background-color: #D4F1F4;
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Logins/Index">LoginsList</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="padding: 0px;">
+            <div class="container cust-contain" >
+                <a class="navbar-brand"  asp-area="" asp-page="/Logins/Index" >LoginsList</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,35 +43,35 @@
                     <ul class="navbar-nav flex-grow-1 mr-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Home/InstructorDashboard">Instructor Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Home/StudentDashboard">Student Dashboard</a>
                         </li>
                         <!--/Assignments/StudentCourseView?courseId=1-->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Assignments/StudentCourseView" asp-route-courseId="1">StudentCourseView</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Assignments/StudentCourseView" asp-route-courseId="1">StudentCourseView</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Assignments/InstructorCourseView" asp-route-courseId="1">InstructorCourseView</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Assignments/InstructorCourseView" asp-route-courseId="1">InstructorCourseView</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Logins/Create">Sign Up</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Logins/Create">Sign Up</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Courses/Index">Classes</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Courses/Index">Classes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Calendar">Calendar</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Calendar">Calendar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="./Charts/ChartsTab">Chart</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="./Charts/ChartsTab">Chart</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Payment/Payment">Tuition Payment</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Payment/Payment">Tuition Payment</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Profile">Profile</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Profile">Profile</a>
                         </li>
                     </ul>
                     <div class="mr-2">

@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Assignment1v3.Pages.Home
 {
-    [Authorize(Policy = "MustBeStudent")] 
+    [Authorize(Policy = "MustBeStudent")]
     public class StudentDetailsModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
