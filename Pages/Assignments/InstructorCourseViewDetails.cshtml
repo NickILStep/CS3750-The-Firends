@@ -1,5 +1,5 @@
 ﻿@page
-@model Assignment1v3.Pages.Assignments.DetailsModel
+@model Assignment1v3.Pages.Assignments.InstructorCourseViewDetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -56,5 +56,8 @@
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Assignment?.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Assignment?.ID">Grade</a> |
+    <a class="red-link" asp-page="./Delete" asp-route-id="@Model.Assignment?.ID" style="color: red;">Delete</a> |
+    <a asp-page="./InstructorCourseView" asp-route-courseId="10">Back to List</a>
 </div>
+
