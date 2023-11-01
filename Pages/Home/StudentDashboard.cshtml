@@ -15,7 +15,7 @@
             {
                 <div class="col-md-3 mb-3">
                     <div class="card custom-card" style="width: 18rem;">
-                        <img class="card-img-top" src="/profilePictures\800px_COLOURBOX3959772.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="/profilePictures/800px_COLOURBOX3959772.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <a asp-page="./Create">@course.CourseNumber</a>
@@ -24,8 +24,8 @@
                             <p class="card-text">@course.Location</p>
                             <p class="card-text">@course.StartTime</p>
                             <a class="btn btn-primary" asp-page="./StudentDetails" asp-route-id="@course.Id">Details</a>
-                            <!--Need the drop stuff-->
-                            <a class="btn btn-danger" asp-page="./StudentDetails" asp-route-id="@course.Id">Drop</a>
+                            <!-- Include your Drop functionality here -->
+                            <a class="btn btn-danger" asp-page="./DropCourse" asp-route-id="@course.Id">Drop</a>
                         </div>
                     </div>
                 </div>
@@ -36,10 +36,9 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">To-Do</h5>
-                    <!-- Add To-Do list here -->
+                    <!-- Add your To-Do list here -->
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </div>

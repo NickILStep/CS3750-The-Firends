@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-//using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System.ComponentModel.DataAnnotations;
@@ -55,25 +54,19 @@ namespace Assignment1v3.Pages.Account
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
-                    if (this.User.HasClaim(c => c.Type == "Role"))
+                    if (User.Claims.Count() > 1)
                     {
-                        var roleClaim = this.User.Claims.First(c => c.Type == "Role").Value;
-
-                        if (roleClaim == "Student")
+                        if (User.Claims.ElementAt(2).ToString() == "Student")
                         {
-                            return RedirectToPage("Home/StudentDashboard");
+                            return RedirectToPage("/Home/StudentDashboard");
                         }
-                        else if (roleClaim == "Instructor")
+                        else if (User.Claims.ElementAt(2).ToString() == "Instructor")
                         {
                             return RedirectToPage("/Home/InstructorDashboard");
                         }
                     }
-                    else if (this.User.Claims.Count() >= 3 && this.User.Claims.ElementAt(2).Value == "Instructor")
-                    {
-                        return NotFound();
-                    }
-
                     return RedirectToPage("/Logins/Index");
+
                 }
                 else
                 {

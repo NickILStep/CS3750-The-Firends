@@ -1,0 +1,18 @@
+﻿@if (User.Claims.Any(c => c.Value == "Student"))
+{
+    <ul class="nav justify-content-center">
+        <!-- Use 'nav' and 'justify-content-center' for centering -->
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-page="/Home/StudentDashboard"> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-page="/Registrations/Index">Registrations</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-page="/Payment/Payment">Tuition Payment</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-page="/Calendar">Calendar</a>
+        </li>
+    </ul>
+}
