@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Assignment1v3.Pages.Assignments
 {
+    [Authorize(Policy = "MustBeInstructor")]
     public class CreateModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;

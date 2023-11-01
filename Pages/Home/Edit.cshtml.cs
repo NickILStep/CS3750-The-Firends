@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment1v3.Pages.Home
 {
+    [Authorize(Policy = "MustBeInstructor")] 
     public class EditModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
@@ -73,7 +75,7 @@ namespace Assignment1v3.Pages.Home
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorDashboard");
         }
 
         private bool CourseExists(int id)

@@ -12,17 +12,16 @@ using Microsoft.AspNetCore.Authorization;
 namespace Assignment1v3.Pages.Home
 {
     [Authorize(Policy = "MustBeInstructor")] 
-    public class DeleteModel : PageModel
+    public class InstructorDetailsModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
 
-        public DeleteModel(Assignment1v3.Data.Assignment1v3Context context)
+        public InstructorDetailsModel(Assignment1v3.Data.Assignment1v3Context context)
         {
             _context = context;
         }
 
-        [BindProperty]
-      public Course Course { get; set; } = default!;
+      public Course Course { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,7 +31,6 @@ namespace Assignment1v3.Pages.Home
             }
 
             var course = await _context.Course.FirstOrDefaultAsync(m => m.Id == id);
-
             if (course == null)
             {
                 return NotFound();
@@ -42,24 +40,6 @@ namespace Assignment1v3.Pages.Home
                 Course = course;
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null || _context.Course == null)
-            {
-                return NotFound();
-            }
-            var course = await _context.Course.FindAsync(id);
-
-            if (course != null)
-            {
-                Course = course;
-                _context.Course.Remove(Course);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./InstructorDashboard");
         }
     }
 }

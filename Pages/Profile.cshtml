@@ -10,7 +10,13 @@
         margin: 5px;
         width: 150px;
         height: 150px;
-        border: 2px solid #20211f;
+        border: 2px solid #75E6DA;
+    }
+    .custdiv{
+        float: right;
+        margin: 5px;
+        width: 150px;
+        height: 150px;
     }
 
     .ProfPicUpdate{
@@ -18,7 +24,7 @@
     }
 
     .link-text {
-        color: blue;
+        color: #189AB4;
         text-decoration: underline;
     }
 
@@ -36,8 +42,9 @@
         display: block;
     }
 
-    .btn{
+    .cust-btn{
         margin: 5px;
+        background-color: #05445E;
     }
 
     .col-md-4{
@@ -46,13 +53,13 @@
 </style>
 <h1>Profile</h1>
 
-<div class="DispProfPic">
+<div class="custdiv">
     <img src="@Url.Content("~/profilePictures/" + Model.Login.ProfilePicturePath)" class="DispProfPic" />        
     
     <form method="post" enctype="multipart/form-data" class="ProfPicUpdate">
         <input type="file" id="fileInput" name="imageFile" accept="image/*" />
         <br/>
-        <button type="submit" class="btn btn-primary ProfPicUpdate">Upload</button>
+        <button type="submit" class="btn cust-btn btn-primary ProfPicUpdate">Upload</button>
     </form>
 </div>
 
@@ -144,10 +151,10 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" id="saveButton" value="Save" class="btn btn-primary" style="display:none"/>
+                <input type="submit" id="saveButton" value="Save" class="btn cust-btn btn-primary" style="display:none"/>
             </div>
             <div class="form-group">
-                <input type="button" id="editButton" value="Edit" class="btn btn-primary" />
+                <input type="button" id="editButton" value="Edit" class="btn cust-btn btn-primary" />
             </div>
 
 

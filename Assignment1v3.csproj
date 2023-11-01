@@ -7,17 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\InstructorView\**" />
     <Compile Remove="wwwroot\ProfileImages\**" />
     <Compile Remove="wwwroot\uploadedPhotos\**" />
+    <Content Remove="Pages\InstructorView\**" />
     <Content Remove="wwwroot\ProfileImages\**" />
     <Content Remove="wwwroot\uploadedPhotos\**" />
+    <EmbeddedResource Remove="Pages\InstructorView\**" />
     <EmbeddedResource Remove="wwwroot\ProfileImages\**" />
     <EmbeddedResource Remove="wwwroot\uploadedPhotos\**" />
+    <None Remove="Pages\InstructorView\**" />
     <None Remove="wwwroot\ProfileImages\**" />
     <None Remove="wwwroot\uploadedPhotos\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,6 +33,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Stripe.net" Version="42.10.0" />
   </ItemGroup>
 
   <ItemGroup>
