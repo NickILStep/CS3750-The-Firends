@@ -7,14 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Assignment1v3.Pages.Home
 {
-    public class DetailsModel : PageModel
+    [Authorize(Policy = "MustBeStudent")]
+    public class StudentDetailsModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
 
-        public DetailsModel(Assignment1v3.Data.Assignment1v3Context context)
+        public StudentDetailsModel(Assignment1v3.Data.Assignment1v3Context context)
         {
             _context = context;
         }

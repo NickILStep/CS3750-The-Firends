@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment1v3.Pages.Home
 {
+    [Authorize(Policy = "MustBeInstructor")] 
     public class CreateModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
@@ -39,7 +41,7 @@ namespace Assignment1v3.Pages.Home
             _context.Course.Add(Course);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorDashboard");
         }
     }
 }

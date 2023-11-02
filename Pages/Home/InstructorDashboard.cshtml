@@ -1,0 +1,49 @@
+﻿@page
+@model Assignment1v3.Pages.Home.InstructorDashboardModel
+
+@{
+    ViewData["Title"] = "Instructor Dashboard";
+}
+
+<div class="container">
+    <h1>Instructor Dashboard</h1>
+
+    <p>
+        <a class = "btn btn-primary" asp-page="Create">Create New</a>
+    </p>
+
+    <div class="row">
+        <div class="col-md-9">
+            <!-- Main Content -->
+            @foreach (var course in Model.Course)
+            {
+                <div class="col-md-3 mb-3">
+                    <div class="card custom-card" style="width: 18rem;">
+                        <img class="card-img-top" src="/profilePictures\800px_COLOURBOX3959772.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <!--This is the link for the cards. Current it sends you to create a new course at the moment-->
+                            <h5 class="card-title">
+                                <a asp-page="./Create">@course.CourseNumber</a>
+                            </h5>
+                            <p class="card-text">@course.CourseName</p>
+                            <p class="card-text">@course.Location</p>
+                            <p class="card-text">@course.StartTime</p>
+                            <a class="btn btn-primary" asp-page="./InstructorDetails" asp-route-id="@course.Id">Details</a>
+                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@course.Id">Detele</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3">
+            <!-- Side Section - To-Do -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">To-Do</h5>
+                    <!-- Add To-Do list here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -12,17 +12,16 @@ using Microsoft.AspNetCore.Authorization;
 namespace Assignment1v3.Pages.Assignments
 {
     [Authorize(Policy = "MustBeInstructor")]
-    public class DeleteModel : PageModel
+    public class InstructorCourseViewDetailsModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
 
-        public DeleteModel(Assignment1v3.Data.Assignment1v3Context context)
+        public InstructorCourseViewDetailsModel(Assignment1v3.Data.Assignment1v3Context context)
         {
             _context = context;
         }
 
-        [BindProperty]
-      public Assignment Assignment { get; set; } = default!;
+      public Assignment Assignment { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,7 +31,6 @@ namespace Assignment1v3.Pages.Assignments
             }
 
             var assignment = await _context.Assignment.FirstOrDefaultAsync(m => m.ID == id);
-
             if (assignment == null)
             {
                 return NotFound();
@@ -42,24 +40,6 @@ namespace Assignment1v3.Pages.Assignments
                 Assignment = assignment;
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null || _context.Assignment == null)
-            {
-                return NotFound();
-            }
-            var assignment = await _context.Assignment.FindAsync(id);
-
-            if (assignment != null)
-            {
-                Assignment = assignment;
-                _context.Assignment.Remove(Assignment);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }
