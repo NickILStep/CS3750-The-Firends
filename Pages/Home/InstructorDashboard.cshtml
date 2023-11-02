@@ -9,7 +9,7 @@
     <h1>Instructor Dashboard</h1>
 
     <p>
-        <a class = "btn btn-primary" asp-page="Create">Create New</a>
+        <a class = "btn btn-primary" asp-page="/Courses/Create">Create New</a>
     </p>
 
     <div class="row">
@@ -21,9 +21,17 @@
                     <div class="card custom-card" style="width: 18rem;">
                         <img class="card-img-top" src="/profilePictures\800px_COLOURBOX3959772.jpg" alt="Card image cap">
                         <div class="card-body">
-                            <!--This is the link for the cards. Current it sends you to create a new course at the moment-->
+                            <!--NEED TO BE DYMANNIC-->
+                            <!--/Assignments/StudentCourseView?courseId=NUM
+                                                        1-Computer science
+                                                        2-Filler
+                                                        6-asd
+                                                        8-erty
+                                                        10-Making Things Work
+                                                        11- cs css
+                            -->
                             <h5 class="card-title">
-                                <a asp-page="./Create">@course.CourseNumber</a>
+                                <a asp-page="/Assignments/InstructorCourseView" asp-route-courseId="10">@course.CourseNumber</a>
                             </h5>
                             <p class="card-text">@course.CourseName</p>
                             <p class="card-text">@course.Location</p>

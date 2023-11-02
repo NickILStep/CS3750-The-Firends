@@ -7,10 +7,11 @@ using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using System.Linq;
 
 namespace Assignment1v3.Pages.Home
 {
-    [Authorize(Policy = "MustBeStudent")] 
+    [Authorize(Policy = "MustBeStudent")]
     public class StudentDashboardModel : PageModel
     {
         private readonly Assignment1v3Context _context;
@@ -24,7 +25,19 @@ namespace Assignment1v3.Pages.Home
 
         public async Task OnGetAsync()
         {
-            Course = await _context.Course.ToListAsync();
+            // Get the currently authenticated user's email or username
+            var user = User.Identity.Name;
+
+            // Query the StudSched table to get the courses for the authenticated user
+            var registeredCourses = await _context.StudSched
+                .Where(s => s.Email_Username == user)
+                .Select(s => s.CourseNum)
+                .ToListAsync();
+
+            // Query the Course table to get the course details for the registered courses
+            Course = await _context.Course
+                .Where(c => registeredCourses.Contains(c.CourseNumber))
+                .ToListAsync();
         }
     }
 }
