@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Assignment1v3.Pages.Registrations
 {
@@ -25,6 +26,8 @@ namespace Assignment1v3.Pages.Registrations
         public string DateSort { get; set; }
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
+        public string DeptSort { get; set; }
+        public List<SelectListItem> Items { get; set; }
 
         public IList<StudSched> studScheds { get; set; } = default!;
         public IList<Course> Course { get; set; } = default!;
@@ -37,22 +40,37 @@ namespace Assignment1v3.Pages.Registrations
         public Course course { get; set; }
   
 
-        public async Task OnGetAsync(string sortOrder,  string searchString)
+        public async Task OnGetAsync(string sortOrder,  string searchString, string deptOrder)
         {
-            
+            Schools list = new Schools();
+            Items = list.strings.Select(a =>
+                                          new SelectListItem
+                                          {
+                                              Value = a.ToString(),
+                                              Text = a
+                                          }).ToList();
+
             // using System;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+            DeptSort = deptOrder;
 
             CurrentFilter = searchString;
             studScheds = await _context.StudSched.ToListAsync();
 
             IQueryable<Course> coursesIQ = from s in _context.Course
                                              select s;
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(searchString) || !String.IsNullOrEmpty(deptOrder))
             {
-                coursesIQ = coursesIQ.Where(s => s.CourseName.Contains(searchString)
+                if(searchString == null)
+                {
+                    coursesIQ = coursesIQ.Where(c => c.School.Contains(deptOrder));
+                }
+                else
+                {
+                    coursesIQ = coursesIQ.Where(s => s.CourseName.Contains(searchString)
                                        || s.Description.Contains(searchString));
+                }
             }
 
             switch (sortOrder)
