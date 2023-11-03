@@ -15,5 +15,7 @@ namespace Assignment1v3.Models
         public DateTime EndTime { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
+
+        public ICollection<InstructorCourse> Instructors { get; set; }
     }
 }

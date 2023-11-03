@@ -23,7 +23,24 @@ namespace Assignment1v3.Data
         public DbSet<Assignment1v3.Models.StudSched>? StudSched { get; set; }
 
         public DbSet<Assignment1v3.Models.Assignment>? Assignment { get; set; }
+        public DbSet<Assignment1v3.Models.Instructor> Instructor { get; set; }
+
+        public DbSet<Assignment1v3.Models.InstructorCourse> InstructorCourse { get; set; }
         public object Courses { get; internal set; }
         public IEnumerable<object> Assignments { get; internal set; }
+        // Configure relationships in the OnModelCreating method
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure the relationship between instructors and courses
+            modelBuilder.Entity<InstructorCourse>()
+                .HasOne(ic => ic.Instructor)
+                .WithMany(i => i.Courses)
+                .HasForeignKey(ic => ic.InstructorId);
+
+            modelBuilder.Entity<InstructorCourse>()
+                .HasOne(ic => ic.Course)
+                .WithMany(c => c.Instructors)
+                .HasForeignKey(ic => ic.CourseId);
+        }
     }
 }

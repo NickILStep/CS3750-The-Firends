@@ -9,39 +9,32 @@
     <h1>Instructor Dashboard</h1>
 
     <p>
-        <a class = "btn btn-primary" asp-page="/Courses/Create">Create New</a>
+        <a class = "btn btn-primary" asp-page="/Courses/Create">Create New Course</a>
     </p>
 
     <div class="row">
         <div class="col-md-9">
             <!-- Main Content -->
-            @foreach (var course in Model.Course)
+            @foreach (var instructorCourse in Model.InstructorCourses)
             {
                 <div class="col-md-3 mb-3">
                     <div class="card custom-card" style="width: 18rem;">
-                        <img class="card-img-top" src="/profilePictures\800px_COLOURBOX3959772.jpg" alt="Card image cap">
                         <div class="card-body">
-                            <!--NEED TO BE DYMANNIC-->
-                            <!--/Assignments/StudentCourseView?courseId=NUM
-                                                        1-Computer science
-                                                        2-Filler
-                                                        6-asd
-                                                        8-erty
-                                                        10-Making Things Work
-                                                        11- cs css
-                            -->
                             <h5 class="card-title">
-                                <a asp-page="/Assignments/InstructorCourseView" asp-route-courseId="10">@course.CourseNumber</a>
+                                <a asp-page="/Assignments/InstructorCourseView" asp-route-courseId="@instructorCourse.Course.Id">@instructorCourse.Course.CourseNumber</a>
                             </h5>
-                            <p class="card-text">@course.CourseName</p>
-                            <p class="card-text">@course.Location</p>
-                            <p class="card-text">@course.StartTime</p>
-                            <a class="btn btn-primary" asp-page="./InstructorDetails" asp-route-id="@course.Id">Details</a>
-                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@course.Id">Detele</a>
+                            <h5 class="card-title">
+                                @instructorCourse.Course.CourseName
+                            </h5>
+                            <p class="card-text">@instructorCourse.Course.Location</p>
+                            <p class="card-text">@instructorCourse.Course.StartTime</p>
+                            <a class="btn btn-primary" asp-page="./InstructorDetails" asp-route-id="@instructorCourse.Course.Id">Details</a>
+                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@instructorCourse.Course.Id">Delete</a>
                         </div>
                     </div>
                 </div>
             }
+
         </div>
         <div class="col-md-3">
             <!-- Side Section - To-Do -->
