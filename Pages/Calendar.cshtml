@@ -12,21 +12,41 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
     <script>
 
-        const model = @Html.Raw(JsonSerializer.Serialize(Model.Event));
-
-        // [
-        //     {
-        //         title: 'test',
-        //         start: '2023-10-23',
-        //         end: '2023-10-24'
-        //     }
-        // ]
+        const model = @Html.Raw(JsonSerializer.Serialize(Model.UserEventList));
 
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: model
+                // events: [
+                //     {
+                //         title: 'Single',
+                //         start: '2023-10-23 18:00:00.000',
+                //         end: '2023-10-23 20:00:00.00'
+                //     },
+                //     {
+                //         title: 'Spanning',
+                //         start: '2023-10-23 22:00:00.000',
+                //         end: '2023-10-24 24:00:00.000'
+                //     },
+                //     {
+                //         title: 'Recurring Single',
+                //         startTime: '20:00:00.000',
+                //         endTime: '21:00:00.000',
+                //         startRecur: '2023-10-23',
+                //         endRecur: '2023-11-23',
+                //         daysOfWeek: [1, 3, 5]
+                //     },
+                //     {
+                //         title: 'Recurring Spanning',
+                //         startTime: '23:00:00.000',
+                //         endTime: '26:00:00.000',
+                //         startRecur: '2023-10-24',
+                //         endRecur: '2023-11-24',
+                //         daysOfWeek: [2]
+                //     }
+                // ]
             });
             calendar.render();
         });
