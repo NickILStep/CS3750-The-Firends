@@ -16,17 +16,14 @@
                 <div class="col-md-3 mb-3">
                     <div class="card custom-card" style="width: 18rem;">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                <a asp-page="/Assignments/StudentCourseView" asp-route-courseId="@course.Id">@course.CourseNumber</a>
-                            </h5>
+                            <a asp-page="/Assignments/StudentCourseView" asp-route-courseId="@course.Id">@course.CourseNumber</a>
                             <h5 class="card-title">
                                 @course.CourseName
                             </h5>
                             <p class="card-text">@course.Location</p>
                             <p class="card-text">@course.StartTime</p>
-                            <a class="btn btn-primary" asp-page="./StudentDetails" asp-route-id="@course.Id">Details</a> 
-                            <!-- Include your Drop functionality here -->
-                           <a class="btn btn-danger" asp-page="./DropCourse" asp-route-id="@course.Id">Drop</a>
+                            <a class="btn btn-primary" asp-page="./StudentDetails" asp-route-id="@course.Id">Details</a>
+                            <a class="btn btn-danger" asp-page="./DropCourse" asp-route-id="@course.Id">Drop</a>
                         </div>
                     </div>
                 </div>

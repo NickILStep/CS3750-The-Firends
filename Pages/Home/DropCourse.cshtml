@@ -1,0 +1,29 @@
+﻿@page
+@model Assignment1v3.Pages.Home.DropCourseModel
+
+@{
+    ViewData["Title"] = "Drop Course";
+}
+
+<h1>Course Details</h1>
+
+@if (Model.Course != null)
+{
+    <div>
+        <h2>@Model.Course.CourseName</h2>
+        <p>Course Number: @Model.Course.CourseNumber</p>
+        <p>Credit Hours: @Model.Course.CreditHours</p>
+        <p>Start Time: @Model.Course.StartTime</p>
+        <p>Location: @Model.Course.Location</p>
+        <p>Description: @Model.Course.Description</p>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="CourseId" value="@Model.Course.Id" />
+        <button type="submit" class="btn btn-danger">Drop Course</button>
+    </form>
+}
+else
+{
+    <p>Course not found or already dropped.</p>
+}
