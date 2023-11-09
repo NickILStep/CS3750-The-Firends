@@ -36,7 +36,8 @@ namespace Assignment1v3.Pages.Home
             {
                 var userEmailClaimValue = userEmailClaim.Value;
                 var studentCourses = await _context.StudSched.Where(x => x.Email_Username.Contains(userEmailClaimValue)).ToListAsync();
-                System.Diagnostics.Debug.WriteLine(studentCourses);
+                //var studentCourses = await _context.StudSched.Where(x => x.ide.Contains(userEmailClaimValue)).ToListAsync();
+                //System.Diagnostics.Debug.WriteLine(studentCourses);
 
                 foreach (var tempcourse in studentCourses)
                 {
@@ -50,7 +51,7 @@ namespace Assignment1v3.Pages.Home
 
                 }
 
-                System.Diagnostics.Debug.WriteLine(Course);
+               // System.Diagnostics.Debug.WriteLine(Course);
 
             }
         }

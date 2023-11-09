@@ -63,8 +63,9 @@
             </td>
             <td>
                 <a asp-page="./InstructorCourseViewDetails" asp-route-id="@item.ID">Detail</a> |
-                <a asp-page="./Edit" asp-route-id="@item.ID">Grade</a> |
-                 <a class="red-link" asp-page="./Delete" asp-route-id="@item.ID" style="color: red;">Delete</a>
+                <!--Need to go to a grade page-->
+                <a asp-page="./Grade">Grade</a>|
+                <a class="red-link" asp-page="./Delete" asp-route-id="@item.ID" style="color: red;">Delete</a>
 
             </td>
         </tr>
