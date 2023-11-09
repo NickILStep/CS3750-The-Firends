@@ -1,4 +1,5 @@
-﻿namespace Assignment1v3.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace Assignment1v3.Models
 {
     public class StudSched
     {

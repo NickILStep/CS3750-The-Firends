@@ -1,0 +1,70 @@
+﻿@page
+@model Assignment1v3.Pages.Home.DropCourseModel
+
+@{
+    ViewData["Title"] = "Drop Course";
+}
+
+<h1>Course Details</h1>
+
+@if (Model.Course != null)
+{
+    <div>
+        <h4>Course</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.School)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.School)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.CourseNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CourseNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.CourseName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CourseName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.CreditHours)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CreditHours)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.StartTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.StartTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.EndTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.EndTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.Location)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.Location)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.Description)
+            </dd>
+        </dl>
+    </div>
+}
+else
+{
+    <p>Course not found or already dropped.</p>
+}

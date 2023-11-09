@@ -29,21 +29,16 @@ namespace Assignment1v3.Pages.Assignments
 
         public async Task<IActionResult> OnGetAsync(int courseId)
         {
-            if (_context.Assignment != null)
-            {
-                Assignment = await _context.Assignment.ToListAsync();
-            }
             SelectedCourse = await _context.Course
                 .Where(c => c.Id == courseId)
                 .FirstOrDefaultAsync();
 
             if (SelectedCourse == null)
             {
-                // Course not found, handle accordingly (e.g., return a not found page).
                 return NotFound();
             }
 
-            Assignment = await _context.Assignment
+            Assignments = await _context.Assignment
                 .Where(a => a.course == SelectedCourse.CourseName)
                 .ToListAsync();
 
