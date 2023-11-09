@@ -8,6 +8,10 @@
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
         <p>
+            Filter by Dept:
+            <select name="deptOrder" asp-items="@Model.Items" value="@Model.DeptSort"></select>
+        </p>
+        <p>
             Find by name:
             <input type="text" name="SearchString" value="@Model.CurrentFilter" />
             <input type="submit" value="Search" class="btn btn-primary" /> |

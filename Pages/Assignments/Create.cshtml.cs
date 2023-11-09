@@ -9,6 +9,7 @@ using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment1v3.Pages.Assignments
 {
@@ -45,6 +46,9 @@ namespace Assignment1v3.Pages.Assignments
             {
                 return Page();
             }
+
+            var courseID = _context.Course.Where(a => a.CourseName == Assignment.course).FirstOrDefaultAsync();
+            Assignment.course = courseID.Result.Id.ToString();
 
             _context.Assignment.Add(Assignment);
             await _context.SaveChangesAsync();

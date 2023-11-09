@@ -44,6 +44,8 @@ namespace Assignment1v3.Pages.Courses
                 return Page();
             }
 
+           
+
             _context.Course.Add(Course);
             await _context.SaveChangesAsync();
 

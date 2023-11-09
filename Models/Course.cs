@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Assignment1v3.Models
 {
@@ -15,7 +16,7 @@ namespace Assignment1v3.Models
         public DateTime EndTime { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
-
-        public ICollection<InstructorCourse> Instructors { get; set; }
+        [BindProperty]
+        public string ClassDays { get; set; }
     }
 }

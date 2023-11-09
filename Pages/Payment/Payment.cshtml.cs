@@ -44,7 +44,7 @@ namespace Assignment1v3.Pages.Payment
             // This is a public sample test API key.
             // Don’t submit any personally identifiable information in requests made with this key.
             // Sign in to see your own test API key embedded in code samples.
-            StripeConfiguration.ApiKey = "sk_test_51Ny4RlB0mWSJyvtEF6kjAFRYirP53gUXjltsjcI2iMjbQmedAr1zFvqBa9TdFDQ7crej0BI1dEK5r5l21k64Jf1L00G9IYoBmH";
+            StripeConfiguration.ApiKey = "pk_test_51Ny4RlB0mWSJyvtEi0l3o5aeaxLe5JyC8ept6tXTuX1CDmJFzlUlutgv6yo3pDlgUVk5Nk3VukRp8hBxdGtP0tY500Aqramtq3";
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             app.UseRouting();
             app.UseStaticFiles();
