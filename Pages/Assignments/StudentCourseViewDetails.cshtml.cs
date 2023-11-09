@@ -21,7 +21,8 @@ namespace Assignment1v3.Pages.Assignments
             _context = context;
         }
 
-      public Assignment Assignment { get; set; } = default!; 
+        public Assignment Assignment { get; set; } = default!;
+        public Course Course { get; set; } // Change to a single Course object
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,9 +36,18 @@ namespace Assignment1v3.Pages.Assignments
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Assignment = assignment;
+
+                // Assuming there is a property in Assignment model that represents course name
+                var courseName = assignment.course;
+
+                // Ensure that the courseName is not null or empty
+                if (!string.IsNullOrEmpty(courseName))
+                {
+                    Course = await _context.Course.FirstOrDefaultAsync(c => c.CourseName == courseName);
+                }
             }
             return Page();
         }

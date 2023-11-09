@@ -10,18 +10,59 @@
 @if (Model.Course != null)
 {
     <div>
-        <h2>@Model.Course.CourseName</h2>
-        <p>Course Number: @Model.Course.CourseNumber</p>
-        <p>Credit Hours: @Model.Course.CreditHours</p>
-        <p>Start Time: @Model.Course.StartTime</p>
-        <p>Location: @Model.Course.Location</p>
-        <p>Description: @Model.Course.Description</p>
+        <h4>Course</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.School)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.School)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.CourseNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CourseNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.CourseName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CourseName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.CreditHours)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CreditHours)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.StartTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.StartTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.EndTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.EndTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.Location)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.Location)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.Description)
+            </dd>
+        </dl>
     </div>
-
-    <form method="post">
-        <input type="hidden" asp-for="CourseId" value="@Model.Course.Id" />
-        <button type="submit" class="btn btn-danger">Drop Course</button>
-    </form>
 }
 else
 {

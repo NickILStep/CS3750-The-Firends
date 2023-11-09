@@ -9,6 +9,7 @@ using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace Assignment1v3.Pages.Home
 {
@@ -22,20 +23,11 @@ namespace Assignment1v3.Pages.Home
             _context = context;
         }
 
-        public IList<InstructorCourse> InstructorCourses { get; set; }
+        public IList<Course> Course { get; set; }
 
         public async Task OnGetAsync()
         {
-            // Fetch courses associated with the current instructor
-            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-            if (userEmailClaim != null)
-            {
-                var userEmail = userEmailClaim.Value;
-                InstructorCourses = await _context.InstructorCourse
-                    .Include(ic => ic.Course)
-                    .Where(ic => ic.Instructor.Email_Username == userEmail)
-                    .ToListAsync();
-            }
+            Course = await _context.Course.ToListAsync();
         }
     }
 }
