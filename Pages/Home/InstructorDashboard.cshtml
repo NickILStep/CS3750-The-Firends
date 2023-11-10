@@ -13,25 +13,23 @@
     </p>
 
     <div class="row">
-        <div class="col-md-9">
+        <div class="row row-cols-2 col-md-9">
             <!-- Main Content -->
             @foreach (var course in Model.Course)
             {
-                <div class="col-md-3 mb-3">
-                    <div class="card custom-card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a asp-page="/Assignments/InstructorCourseView" asp-route-courseId="@course.Id">@course.CourseNumber</a>
-                            </h5>
-                            <p class="card-text">@course.CourseName</p>
-                            <p class="card-text">@course.Location</p>
-                            <p class="card-text">@course.StartTime</p>
-                            <a class="btn btn-primary" asp-page="./InstructorDetails" asp-route-id="@course.Id">Details</a>
-                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@course.Id">Delete</a>
-                        </div>
+                <div class="card custom-card m-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a asp-page="/Assignments/InstructorCourseView" asp-route-courseId="@course.Id">@course.CourseNumber</a>
+                        </h5>
+                        <p class="card-text">@course.CourseName</p>
+                        <p class="card-text">@course.Location</p>
+                        <p class="card-text">@course.StartTime</p>
+                        <a class="btn btn-primary" asp-page="./InstructorDetails" asp-route-id="@course.Id">Details</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@course.Id">Delete</a>
                     </div>
                 </div>
-            }
+				}
         </div>
         <div class="col-md-3">
             <!-- Side Section - To-Do -->

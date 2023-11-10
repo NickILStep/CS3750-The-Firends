@@ -54,13 +54,13 @@ namespace Assignment1v3.Pages.Account
 
                     await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
-                    if (User.Claims.Count() > 1)
+                    if (claimsPrincipal.Claims.Count() > 1)
                     {
-                        if (User.Claims.ElementAt(2).ToString() == "Student")
+                        if (claimsPrincipal.Claims.ElementAt(2).ToString() == "Role: Student")
                         {
                             return RedirectToPage("/Home/StudentDashboard");
                         }
-                        else if (User.Claims.ElementAt(2).ToString() == "Instructor")
+                        else if (claimsPrincipal.Claims.ElementAt(2).ToString() == "Role: Instructor")
                         {
                             return RedirectToPage("/Home/InstructorDashboard");
                         }

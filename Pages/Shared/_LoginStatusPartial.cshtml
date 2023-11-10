@@ -1,11 +1,18 @@
 ﻿@if (User.Identity.IsAuthenticated){
-    <ul class="navbar-nav flex-grow-1 mr-auto">
+    <ul class="navbar-nav flex-grow-1 me-auto">
         <li>
-            <button class="btn btn-primary"><span class="bi bi-bell"></span></button>
+            <button class="btn btn-primary mx-3"><span class="bi bi-bell"></span></button>
+        </li>
+        <li>
+            <span class="navbar-brand">
+                Welcome @User.Identity.Name
+            </span>
+        </li>
+        <li>
+            <a class="nav-link" asp-page="/Profile">Profile</a>
         </li>
         <li>
             <form method="post" class="form-inline" asp-page="/Account/Logout">
-                 Welcome @User.Identity.Name
                 <button type="submit" class="btn btn-link ml-2">Logout</button>
             </form>
         </li>
@@ -16,6 +23,9 @@
 }
 else
 {
-    <a class="btn btn-link" asp-page="/Account/Login">Login</a>
-    <a class="nav-link text-light" asp-area="" asp-page="/Logins/Create">Sign Up</a> <!-- Added this line for Sign Up -->
+    <ul class="navbar-nav flex-grow-1 me-auto">
+		<a class="btn btn-link" asp-page="/Account/Login">Login</a>
+		<a class="btn btn-link" asp-page="/Logins/Create">Sign Up</a> <!-- Added this line for Sign Up -->
+    </ul>
+
 }

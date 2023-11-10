@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Assignment1v3.Pages.Courses
 {
@@ -39,7 +41,11 @@ namespace Assignment1v3.Pages.Courses
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Course == null || Course == null)
+            //This nasty line of code grabs the logged-in user, grabs their ID, and converts it to an integer for the DB
+            int instructorID = Convert.ToInt32((User.Claims.ElementAt(3).ToString()).Remove(0, 4));
+            Course.InstructorId = instructorID;
+
+            if (!ModelState.IsValid || _context.Course == null || Course == null)
             {
                 return Page();
             }
