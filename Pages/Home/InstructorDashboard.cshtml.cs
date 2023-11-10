@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using NuGet.Packaging;
 
 namespace Assignment1v3.Pages.Home
 {
@@ -27,7 +28,35 @@ namespace Assignment1v3.Pages.Home
 
         public async Task OnGetAsync()
         {
-            Course = await _context.Course.ToListAsync();
+            Course = new List<Course>();
+
+            // Get the currently authenticated user's email claim
+            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+            System.Diagnostics.Debug.WriteLine(userEmailClaim);
+
+            if (userEmailClaim != null)
+            {
+                var userEmail = userEmailClaim.Value;
+
+                // Find the user by email address
+                var user = await _context.Login
+                    .FirstOrDefaultAsync(u => u.Email_Username == userEmail);
+                System.Diagnostics.Debug.WriteLine(user);
+
+                if (user != null)
+                {
+                    var userId = user.Id;
+                    System.Diagnostics.Debug.WriteLine(userId);
+
+                    // Find courses where the instructor ID matches the user's ID
+                    var instructorCourses = await _context.Course
+                        .Where(c => c.InstructorId == userId)
+                        .ToListAsync();
+
+                    Course.AddRange(instructorCourses);
+                }
+            }
         }
+
     }
 }
