@@ -1,4 +1,4 @@
-﻿@page "{courseId:int}"
+﻿@page 
 @model Assignment1v3.Pages.Assignments.StudentCourseViewModel
 
 @{
@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Assignments)
+        @foreach (var item in Model.Assignment)
         {
             <tr>
                 <td>
