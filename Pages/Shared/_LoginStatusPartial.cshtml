@@ -1,8 +1,8 @@
 ﻿@if (User.Identity.IsAuthenticated){
     <ul class="navbar-nav flex-grow-1 mr-auto">
-        <li>
-            <button class="btn btn-primary"><span class="bi bi-bell"></span></button>
-        </li>
+        
+        
+  
         <li>
             <form method="post" class="form-inline" asp-page="/Account/Logout">
                  Welcome @User.Identity.Name
