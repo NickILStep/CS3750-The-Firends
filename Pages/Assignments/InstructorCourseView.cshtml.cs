@@ -33,6 +33,7 @@ namespace Assignment1v3.Pages.Assignments
             {
                 Assignment = await _context.Assignment.ToListAsync();
             }
+
             SelectedCourse = await _context.Course
                 .Where(c => c.Id == courseId)
                 .FirstOrDefaultAsync();
@@ -44,7 +45,7 @@ namespace Assignment1v3.Pages.Assignments
             }
 
             Assignment = await _context.Assignment
-                .Where(a => a.course == SelectedCourse.CourseName)
+                .Where(a => a.course == SelectedCourse.Id.ToString()) // Assuming 'course' is a string in the Assignment model
                 .ToListAsync();
 
             return Page();
