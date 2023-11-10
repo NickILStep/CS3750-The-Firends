@@ -31,7 +31,7 @@ namespace Assignment1v3.Pages.Home
 
             // Get the currently authenticated user's email address claim
             var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-
+            //System.Diagnostics.Debug.WriteLine(user);
             if (userEmailClaim != null)
             {
                 var userEmailClaimValue = userEmailClaim.Value;

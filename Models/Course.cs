@@ -17,6 +17,7 @@ namespace Assignment1v3.Models
         public string Location { get; set; }
         public string Description { get; set; }
         [BindProperty]
-        public string ClassDays { get; set; }
+        public string? ClassDays { get; set; }
+        public int  InstructorId { get; internal set; }
     }
 }
