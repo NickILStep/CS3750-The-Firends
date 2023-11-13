@@ -101,6 +101,21 @@ namespace Assignment1v3.Pages.Registrations
 
             };
             _context.StudSched.Add(newsched);
+
+            var newevent = new Event
+            {
+                title = course.CourseNumber + ": " + course.CourseName,
+                startTime = course.StartTime,
+                endTime = course.EndTime,
+                startRecur = course.StartRecur,
+                endRecur = course.EndRecur,
+                //daysOfWeek = course.ClassDays,
+                daysOfWeek = "[1]", // Temporary until we add daysOfWeek functionality to Course creation
+                userId = this.User.Claims.ElementAt(1).ToString(),
+                url = "/Home/StudentDashboard",
+            };
+            _context.Event.Add(newevent);
+
             await _context.SaveChangesAsync();
             return RedirectToPage("/Registrations/Index");
         }
