@@ -107,10 +107,16 @@ namespace Assignment1v3.Pages.Registrations
                 title = course.CourseNumber + ": " + course.CourseName,
                 startTime = course.StartTime,
                 endTime = course.EndTime,
-                startRecur = course.StartRecur,
-                endRecur = course.EndRecur,
+                //startRecur = course.StartRecur,
+                //endRecur = course.EndRecur,
                 //daysOfWeek = course.ClassDays,
-                daysOfWeek = "[1]", // Temporary until we add daysOfWeek functionality to Course creation
+
+                // Temporary until we add recur and daysOfWeek functionality to Course creation
+                startRecur = DateTime.Parse("2023-10-01 00:00:00.000"),
+                endRecur = DateTime.Parse("2023-10-31 00:00:00.000"),
+                daysOfWeek = "[1]",
+                // ----------------------------------------------------------------------------
+
                 userId = this.User.Claims.ElementAt(1).ToString(),
                 url = "/Home/StudentDashboard",
             };
