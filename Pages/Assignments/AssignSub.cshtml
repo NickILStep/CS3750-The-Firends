@@ -4,7 +4,7 @@
 	ViewData["Title"] = "AssignSub";
 }
 
-<h1>Details</h1>
+<h1>Assignment Submit</h1>
 
 <div>
     <h4>Assignment</h4>
@@ -54,7 +54,24 @@
     </dl>
 </div>
 <div>
+    
     <!--Need to go to assignment page-->
-    <a asp-page="./StudentCourseView" asp-route-id="@Model.Assignment?.ID">Submit Assignment</a> |
-    <a asp-page="./StudentCourseView">Back to List</a> |
+    @if (Model.Assignment.uploadType == "File Upload")
+    {
+        <form method="post" enctype="multipart/form-data" class="AssignmentUpload">
+            <input type="file" id="fileInput" name="imageFile" accept="*" />
+            <br />
+            <button type="submit" class="btn cust-btn btn-primary AssignmentUpload">Submit</button>
+        
+        </form>
+    }
+    else
+    {
+        <form method="post">
+            <textarea class="textbox"></textarea>
+            <br />
+            <button type="submit" class="btn cust-btn btn-primary AssignmentUpload">Submit</button>
+
+        </form>
+    }
 </div>
