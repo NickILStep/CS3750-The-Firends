@@ -6,7 +6,7 @@ namespace Assignment1v3.Models
     {
         public int ID { get; set; }
 
-        public string course { get; set; }
+        public int course { get; set; }
 
         public string name { get; set; }
 

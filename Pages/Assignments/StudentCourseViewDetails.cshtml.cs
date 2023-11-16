@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -26,29 +24,15 @@ namespace Assignment1v3.Pages.Assignments
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Assignment == null)
-            {
-                return NotFound();
-            }
-
             var assignment = await _context.Assignment.FirstOrDefaultAsync(m => m.ID == id);
-            if (assignment == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Assignment = assignment;
+            Assignment = assignment;
+            var courseId = assignment.course;
 
-                // Assuming there is a property in Assignment model that represents course name
-                var courseName = assignment.course;
-
-                // Ensure that the courseName is not null or empty
-                if (!string.IsNullOrEmpty(courseName))
-                {
-                    Course = await _context.Course.FirstOrDefaultAsync(c => c.CourseName == courseName);
-                }
+            if (courseId != 0) // Assuming 0 is not a valid course ID
+            {
+                Course = await _context.Course.FirstOrDefaultAsync(c => c.Id == courseId);
             }
+
             return Page();
         }
     }

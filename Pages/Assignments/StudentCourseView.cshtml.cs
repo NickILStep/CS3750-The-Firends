@@ -48,7 +48,7 @@ namespace Assignment1v3.Pages.Assignments
             }
 
             Assignment = await _context.Assignment
-                .Where(a => a.course == SelectedCourse.Id.ToString()) // Assuming 'course' is a string in the Assignment model
+                .Where(a => a.course == SelectedCourse.Id) // Assuming 'course' is a string in the Assignment model
                 .ToListAsync();
             System.Diagnostics.Debug.WriteLine(Assignment);
 
