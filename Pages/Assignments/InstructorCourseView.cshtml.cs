@@ -29,6 +29,7 @@ namespace Assignment1v3.Pages.Assignments
 
         public async Task<IActionResult> OnGetAsync(int courseId)
         {
+            // Check if assignments exist
             if (_context.Assignment != null)
             {
                 Assignment = await _context.Assignment.ToListAsync();
@@ -45,7 +46,7 @@ namespace Assignment1v3.Pages.Assignments
             }
 
             Assignment = await _context.Assignment
-                .Where(a => a.course == SelectedCourse.Id.ToString()) // Assuming 'course' is a string in the Assignment model
+                .Where(a => a.course == SelectedCourse.Id) // Assuming 'course' is now an int in the Assignment model
                 .ToListAsync();
 
             return Page();

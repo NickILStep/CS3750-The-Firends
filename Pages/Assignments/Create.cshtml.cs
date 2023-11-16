@@ -38,8 +38,6 @@ namespace Assignment1v3.Pages.Assignments
         [BindProperty]
         public Assignment Assignment { get; set; } = default!;
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid || _context.Assignment == null || Assignment == null)
@@ -47,8 +45,8 @@ namespace Assignment1v3.Pages.Assignments
                 return Page();
             }
 
-            var courseID = _context.Course.Where(a => a.CourseName == Assignment.course).FirstOrDefaultAsync();
-            Assignment.course = courseID.Result.Id.ToString();
+            var courseID = _context.Course.Where(a => a.Id == Assignment.course).FirstOrDefaultAsync();
+            Assignment.course = courseID.Result.Id;
 
             _context.Assignment.Add(Assignment);
             await _context.SaveChangesAsync();
