@@ -27,6 +27,7 @@ namespace Assignment1v3.Pages.Assignments
 
         public async Task<IActionResult> OnGetAsync(int courseId)
         {
+            //Debuging stuff
             System.Diagnostics.Debug.WriteLine(courseId);
             System.Diagnostics.Debug.WriteLine(_context.Assignment);
             if (_context.Assignment != null)
