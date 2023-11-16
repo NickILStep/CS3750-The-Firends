@@ -38,15 +38,14 @@ namespace Assignment1v3.Pages.Assignments
         [BindProperty]
         public Assignment Assignment { get; set; } = default!;
         
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int ID)
         {
           if (!ModelState.IsValid || _context.Assignment == null || Assignment == null)
             {
                 return Page();
             }
 
-            var courseID = _context.Course.Where(a => a.Id == Assignment.course).FirstOrDefaultAsync();
-            Assignment.course = courseID.Result.Id;
+            Assignment.course = ID;
 
             _context.Assignment.Add(Assignment);
             await _context.SaveChangesAsync();

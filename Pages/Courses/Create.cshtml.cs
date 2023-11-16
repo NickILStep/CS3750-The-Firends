@@ -10,6 +10,7 @@ using Assignment1v3.Models;
 using System.Security.Claims;
 using System.Security.Principal;
 using Stripe;
+using Microsoft.Extensions.Primitives;
 
 namespace Assignment1v3.Pages.Courses
 {
@@ -17,6 +18,7 @@ namespace Assignment1v3.Pages.Courses
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
         public List<SelectListItem> Items { get; set; }
+        public Schools list = new Schools();
 
         public CreateModel(Assignment1v3.Data.Assignment1v3Context context)
         {
@@ -25,7 +27,6 @@ namespace Assignment1v3.Pages.Courses
 
         public IActionResult OnGet()
         {
-            Schools list = new Schools();
             Items = list.strings.Select(a =>
                                           new SelectListItem
                                           {
@@ -37,6 +38,8 @@ namespace Assignment1v3.Pages.Courses
 
         [BindProperty]
         public Course Course { get; set; } = default!;
+        [BindProperty]
+        public List<string> ClassDays {  get; set; }
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

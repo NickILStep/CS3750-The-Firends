@@ -45,19 +45,29 @@
                 <span asp-validation-for="Course.EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Course.Location" class="control-label"></label>
-                <input asp-for="Course.Location" class="form-control" />
-                <span asp-validation-for="Course.Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Course.Description" class="control-label"></label>
                 <input asp-for="Course.Description" class="form-control" />
                 <span asp-validation-for="Course.Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Course.StartRecur" class="control-label">Start Date</label>
+				<input asp-for="Course.StartRecur" class="form-control" />
+				<span asp-validation-for="Course.StartRecur" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Course.EndRecur" class="control-label">End Date</label>
+				<input asp-for="Course.EndRecur" class="form-control" />
+				<span asp-validation-for="Course.EndRecur" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Course.Location" class="control-label"></label>
+				<input asp-for="Course.Location" class="form-control" />
+				<span asp-validation-for="Course.Location" class="text-danger"></span>
             </div>
             <div class="form-group">
                 @for(DayOfWeek i = DayOfWeek.Sunday; i <= DayOfWeek.Saturday; i++)
                 {
-                    <input name="ClassDays" type="checkbox" value="@i" />@i <br />
+					<input type="checkbox" name="ClassDays" value="@i" />@i <br />
                 }
             </div>
             <div class="form-group">
