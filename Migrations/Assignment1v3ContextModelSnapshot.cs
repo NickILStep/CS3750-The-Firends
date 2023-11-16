@@ -68,6 +68,9 @@ namespace Assignment1v3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ClassDays")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CourseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,8 +85,14 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndRecur")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -93,7 +102,10 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime?>("StartRecur")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -109,18 +121,28 @@ namespace Assignment1v3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("end")
+                    b.Property<string>("daysOfWeek")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("endRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("start")
+                    b.Property<DateTime?>("endTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("startRecur")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("startTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("url")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -270,12 +292,18 @@ namespace Assignment1v3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseNum")
                         .HasColumnType("int");
 
                     b.Property<string>("Email_Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StudId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -285,7 +313,7 @@ namespace Assignment1v3.Migrations
             modelBuilder.Entity("Assignment1v3.Models.InstructorCourse", b =>
                 {
                     b.HasOne("Assignment1v3.Models.Course", "Course")
-                        .WithMany("Instructors")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -299,11 +327,6 @@ namespace Assignment1v3.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("Assignment1v3.Models.Course", b =>
-                {
-                    b.Navigation("Instructors");
                 });
 
             modelBuilder.Entity("Assignment1v3.Models.Instructor", b =>
