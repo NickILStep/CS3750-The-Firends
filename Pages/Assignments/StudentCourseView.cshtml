@@ -11,25 +11,13 @@
     <thead>
         <tr>
             <th>
-                Course
-            </th>
-            <th>
                 Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Points
-            </th>
-            <th>
-                Open Date
             </th>
             <th>
                 Due Date
             </th>
             <th>
-                Upload Type
+                Submission Type
             </th>
             <th></th>
         </tr>
@@ -39,19 +27,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.course)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.maxPoints)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.startDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.dueDate)
@@ -62,6 +38,7 @@
                 <td>
                     <a asp-page="./StudentCourseViewDetails" asp-route-id="@item.ID">Details</a> |
                     <!--Add sumbit button that takes them to the submit area-->
+                    <a asp-page="./AssignSub" asp-route-id="@item.ID">Submit</a> 
                 </td>
             </tr>
         }
