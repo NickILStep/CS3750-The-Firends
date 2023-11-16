@@ -38,8 +38,6 @@ namespace Assignment1v3.Pages.Assignments
         [BindProperty]
         public Assignment Assignment { get; set; } = default!;
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid || _context.Assignment == null || Assignment == null)
