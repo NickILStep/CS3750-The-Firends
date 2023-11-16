@@ -14,57 +14,35 @@
     <thead>
         <tr>
             <th>
-                Course
-            </th>
-            <th>
                 Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Points
-            </th>
-            <th>
-                Open Date
             </th>
             <th>
                 Due Date
             </th>
             <th>
-                Upload Type
+                Submission Type
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Assignment) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.course)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.maxPoints)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.startDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.uploadType)
-            </td>
-            <td>
+        @foreach (var item in Model.Assignment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.uploadType)
+                </td>
+                <td>
                 <a asp-page="./InstructorCourseViewDetails" asp-route-id="@item.ID">Detail</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <!--Need to go to a grade page-->
-                <a asp-page="./Grade">Grade</a>|
+                <a asp-page="./Grade">Submissions</a>|
                 <a class="red-link" asp-page="./Delete" asp-route-id="@item.ID" style="color: red;">Delete</a>
 
             </td>

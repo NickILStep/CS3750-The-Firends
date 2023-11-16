@@ -80,7 +80,13 @@
             </td>
             <td>
                     @if (item.CourseNumber != null) {
+                        var courname = item.CourseName;
                         var cournum = item.CourseNumber;
+                        var courStartTime = item.StartTime;
+                        var courEndTime = item.EndTime;
+                        var courStartRecur = item.StartRecur;
+                        var courEndRecur = item.EndRecur;
+                        var courDaysOfWeek = item.ClassDays;
                         bool iscourse = false;
                         var cookieValue = this.User.Claims.ElementAt(1).ToString();
                         @foreach (var coursec in Model.studScheds)
@@ -99,7 +105,13 @@
                         <form method="post">
                             
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="course.CourseName" value="@courname" >
                             <input type="hidden" asp-for="course.CourseNumber" value="@cournum" >
+                            <input type="hidden" asp-for="course.StartTime" value="@courStartTime" >
+                            <input type="hidden" asp-for="course.EndTime" value="@courEndTime" >
+                            <input type="hidden" asp-for="course.StartRecur" value="@courStartRecur" >
+                            <input type="hidden" asp-for="course.EndRecur" value="@courEndRecur" >
+                            <input type="hidden" asp-for="course.ClassDays" value="@courDaysOfWeek" >
                             <span asp-validation-for="course.CourseNumber" class="text-danger"></span>
                             <button type="submit" disabled="@(iscourse)"> Add </button>
                         </form>

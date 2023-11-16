@@ -11,9 +11,13 @@ namespace Assignment1v3.Models
         public string CourseName { get; set; }
         public int CreditHours { get; set; }
         [DataType(DataType.Time)]
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
         [DataType(DataType.Time)]
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? StartRecur { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? EndRecur { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
         [BindProperty]

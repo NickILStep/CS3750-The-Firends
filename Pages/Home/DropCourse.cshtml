@@ -5,9 +5,7 @@
     ViewData["Title"] = "Drop Course";
 }
 
-<h1>Dropping Course</h1>
-
-<h3>Are you sure you want to drop this course: @Model.Course.CourseName?</h3>
+<h2>Are you sure you want to drop this course: @Model.Course.CourseName?</h2>
 
 <div>
     <hr />
@@ -61,4 +59,9 @@
             @Html.DisplayFor(model => model.Course.Description)
         </dd>
     </dl>
+    <form method="post">
+        <input type="hidden" asp-for="Course.Id" />
+        <button type="submit" class="btn btn-danger">Drop Course</button>
+        <a asp-page="/Index" class="btn btn-secondary">Cancel</a>
+    </form>
 </div>
