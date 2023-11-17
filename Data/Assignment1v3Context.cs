@@ -27,7 +27,7 @@ namespace Assignment1v3.Data
         public DbSet<Assignment1v3.Models.Assignment>? Assignment { get; set; }
         public DbSet<Assignment1v3.Models.Instructor> Instructor { get; set; }
 
-        public DbSet<Assignment1v3.Models.Submission> Submission { get; set; }
+        
 
         public DbSet<Assignment1v3.Models.InstructorCourse> InstructorCourse { get; set; }
         public object Courses { get; internal set; }
