@@ -10,11 +10,11 @@ namespace Assignment1v3.Models
         public int UserID { get; set; }
         public int maxPoints { get; set; }
 
-        public int pointsEarn { get; set; }
+        public int PointsEarned { get; set; }
 
         public string submissionType { get; set; }
 
-        public string? Upload { get; set;}
+        public string? Upload { get; set;} = string.Empty;
         public string? TextBox { get; set; }
 
     }

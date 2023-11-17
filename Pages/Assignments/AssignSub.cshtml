@@ -58,17 +58,22 @@
     <!--Need to go to assignment page-->
     @if (Model.Assignment.uploadType == "File Upload")
     {
-        <form method="post" enctype="multipart/form-data" class="AssignmentUpload">
-            <input type="file" id="fileInput" name="imageFile" accept="*" />
+        
+        <form method="post" enctype="multipart/form-data" class="fileUpload">
+            <input type="file" id="fileInput" name="fileUpload" accept="*" />
+            <input type="hidden" asp-for="Submission.maxPoints" value="@Model.Assignment.maxPoints">
+            <span asp-validation-for="Submission.TextBox" class="text-danger"></span>
             <br />
-            <button type="submit" class="btn cust-btn btn-primary AssignmentUpload">Submit</button>
+            <button type="submit" class="btn cust-btn btn-primary fileUpload">Submit</button>
         
         </form>
     }
     else
     {
         <form method="post">
-            <textarea class="textbox"></textarea>
+            <textarea asp-for="Submission.TextBox" class="textbox"></textarea>
+            <input type="hidden" asp-for="Submission.maxPoints" value="@Model.Assignment.maxPoints">
+            <span asp-validation-for="Submission.TextBox" class="text-danger"></span>
             <br />
             <button type="submit" class="btn cust-btn btn-primary AssignmentUpload">Submit</button>
 

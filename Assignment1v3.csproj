@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\test\" />
+    <Folder Include="wwwroot\Files\" />
     <Folder Include="wwwroot\profilePictures\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
