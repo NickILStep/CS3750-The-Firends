@@ -1,0 +1,27 @@
+﻿@page
+@model Assignment1v3.Pages.Assignments.SubmissionListModel
+
+<h2>Submitted Assignments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Submission Type</th>
+            <th>Graded</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var submission in Model.Submissions)
+        {
+            <tr>
+                <td>@submission.User.Name_First @submission.User.Name_Last</td>
+                <td>@submission.submissionType</td>
+                <td>@submission.Graded</td>
+                <td>
+                    <a class="btn btn-primary" asp-page="./Grade" asp-route-submissionId="@submission.ID">Grade</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
