@@ -16,6 +16,6 @@ namespace Assignment1v3.Models
 
         public string? Upload { get; set;} = string.Empty;
         public string? TextBox { get; set; }
-
+        public bool? Graded { get; set; } = false;
     }
 }

@@ -5,6 +5,16 @@
     ViewData["Title"] = "Instructor Dashboard";
 }
 
+<style>
+    .Assignment-card {
+        width: auto;
+        background-color: #D4F1F4;
+        border: 1px solid #05445E;
+        margin: 3px;
+        padding: 5px;
+    }
+</style>
+
 <div class="container">
     <h1>Instructor Dashboard</h1>
 
@@ -12,8 +22,8 @@
         <a class="btn btn-primary" asp-page="/Courses/Create">Create New</a>
     </p>
 
-    <div class="row">
-        <div class="row row-cols-2 col-md-9">
+    <div style="float:left; width: 75%;">
+        <div class="row row-cols-2 col-md-9" style="width: 100%;">
             <!-- Main Content -->
             @foreach (var course in Model.Course)
             {
@@ -30,14 +40,30 @@
                     </div>
                 </div>
 				}
-        </div>
-        <div class="col-md-3">
-            <!-- Side Section - To-Do -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">To-Do</h5>
-                    <!-- Add To-Do list here -->
-                </div>
+        </div>        
+    </div>
+    <div class="col-md-3" style="float:right; margin-bottom: 60px;">
+        <!-- Side Section - To-Do -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">To-Do</h5>
+                <!-- Add your To-Do list here -->
+                @if (Model.TO_DO.Any())
+                {
+                    @foreach (var assignment in Model.TO_DO)
+                    {
+                        <div class="Assignment-card">
+                            <a style="font-weight: bold; font-size: 25px;">@assignment.Upload</a> <!--Can be turned into a link once grading is set up. asp-page="/Assignments/StudentCourseViewDetails" asp-route-id="@assignment.AssignmentID"-->
+                            <p> @assignment.TextBox</p>
+                            <p>Points Possible: @assignment.maxPoints</p>
+                            <p>Submission Type: @assignment.submissionType</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No assignments to display.</p>
+                }
             </div>
         </div>
     </div>
