@@ -4,17 +4,26 @@
 @{
     ViewData["Title"] = "Student Dashboard";
 }
+<style>
+    .Assignment-card{
+        width: auto;
+        background-color: #D4F1F4;
+        border: 1px solid #05445E;
+        margin: 3px;
+        padding: 5px;
+    }
+</style>
 
 <div class="container">
     <h1>Student Dashboard</h1>
 
-    <div class="row">
-        <div class="row row-cols-2 col-md-9">
+    <div style="float:left; width: 75%;">
+        <div class="row row-cols-2 col-md-9" style="width: 100%;">
             <!-- Main Content -->
             @foreach (var course in Model.Course)
             {
-                <div class="card custom-card m-2" style="width: 18rem;">
-                    <div class="card-body">
+                <div class="card custom-card m-2" style="width: 18rem; height: auto;">
+                    <div class="card-body" style="height: auto;">
                         <a asp-page="/Assignments/StudentCourseView" asp-route-courseId="@course.Id">@course.CourseNumber</a>
                         <h5 class="card-title">
                             @course.CourseName
@@ -27,13 +36,32 @@
                 </div>
             }
         </div>
-        <div class="col-md-3">
-            <!-- Side Section - To-Do -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">To-Do</h5>
-                    <!-- Add your To-Do list here -->
-                </div>
+        
+    </div>
+    <div class="col-md-3" style="float:right; margin-bottom: 60px;">
+        <!-- Side Section - To-Do -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">To-Do</h5>
+                <!-- Add your To-Do list here -->
+                @if (Model.TO_DO.Any())
+                {
+                    @foreach (var assignment in Model.TO_DO)
+                    {
+                        <div class="Assignment-card">
+                            <a style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/StudentCourseViewDetails" asp-route-id="@assignment.ID">@assignment.name</a>
+                            <p> @assignment.description</p>
+
+                            <p>Due: @assignment.dueDate.ToString("MM/dd/yyyy")</p>
+                            <p>Points Possible: @assignment.maxPoints</p>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No assignments to display.</p>
+                }
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using Stripe;
 
 namespace Assignment1v3.Pages.Home
 {
@@ -24,10 +25,13 @@ namespace Assignment1v3.Pages.Home
         }
 
         public List<Course> Course { get; set; }
+        public List<Assignment> TO_DO { get; set; }
+        
 
         public async Task OnGetAsync()
         {
             Course = new List<Course>();
+            TO_DO = new List<Assignment>();
 
             // Get the currently authenticated user's email address claim
             var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
@@ -51,9 +55,38 @@ namespace Assignment1v3.Pages.Home
 
                 }
 
-               // System.Diagnostics.Debug.WriteLine(Course);
+                foreach (var tempcourse in studentCourses)
+                {
+                   
+
+                    var matchingAssignments = await (
+                        from assignment in _context.Assignment
+                        join course in _context.Course on assignment.course equals course.Id // to access name and number later
+                        where assignment.course == tempcourse.CourseId && //from a course enrolled in
+                              assignment.startDate <= DateTime.Now && //assignment is open
+                              assignment.dueDate >= DateTime.Now && //still to be due
+                              !_context.Submission.Any(s => s.AssignmentID == assignment.ID && s.UserID == int.Parse(this.User.Claims.ElementAt(3).Value)) // where it hasn't been submitted yet.
+                        select new Assignment
+                        {
+                            ID = assignment.ID,
+                            description = course.CourseNumber.ToString() + "-" + course.CourseName.ToString(), //this is wonky but I'm stealing the description slot to access the courseNumber and Course name
+                            name = assignment.name,
+                            maxPoints = assignment.maxPoints,
+                            startDate = assignment.startDate,
+                            dueDate = assignment.dueDate
+                        }).ToListAsync();
+                    TO_DO.AddRange(matchingAssignments);
+
+                }
+                TO_DO = TO_DO.OrderBy(x => x.dueDate).ToList();
+                
+
+
+
+                // System.Diagnostics.Debug.WriteLine(Course);
 
             }
+            
         }
 
     }

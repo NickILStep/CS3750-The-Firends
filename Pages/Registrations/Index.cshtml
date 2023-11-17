@@ -87,6 +87,7 @@
                         var courStartRecur = item.StartRecur;
                         var courEndRecur = item.EndRecur;
                         var courDaysOfWeek = item.ClassDays;
+                        var courID = item.Id;
                         bool iscourse = false;
                         var cookieValue = this.User.Claims.ElementAt(1).ToString();
                         @foreach (var coursec in Model.studScheds)
@@ -112,6 +113,7 @@
                             <input type="hidden" asp-for="course.StartRecur" value="@courStartRecur" >
                             <input type="hidden" asp-for="course.EndRecur" value="@courEndRecur" >
                             <input type="hidden" asp-for="course.ClassDays" value="@courDaysOfWeek" >
+                            <input type="hidden" asp-for="course.Id" value="@courID">
                             <span asp-validation-for="course.CourseNumber" class="text-danger"></span>
                             <button type="submit" disabled="@(iscourse)"> Add </button>
                         </form>

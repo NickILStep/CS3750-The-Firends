@@ -98,7 +98,8 @@ namespace Assignment1v3.Pages.Registrations
             {
                 Email_Username = this.User.Claims.ElementAt(1).ToString(),
                 CourseNum = course.CourseNumber,
-
+                StudId = int.Parse(this.User.Claims.ElementAt(3).Value),
+                CourseId = course.Id
             };
             _context.StudSched.Add(newsched);
 
