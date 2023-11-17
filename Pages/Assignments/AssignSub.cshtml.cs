@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Assignment1v3.Pages.Assignments
 {
@@ -12,18 +13,26 @@ namespace Assignment1v3.Pages.Assignments
 	{
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
-
+		public int userID;
+		public string uniquefilename;
+        public int assignid;
 		public AssignSubModel(Assignment1v3.Data.Assignment1v3Context context, IWebHostEnvironment webHostEnvironment)
 		{
 			_context = context;
             _webHostEnvironment = webHostEnvironment;
         }
 
-		public Assignment Assignment { get; set; } = default!;
+        [BindProperty]
+        public Submission Submission { get; set; } = default!;
+		[BindProperty]
+        public Assignment Assignment { get; set; } = default!;
 
+        
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
-			if (id == null || _context.Assignment == null)
+            
+
+            if (id == null || _context.Assignment == null)
 			{
 				return NotFound();
 			}
@@ -36,14 +45,38 @@ namespace Assignment1v3.Pages.Assignments
 			else
 			{
 				Assignment = assignment;
+                
 			}
 			return Page();
 		}
 		public async Task<IActionResult> OnPostAsync(IFormFile fileUpload)
 		{
-			if (fileUpload != null)
+            
+            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+            System.Diagnostics.Debug.WriteLine(userEmailClaim);
+            if (userEmailClaim != null)
+            {
+                var userEmail = userEmailClaim.Value;
+
+                // Find the user by email address
+                var user = await _context.Login
+                    .FirstOrDefaultAsync(u => u.Email_Username == userEmail);
+                System.Diagnostics.Debug.WriteLine(user);
+
+                if (user != null)
+                {
+                    var userId = user.Id;
+                    System.Diagnostics.Debug.WriteLine(userId);
+
+                    userID = userId;
+
+
+                }
+            }
+
+            if (fileUpload != null)
 			{
-				if (fileUpload.Length > 0)
+                if (fileUpload.Length > 0)
 				{
 					// Make sure name is unique
 					var uniqueFileName = Guid.NewGuid().ToString() + "_" + fileUpload.FileName;
@@ -59,13 +92,40 @@ namespace Assignment1v3.Pages.Assignments
 					{
 						await fileUpload.CopyToAsync(stream);
 					}
-				}
-                return Page();
+					uniquefilename = uniqueFileName;
+
+                    
+                    
+
+                    
+
+                }
+                Submission.Upload = uniquefilename;
+                Submission.TextBox = Submission.TextBox;
+                Submission.UserID = userID;
+                Submission.AssignmentID = Assignment.ID;
+                Submission.submissionType = "File Upload";
+                
+
+
+                _context.Submission.Add(Submission);
             }
 			else {
-				return Page();
+                Submission.Upload = uniquefilename;
+                Submission.TextBox = Submission.TextBox;
+                Submission.UserID = userID;
+                Submission.AssignmentID = Assignment.ID;
+                Submission.submissionType = "Text Box";
+
+
+                _context.Submission.Add(Submission);
+
+                
+                
             }
-            
+            await _context.SaveChangesAsync();
+            return Page();
+
         }
 	}
 }
