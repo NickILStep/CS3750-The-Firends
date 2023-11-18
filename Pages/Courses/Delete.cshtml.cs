@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Assignment1v3.Data;
 using Assignment1v3.Models;
+using System.Security.Claims;
+using Microsoft.Data.SqlClient;
 
 namespace Assignment1v3.Pages.Courses
 {
@@ -20,7 +22,7 @@ namespace Assignment1v3.Pages.Courses
         }
 
         [BindProperty]
-      public Course Course { get; set; } = default!;
+        public Course Course { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -54,6 +56,7 @@ namespace Assignment1v3.Pages.Courses
             {
                 Course = course;
                 _context.Course.Remove(Course);
+
                 await _context.SaveChangesAsync();
             }
 
