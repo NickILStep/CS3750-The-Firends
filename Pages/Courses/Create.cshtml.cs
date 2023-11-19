@@ -54,29 +54,28 @@ namespace Assignment1v3.Pages.Courses
                 return Page();
             }
 
-            string dateFormat = "MM/dd/yyyy HH:mm";
+            _context.Course.Add(Course);
+            await _context.SaveChangesAsync();
 
             var newevent = new Assignment1v3.Models.Event
             {
                 title = Course.CourseNumber + ": " + Course.CourseName,
                 startTime = Course.StartTime,
                 endTime = Course.EndTime,
-                //startRecur = Course.StartRecur,
-                //endRecur = Course.EndRecur,
+                startRecur = Course.StartRecur,
+                endRecur = (Course.EndRecur).AddDays(1),
                 //daysOfWeek = Course.ClassDays,
 
                 // Temporary until we add recur and daysOfWeek functionality to Course creation
-                startRecur = DateTime.Parse("2023-10-01 00:00:00.000"),
-                endRecur = DateTime.Parse("2023-10-31 00:00:00.000"),
                 daysOfWeek = "[1]",
                 // ----------------------------------------------------------------------------
 
                 userId = this.User.Claims.ElementAt(1).ToString(),
+                courseId = Course.Id,
+                studSchedId = null,
                 url = "/Home/InstructorDashboard",
             };
             _context.Event.Add(newevent);
-
-            _context.Course.Add(Course);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
