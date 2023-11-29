@@ -84,10 +84,10 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("EndRecur")
+                    b.Property<DateTime>("EndRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("EndTime")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("InstructorId")
@@ -101,10 +101,10 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("StartRecur")
+                    b.Property<DateTime>("StartRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -120,20 +120,26 @@ namespace Assignment1v3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<int>("courseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("daysOfWeek")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("endRecur")
+                    b.Property<DateTime>("endRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("endTime")
+                    b.Property<DateTime>("endTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("startRecur")
+                    b.Property<DateTime>("startRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("startTime")
+                    b.Property<DateTime>("startTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("studSchedId")
+                        .HasColumnType("int");
 
                     b.Property<string>("title")
                         .HasColumnType("nvarchar(max)");

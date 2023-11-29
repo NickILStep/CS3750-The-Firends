@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1v3.Migrations
 {
     [DbContext(typeof(Assignment1v3Context))]
-    [Migration("20231117025137_Submission")]
-    partial class Submission
+    [Migration("20231128054604_InitialAzureCreate")]
+    partial class InitialAzureCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,10 +87,10 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("EndRecur")
+                    b.Property<DateTime>("EndRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("EndTime")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("InstructorId")
@@ -104,10 +104,10 @@ namespace Assignment1v3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("StartRecur")
+                    b.Property<DateTime>("StartRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -123,20 +123,26 @@ namespace Assignment1v3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<int>("courseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("daysOfWeek")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("endRecur")
+                    b.Property<DateTime>("endRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("endTime")
+                    b.Property<DateTime>("endTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("startRecur")
+                    b.Property<DateTime>("startRecur")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("startTime")
+                    b.Property<DateTime>("startTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("studSchedId")
+                        .HasColumnType("int");
 
                     b.Property<string>("title")
                         .HasColumnType("nvarchar(max)");
@@ -310,6 +316,44 @@ namespace Assignment1v3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StudSched");
+                });
+
+            modelBuilder.Entity("Assignment1v3.Models.Submission", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("AssignmentID")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Graded")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PointsEarned")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TextBox")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Upload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("maxPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("submissionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Submission");
                 });
 
             modelBuilder.Entity("Assignment1v3.Models.InstructorCourse", b =>
