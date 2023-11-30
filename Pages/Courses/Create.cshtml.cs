@@ -45,6 +45,18 @@ namespace Assignment1v3.Pages.Courses
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            string daysList = "[";
+            for (int i = 0; i < ClassDays.Count; i++)
+            {
+                daysList += ClassDays[i].ToString();
+                if(i < ClassDays.Count - 1)
+                {
+                    daysList += ", ";
+                }
+            }
+            daysList += "]";
+            Course.ClassDays = daysList;
+
             //This nasty line of code grabs the logged-in user, grabs their ID, and converts it to an integer for the DB
             int instructorID = Convert.ToInt32((User.Claims.ElementAt(3).ToString()).Remove(0, 4));
             Course.InstructorId = instructorID;
@@ -64,12 +76,7 @@ namespace Assignment1v3.Pages.Courses
                 endTime = Course.EndTime,
                 startRecur = Course.StartRecur,
                 endRecur = (Course.EndRecur).AddDays(1),
-                //daysOfWeek = Course.ClassDays,
-
-                // Temporary until we add recur and daysOfWeek functionality to Course creation
-                daysOfWeek = "[1]",
-                // ----------------------------------------------------------------------------
-
+                daysOfWeek = Course.ClassDays,
                 userId = this.User.Claims.ElementAt(1).ToString(),
                 courseId = Course.Id,
                 studSchedId = null,
