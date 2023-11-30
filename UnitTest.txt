@@ -1,0 +1,128 @@
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Assignment1v3.Pages.Account;
+using Assignment1v3.Pages.Courses;
+using Microsoft.EntityFrameworkCore;
+
+namespace TestProject1
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        Assignment1v3Context _context;
+        public UnitTest1()
+        {
+            DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder(options);
+            SqlServerDbContextOptionsExtensions.UseSqlServer(builder, "Server=tcp:the-firends.database.windows.net,1433;Initial Catalog=TheFirends;Persist Security Info=False;User ID=WeTheFirends;Password=#TheFirendsSuperSecurePassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", null);
+            _context = new Assignment1v3Context((DbContextOptions<Assignment1v3Context>)builder.Options);
+        }
+
+        [TestMethod]
+        public async Task InstructorCanCreateCourseTest()
+        {
+            //hint: If you have issues accessing database
+            // Look at "Help for Unit testing " in "Start Here" module in Canvas
+            //First start with an existing instructor id. 
+            // Find out how many courses this instructor is teacing N
+            // I'm going to test with instructor id 15
+            string username = "instructorTest@testing.test";
+            string password = "TESTING";
+
+            int instructorID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorID);
+            int preCourseNum = _context.Course.Where(y => y.InstructorId == instructorID).Count();
+
+            // Execute your code and create a new course for this instructor
+            var createCourse = new Assignment1v3.Pages.Courses.CreateModel(_context);
+            Assert.IsNotNull(createCourse);
+            #region Creating the new Course
+            Course newCourse = new Course();
+            newCourse.ClassDays = "[1, 3]";
+            newCourse.CreditHours = 4;
+            newCourse.CourseName = "Unit Testing";
+            newCourse.CourseNumber = 4555;
+            newCourse.Description = "Making Unit Tests";
+            newCourse.Location = "In the Deep Dark Recessess of my mind";
+            newCourse.School = new Schools().strings[0];
+            newCourse.StartRecur = new DateTime(2023, 12, 1);
+            newCourse.EndRecur = new DateTime(2023, 12, 31);
+            newCourse.StartTime = new DateTime(2023, 12, 1, 14, 25, 0);
+            newCourse.EndTime = new DateTime(2023, 12, 1, 16, 25, 0);
+            #endregion
+            Assert.IsNotNull(newCourse);
+
+            createCourse.Course = newCourse;
+            await createCourse.OnPostAsync(instructorID);
+
+            // Find out How many courses this insctructor is teaching now M
+            int postCourseNum = _context.Course.Where(y => y.InstructorId == instructorID).Count();
+
+            // Assert that M = N + 1
+            Assert.AreEqual(preCourseNum + 1, postCourseNum);
+
+            // More hints:
+            // Your code has two components. 1. Related to web, 2. actual logic
+            // You may or may not need to refactor the code to separate web relcated code with actual logic. 
+
+            if(_context.Course.Where(d => d.Location == "In the Deep Dark Recessess of my mind").Count() > 1)
+            {
+                _context.Course.Remove(newCourse);
+                await _context.SaveChangesAsync();
+            }
+
+            Assert.AreEqual(1, _context.Course.Where(d => d.Location == "In the Deep Dark Recessess of my mind").Count());
+        }
+
+        [TestMethod]
+        public async Task InstructorCanCreateAssignment()
+        {
+            string username = "instructorTest@testing.test";
+            string password = "TESTING";
+
+            int instructorID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorID);
+
+            int preAssignNum = _context.Assignment.Where(y => y.course == 7).Count();
+
+            var createAssignmentPage = new Assignment1v3.Pages.Assignments.CreateModel(_context);
+            Assert.IsNotNull(createAssignmentPage);
+
+            #region Creating an Assignment
+            Assignment newAssignment = new Assignment();
+            newAssignment.course = 8;
+            newAssignment.created_date = DateTime.Now;
+            newAssignment.description = "How to know if a unit test works";
+            newAssignment.dueDate = new DateTime(2023, 12, 15, 11, 59, 59);
+            newAssignment.maxPoints = 100;
+            newAssignment.name = "How to Unit Test";
+            newAssignment.startDate = new DateTime(2023, 12, 1, 12, 0, 0);
+            newAssignment.uploadType = "Text Box";
+            #endregion
+            Assert.IsNotNull(newAssignment);
+
+            createAssignmentPage.Assignment = newAssignment;
+            await createAssignmentPage.OnPostAsync(instructorID);
+
+            int postAssignNum = _context.Assignment.Where(y => y.course == 7).Count();
+
+            Assert.AreEqual(postAssignNum, preAssignNum + 1);
+
+            if (_context.Assignment.Where(d => d.description == "How to know if a unit test works").Count() > 1)
+            {
+                _context.Assignment.Remove(newAssignment);
+                await _context.SaveChangesAsync();
+            }
+
+            Assert.AreEqual(1, _context.Assignment.Where(d => d.description == "How to know if a unit test works").Count());
+        }
+
+        [TestMethod]
+        public void TestMethod()
+        {
+            //When this test is run, make sure the application is running first to perform the UI test
+            //Click on login and login with valid credentials
+            //Selenium
+        }
+    }
+}

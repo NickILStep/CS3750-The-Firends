@@ -43,22 +43,32 @@ namespace Assignment1v3.Pages.Courses
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int instID)
         {
-            string daysList = "[";
-            for (int i = 0; i < ClassDays.Count; i++)
-            {
-                daysList += ClassDays[i].ToString();
-                if(i < ClassDays.Count - 1)
-                {
-                    daysList += ", ";
-                }
-            }
-            daysList += "]";
-            Course.ClassDays = daysList;
+            int instructorID;
 
-            //This nasty line of code grabs the logged-in user, grabs their ID, and converts it to an integer for the DB
-            int instructorID = Convert.ToInt32((User.Claims.ElementAt(3).ToString()).Remove(0, 4));
+            if (instID == null)
+            {
+                //This nasty line of code grabs the logged-in user, grabs their ID, and converts it to an integer for the DB
+                instructorID = Convert.ToInt32((User.Claims.ElementAt(3).ToString()).Remove(0, 4));
+
+                string daysList = "[";
+                for (int i = 0; i < ClassDays.Count; i++)
+                {
+                    daysList += ClassDays[i].ToString();
+                    if(i < ClassDays.Count - 1)
+                    {
+                        daysList += ", ";
+                    }
+                }
+                daysList += "]";
+                Course.ClassDays = daysList;
+            }
+            else
+            {
+                instructorID = instID;
+            }
+            
             Course.InstructorId = instructorID;
 
             if (!ModelState.IsValid || _context.Course == null || Course == null)
@@ -77,11 +87,20 @@ namespace Assignment1v3.Pages.Courses
                 startRecur = Course.StartRecur,
                 endRecur = (Course.EndRecur).AddDays(1),
                 daysOfWeek = Course.ClassDays,
-                userId = this.User.Claims.ElementAt(1).ToString(),
                 courseId = Course.Id,
                 studSchedId = null,
                 url = "/Home/InstructorDashboard",
             };
+
+            if(instID == null)
+            {
+                newevent.userId = this.User.Claims.ElementAt(1).ToString();
+            }
+            else
+            {
+                newevent.userId = instID.ToString();
+            }
+
             _context.Event.Add(newevent);
             await _context.SaveChangesAsync();
 
