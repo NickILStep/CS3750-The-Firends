@@ -46,6 +46,7 @@ namespace Assignment1v3.Pages.Assignments
             }
 
             Assignment.course = ID;
+            Assignment.created_date = DateTime.Now;
 
             _context.Assignment.Add(Assignment);
             await _context.SaveChangesAsync();
