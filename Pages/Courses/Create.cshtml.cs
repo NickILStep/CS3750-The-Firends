@@ -47,28 +47,28 @@ namespace Assignment1v3.Pages.Courses
         {
             int instructorID;
 
-            if (instID == null)
+            if (instID == null || instID == 0)
             {
                 //This nasty line of code grabs the logged-in user, grabs their ID, and converts it to an integer for the DB
                 instructorID = Convert.ToInt32((User.Claims.ElementAt(3).ToString()).Remove(0, 4));
-
-                string daysList = "[";
-                for (int i = 0; i < ClassDays.Count; i++)
-                {
-                    daysList += ClassDays[i].ToString();
-                    if(i < ClassDays.Count - 1)
-                    {
-                        daysList += ", ";
-                    }
-                }
-                daysList += "]";
-                Course.ClassDays = daysList;
             }
             else
             {
                 instructorID = instID;
             }
-            
+
+            string daysList = "[";
+            for (int i = 0; i < ClassDays.Count; i++)
+            {
+                daysList += ClassDays[i].ToString();
+                if (i < ClassDays.Count - 1)
+                {
+                    daysList += ", ";
+                }
+            }
+            daysList += "]";
+            Course.ClassDays = daysList;
+
             Course.InstructorId = instructorID;
 
             if (!ModelState.IsValid || _context.Course == null || Course == null)
@@ -92,7 +92,7 @@ namespace Assignment1v3.Pages.Courses
                 url = "/Home/InstructorDashboard",
             };
 
-            if(instID == null)
+            if(instID == null || instID == 0)
             {
                 newevent.userId = this.User.Claims.ElementAt(1).ToString();
             }
