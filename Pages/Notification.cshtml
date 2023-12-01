@@ -1,0 +1,70 @@
+﻿@page
+@model NotificationModel
+@{
+	ViewData["Title"] = "Notification";
+}
+
+<h1>Notification</h1>
+
+
+
+    <div class="notification-heading">
+        <h4 class="menu-title">Notifications</h4><h4 class="menu-title pull-right"></h4>
+    </div>
+    <li class="divider"></li>
+    <div class="notifications-wrapper">
+        <a class="content" href="#">
+
+            <div id="i" class="notification-item">
+                <h4 class="item-title">Evaluation Deadline 1 · day ago</h4>
+                <p class="item-info">Marketing 101, Video Assignment</p>
+                <a class="bi bi-trash-fill" onclick="remove()"></a>
+
+            </div>
+
+        </a>
+        <a class="content" href="#">
+            <div id="i" class="notification-item">
+                <h4 class="item-title">Evaluation Deadline 1 · day ago</h4>
+                <p class="item-info">Marketing 101, Video Assignment</p>
+                <a class="bi bi-trash-fill" onclick="remove()"></a>
+            </div>
+        </a>
+        <a class="content" href="#">
+            <div id="i" class="notification-item">
+                <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+                <p class="item-info">Marketing 101, Video Assignment</p>
+                <a class="bi bi-trash-fill" onclick="remove()"></a>
+            </div>
+        </a>
+        <a class="content" href="#">
+            <div id="i" class="notification-item">
+                <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+                <p class="item-info">Marketing 101, Video Assignment</p>
+                <a class="bi bi-trash-fill" onclick="remove()"></a>
+            </div>
+
+        </a>
+        <a class="content" href="#">
+            <div id="i" class="notification-item">
+                <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+                <p class="item-info">Marketing 101, Video Assignment</p>
+                <a class="bi bi-trash-fill" onclick="remove()"></a>
+            </div>
+        </a>
+        <a class="content" href="#">
+            <div id="i" class="notification-item">
+                <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+                <p class="item-info">Marketing 101, Video Assignment</p>
+                <a class="bi bi-trash-fill" onclick="remove()"></a>
+            </div>
+        </a>
+        <script>
+            function remove() {
+                const element = document.getElementById("i");
+                element.parentNode.removeChild(element);
+            }
+        </script>
+    </div>
+    <li class="divider"></li>
+    <div class="notification-footer"><h4 class="menu-title">View all<i class="bi bi-arrow-right-circle-fill"></i></h4></div>
