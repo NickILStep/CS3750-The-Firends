@@ -1,0 +1,79 @@
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Assignment1v3.Pages.Account;
+using Assignment1v3.Pages.Courses;
+using Microsoft.EntityFrameworkCore;
+
+namespace TestProject1
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        Assignment1v3Context _context;
+        public UnitTest1()
+        {
+            DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder(options);
+            SqlServerDbContextOptionsExtensions.UseSqlServer(builder, "Server=tcp:the-firends.database.windows.net,1433;Initial Catalog=TheFirends;Persist Security Info=False;User ID=WeTheFirends;Password=#TheFirendsSuperSecurePassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", null);
+            _context = new Assignment1v3Context((DbContextOptions<Assignment1v3Context>)builder.Options);
+        }
+
+        [TestMethod]
+        public async Task NewStudentSignUpTest()
+        {
+            [TestMethod]
+            public async Task NewStudentSignUpTest()
+            {
+                var signUpModel = new Assignment1v3.Pages.Account.CreateUserModel(_context);
+                Assert.IsNotNull(signUpModel);
+
+                #region Creating a New Student User
+                Login newStudent = new Login();
+                newStudent.Name_First = "Student";
+                newStudent.Name_Last = "Test";
+                newStudent.Birth_Date = new DateTime(2000, 1, 1);
+                newStudent.Email_Username = "studentTest@testing.test";
+                newStudent.Password = "TESTING";
+                newStudent.ConfirmPassword = "TESTING";
+                newStudent.Role = "Student";
+                #endregion
+                Assert.IsNotNull(newStudent);
+
+                signUpModel.Credential = new Credential
+                {
+                    Username = newStudent.Email_Username,
+                    Password = newStudent.Password
+                };
+
+                var signUpResult = await signUpModel.OnPostAsync();
+
+                // Assert that the student user was successfully created
+                Assert.IsNotNull(signUpResult);
+                // Cleanup (remove the created student user from the database)
+                await CleanupUserAsync(newStudent);
+
+                // Assert that the user is removed from the database
+                Assert.AreEqual(0, _context.Login.Count(u => u.Email_Username == newStudent.Email_Username));
+            }
+
+            private async Task CleanupUserAsync(Login user)
+            {
+                var createdUser = await _context.Login.SingleOrDefaultAsync(u => u.Email_Username == user.Email_Username);
+                if (createdUser != null)
+                {
+                    _context.Login.Remove(createdUser);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+
+        [TestMethod]
+        public void TestMethod()
+        {
+            //When this test is run, make sure the application is running first to perform the UI test
+            //Click on login and login with valid credentials
+            //Selenium
+        }
+    }
+}

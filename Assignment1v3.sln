@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment1v3", "Assignment
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nick-UnitTest", "..\Nick-UnitTest\Nick-UnitTest.csproj", "{AB365D8A-933E-4CBC-8B06-E7DAB45F4A5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllorynUnitTesting", "..\AllorynUnitTesting\AllorynUnitTesting.csproj", "{44687799-A212-4B05-BDEC-C5B3D2729AB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
