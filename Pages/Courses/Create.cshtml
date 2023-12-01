@@ -65,9 +65,13 @@
 				<span asp-validation-for="Course.Location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @for(DayOfWeek i = DayOfWeek.Sunday; i <= DayOfWeek.Saturday; i++)
-                {
-					<input type="checkbox" name="ClassDays" value="@i" />@i <br />
+                @{
+                    int j = 0;
+                    for(DayOfWeek i = DayOfWeek.Sunday; i <= DayOfWeek.Saturday; i++)
+                    {
+                        <input type="checkbox" name="ClassDays" value="@j" />@i <br />
+                        j++;
+                    }
                 }
             </div>
             <div class="form-group">

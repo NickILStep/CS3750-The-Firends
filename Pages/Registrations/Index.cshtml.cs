@@ -112,12 +112,7 @@ namespace Assignment1v3.Pages.Registrations
                 endTime = course.EndTime,
                 startRecur = course.StartRecur,
                 endRecur = course.EndRecur,
-                //daysOfWeek = course.ClassDays,
-
-                // Temporary until we add recur and daysOfWeek functionality to Course creation
-                daysOfWeek = "[1]",
-                // ----------------------------------------------------------------------------
-
+                daysOfWeek = course.ClassDays,
                 userId = this.User.Claims.ElementAt(1).ToString(),
                 courseId = course.Id,
                 studSchedId = newsched.Id,
