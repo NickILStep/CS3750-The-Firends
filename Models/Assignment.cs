@@ -20,7 +20,7 @@ namespace Assignment1v3.Models
 
         public string uploadType { get; set; }
 
-        [DataType(DataType.Date)]
+        
         public DateTime created_date { get; set; }
     }
 }
