@@ -8,7 +8,7 @@ namespace Assignment1v3.Models
         public string Email_Username { get; set; }
 
         public int CourseNum { get; set; }
-        public int? StudId { get; set; }
+        public int StudId { get; set; }
         public int? CourseId {  get; set; }
     }
 }
