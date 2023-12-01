@@ -18,6 +18,8 @@ namespace Assignment1v3.Models
 
         public DateTime dueDate { get; set; }
 
-        public string uploadType { get; set; }
+        public string uploadType { get; set;}     
+      
+        public DateTime created_date { get; set; }
     }
 }

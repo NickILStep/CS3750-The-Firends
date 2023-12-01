@@ -49,7 +49,7 @@
                     @foreach (var assignment in Model.TO_DO)
                     {
                         <div class="Assignment-card">
-                            <a style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/StudentCourseViewDetails" asp-route-id="@assignment.ID">@assignment.name</a>
+                            <a style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/AssignSub" asp-route-id="@assignment.ID">@assignment.name</a>
                             <p> @assignment.description</p>
 
                             <p>Due: @assignment.dueDate.ToString("MM/dd/yyyy")</p>

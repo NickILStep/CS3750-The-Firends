@@ -28,7 +28,7 @@ namespace Assignment1v3.Pages.Assignments
         public Assignment Assignment { get; set; } = default!;
 
         
-		public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int id)
 		{
             
 
@@ -51,21 +51,21 @@ namespace Assignment1v3.Pages.Assignments
 		}
 		public async Task<IActionResult> OnPostAsync(IFormFile fileUpload)
 		{
-            
+
             var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             System.Diagnostics.Debug.WriteLine(userEmailClaim);
             if (userEmailClaim != null)
             {
-                var userEmail = userEmailClaim.Value;
+                var userEmailClaimValue = userEmailClaim.Value;
 
                 // Find the user by email address
-                var user = await _context.Login
-                    .FirstOrDefaultAsync(u => u.Email_Username == userEmail);
+                var user = await _context.StudSched
+                    .FirstOrDefaultAsync(x => x.Email_Username.Contains(userEmailClaimValue));
                 System.Diagnostics.Debug.WriteLine(user);
 
                 if (user != null)
                 {
-                    var userId = user.Id;
+                    var userId = user.StudId;
                     System.Diagnostics.Debug.WriteLine(userId);
 
                     userID = userId;
@@ -105,6 +105,7 @@ namespace Assignment1v3.Pages.Assignments
                 Submission.UserID = userID;
                 Submission.AssignmentID = Assignment.ID;
                 Submission.submissionType = "File Upload";
+                Submission.modified_date = DateTime.Now;
                 
 
 
@@ -116,6 +117,7 @@ namespace Assignment1v3.Pages.Assignments
                 Submission.UserID = userID;
                 Submission.AssignmentID = Assignment.ID;
                 Submission.submissionType = "Text Box";
+                Submission.modified_date = DateTime.Now;
 
 
                 _context.Submission.Add(Submission);

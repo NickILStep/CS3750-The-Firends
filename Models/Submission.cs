@@ -18,5 +18,8 @@ namespace Assignment1v3.Models
         public string? TextBox { get; set; }
         public bool? Graded { get; set; } = false;
         public Login User { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime modified_date { get; set; }
     }
 }
