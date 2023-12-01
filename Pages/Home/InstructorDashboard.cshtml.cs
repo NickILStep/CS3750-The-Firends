@@ -68,7 +68,7 @@ namespace Assignment1v3.Pages.Home
                             join Assignment in _context.Assignment on Submission.AssignmentID equals Assignment.ID // to access name and number later
                             join Course in _context.Course on Assignment.course equals Course.Id
                             join Login in _context.Login on Submission.UserID equals Login.Id
-                            where //from a course they teach                                   
+                            where Assignment.course == tempcourse.Id &&//from a course they teach                                   
                                   Assignment.startDate <= DateTime.Now &&   //Assignment has started
                                   Submission.Graded == false  //assignment is ungraded
                             select new Submission
