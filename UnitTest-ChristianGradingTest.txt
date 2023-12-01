@@ -1,0 +1,130 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Assignment1v3.Pages.Account;
+using Assignment1v3.Pages.Courses;
+using Microsoft.EntityFrameworkCore;
+
+namespace Christian_Sleve
+{
+    
+
+    [TestClass]
+    public class UnitTest1
+    {
+        Assignment1v3Context _context;
+        IWebHostEnvironment _webHostEnvironment;
+
+        Assignment newAssignment;
+        Submission newSubmission;
+        public UnitTest1()
+        {
+            DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder(options);
+            SqlServerDbContextOptionsExtensions.UseSqlServer(builder, "Server=tcp:the-firends.database.windows.net,1433;Initial Catalog=TheFirends;Persist Security Info=False;User ID=WeTheFirends;Password=#TheFirendsSuperSecurePassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", null);
+            _context = new Assignment1v3Context((DbContextOptions<Assignment1v3Context>)builder.Options);
+        }
+
+        [TestMethod]
+        public async Task InstructorCanCreateAssignmentTest()
+        {
+            string username = "SandyCheeks@gmail.com";
+            string password = "sandycheeks";
+
+            int instructorID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorID);
+            int CourseNum = _context.Course.Where(y => y.InstructorId == instructorID).FirstOrDefault().CourseNumber;
+            int preAssignmentNum = _context.Assignment.Where(y => y.course == CourseNum).Count();
+
+            var CreateAssignment = new Assignment1v3.Pages.Assignments.CreateModel(_context);
+            Assert.IsNotNull(CreateAssignment);
+
+
+            newAssignment = new Assignment();
+            newAssignment.Course = CourseNum;
+            newAssignment.name = "TestAssignment";
+            newAssignment.description = "Test Test Test Description";
+            newAssignment.maxPoints = 100;
+            newAssignment.startDate = DateTime.Now;
+            newAssignment.dueDate = DateTime.Now.AddDays(50);
+            newAssignment.uploadType = "";
+            newAssignment.created_date = DateTime.Now;
+            Assert.IsNotNull(newAssignment);
+
+            CreateAssignment.Assignment = newAssignment;
+            await CreateAssignment.OnPostAsync(CourseNum);
+            newAssignment = await _context.Assignment.Where(y => y.name == newAssignment.name);//used for cleanup
+            int postAssignmentNum = _context.Assignment.Where(y => y.AssignmentID == CourseNum).Count();
+
+            Assert.AreEqual(preAssignmentNum+1, postAssignmentNum);
+        }
+
+        [TestMethod]
+        public async Task StudentCanSubmitAssignmentTest()
+        {
+            string username = "SandyStudent1@gmail.com";
+            string password = "sandycheeks";
+            int StudentID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(StudentID);
+            int preSubmissionNum = _context.Submission.Where(y => y.course == newAssignment.ID).Count();
+
+            var CreateSubmission = new Assignment1v3.Pages.Assignments.AssignSubModel(_context, _webHostEnvironment);
+            Assert.IsNotNull(CreateSubmission);
+            Submission newSubmission = new Submission();
+            newSubmission.AssignmentID = newAssignment.ID;
+            newSubmission.UserID = StudentID;
+            newSubmission.maxPoints = newAssignment.maxPoints;
+            newSubmission.PointsEarned = 0;
+            newSubmission.submissionType = newAssignment.uploadType;
+            newSubmission.Upload = "";
+            newSubmission.TextBox = "This is the test submission.";
+            newSubmission.Graded = false;
+            newSubmission.User = null;
+            newSubmission.modified_date = DateTime.Now;
+            Assert.IsNotNull(newSubmission);
+
+            CreateSubmission.Submission = newSubmission;
+            await CreateSubmission.OnPostAsync(IFormFile fileUpload);
+            newSubmission = await _context.Submission.Where(y => y.TextBox == newSubmission.TextBox);//used for cleanup
+            int postSubmissionNum = _context.Submission.Where(y => y.course == newAssignment.ID).Count();
+            
+            Assert.AreEqual(preSubmissionNum + 1, postSubmissionNum);
+        }
+
+        [TestMethod]
+        public async Task InstructorCanGradeAssignmentTest()
+        {
+            var Grading = new Assignment1v3.Pages.Assignments.GradeModel(_context);
+            await Grading.OnPostAsync(newSubmission.ID);
+            newSubmission = await _context.Submission.Where(y => y.ID == newSubmission.ID);
+            Assert.AreEqual(newSubmission.Graded, true);
+
+        }
+
+        [TestMethod]
+        public async Task CleanupTest()
+        {
+            int preSubmissionNum = _context.Submission.Where(y => y.course == newAssignment.ID).Count();
+            _context.Submission.Remove(newSubmission);
+            await _context.SaveChangesAsync();
+            int postSubmissionNum = _context.Submission.Where(y => y.course == newAssignment.ID).Count();
+
+            Assert.AreEqual(postSubmissionNum + 1, preSubmissionNum);
+
+
+
+            string username = "SandyCheeks@gmail.com";
+            string password = "sandycheeks";
+
+            int instructorID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorID);
+            int CourseNum = _context.Course.Where(y => y.InstructorId == instructorID).FirstOrDefault().CourseNumber;
+            int preAssignmentNum = _context.Assignment.Where(y => y.course == CourseNum).Count();
+            _context.Assignment.Remove(newAssignment);
+            await _context.SaveChangesAsync();
+            int postAssignmentNum = _context.Assignment.Where(y => y.AssignmentID == CourseNum).Count();
+            Assert.AreEqual(postAssignmentNum + 1, preAssignmentNum);
+        }
+    }
+}

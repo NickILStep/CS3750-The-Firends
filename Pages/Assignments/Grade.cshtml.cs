@@ -16,9 +16,10 @@ namespace Assignment1v3.Pages.Assignments
 
         [BindProperty]
         public Submission Submission { get; set; }
+        [BindProperty]
+        public Assignment Assignment { get; set; }
 
-        public string StudentName { get; set; }
-        public string AssignmentName { get; set; }
+        public string StudentName { get; set; }        
 
         public async Task<IActionResult> OnGetAsync(int submissionId)
         {
@@ -34,8 +35,8 @@ namespace Assignment1v3.Pages.Assignments
             StudentName = $"{student.Name_First} {student.Name_Last}";
 
             // Get the assignment name from the Assignment model associated with the submission
-            var assignment = await _context.Assignment.FindAsync(Submission.AssignmentID);
-            AssignmentName = assignment.name;
+            Assignment = await _context.Assignment.FindAsync(Submission.AssignmentID);
+            
 
             return Page();
         }

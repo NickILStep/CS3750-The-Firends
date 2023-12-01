@@ -4,14 +4,14 @@
     ViewData["Title"] = "Grading";
 }
 
-<h2>Assignment Name: @Model.AssignmentName</h2>
+<h2>Assignment Name: @Model.Assignment.name</h2>
 
 <form method="post">
     <div>
         <h3>Student Name: @Model.StudentName</h3>
 
         <p><strong>Max Points:</strong> @Model.Submission.maxPoints</p>
-
+        <p><strong>Assignment Description:</strong>@Model.Assignment.description</p>
         <p><strong>Submission Type:</strong> @Model.Submission.submissionType</p>
         @if (Model.Submission.submissionType == "Text Box")
         {
