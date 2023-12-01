@@ -47,13 +47,13 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">To-Do</h5>
-                <!-- Add your To-Do list here -->
+                <!--To-Do list-->
                 @if (Model.TO_DO.Any())
                 {
                     @foreach (var assignment in Model.TO_DO)
                     {
                         <div class="Assignment-card">
-                            <a style="font-weight: bold; font-size: 25px;">@assignment.Upload</a> <!--Can be turned into a link once grading is set up. asp-page="/Assignments/StudentCourseViewDetails" asp-route-id="@assignment.AssignmentID"-->
+                            <a style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/Grade" asp-route-submissionId="@assignment.ID">@assignment.Upload</a>
                             <p> @assignment.TextBox</p>
                             <p>Points Possible: @assignment.maxPoints</p>
                             <p>Submission Type: @assignment.submissionType</p>
