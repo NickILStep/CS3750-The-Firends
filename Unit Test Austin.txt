@@ -1,0 +1,42 @@
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Assignment1v3.Pages.Assignments;
+using Assignment1v3.Pages.Courses;
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+
+namespace Unit_Test
+{
+    [TestClass]
+    public class UnitTest1
+    {
+
+        Assignment1v3Context context;
+        
+        public UnitTest1()
+        {
+            DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder(options);
+            SqlServerDbContextOptionsExtensions.UseSqlServer(builder, "Server=tcp:the-firends.database.windows.net,1433;Initial Catalog=TheFirends;Persist Security Info=False;User ID=WeTheFirends;Password=#TheFirendsSuperSecurePassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", null);
+            var _context = new Assignment1v3Context((DbContextOptions<Assignment1v3Context>)builder.Options);
+
+            context = _context;
+            Assert.IsNotNull(_context);
+
+            
+        }
+        [TestMethod]
+        public async Task createcoursetables()
+        {
+
+            int courseid = 3;
+
+            var createtable = new Assignment1v3.Pages.Assignments.StudentCourseViewModel(context);
+            await createtable.OnGetAsync(3);
+            Assert.IsNotNull(createtable.Assignment);
+
+        }
+    }
+}
