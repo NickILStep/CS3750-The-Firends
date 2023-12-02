@@ -1,0 +1,109 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Assignment1v3.Pages.Account;
+using Assignment1v3.Pages.Courses;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+
+namespace Christian_Sleve
+{
+
+
+    [TestClass]
+    public class UnitTest1
+    {
+        Assignment1v3Context _context;
+        IWebHostEnvironment _webHostEnvironment;
+
+
+        public UnitTest1()
+        {
+            DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder(options);
+            SqlServerDbContextOptionsExtensions.UseSqlServer(builder, "Server=tcp:the-firends.database.windows.net,1433;Initial Catalog=TheFirends;Persist Security Info=False;User ID=WeTheFirends;Password=#TheFirendsSuperSecurePassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", null);
+            _context = new Assignment1v3Context((DbContextOptions<Assignment1v3Context>)builder.Options);
+        }
+
+        [TestMethod]
+        public async Task CanCreateInstructorTest()
+        {
+            int preInstructorLoginNum = _context.Login.Where(y => y.Role == "Instructor").Count();
+            var CreateLogin = new Assignment1v3.Pages.Logins.CreateModel(_context);
+            Assert.IsNotNull(CreateLogin);
+
+            Login newLogin = new Login();
+            newLogin.Name_First = "ChristianTest";
+            newLogin.Name_Last = "SleveTest";
+            newLogin.Email_Username = "092834024570487209548@gmail.com";
+            newLogin.Password = "dsflkfjDLSFKJ";
+            newLogin.ConfirmPassword = "dsflkfjDLSFKJ";
+            newLogin.Birth_Date = DateTime.Now.AddYears(-20);
+            newLogin.Role = "Instructor";
+            Assert.IsNotNull(newLogin);
+
+            CreateLogin.Login = newLogin;
+            await CreateLogin.OnPostAsync();
+            int postInstructorLoginNum = _context.Login.Where(y => y.Role == "Instructor").Count();
+
+            Assert.AreEqual(preInstructorLoginNum + 1, postInstructorLoginNum);
+        }
+
+        [TestMethod]
+        public async Task CanCreateStudentTest()
+        {
+            int preStudentLoginNum = _context.Login.Where(y => y.Role == "Student").Count();
+            var CreateLogin = new Assignment1v3.Pages.Logins.CreateModel(_context);
+            Assert.IsNotNull(CreateLogin);
+
+            Login newLogin = new Login();
+            newLogin.Name_First = "ChristianTest";
+            newLogin.Name_Last = "SleveTest";
+            newLogin.Email_Username = "0928340232131@gmail.com";
+            newLogin.Password = "dsflkfjDLSFKJ";
+            newLogin.ConfirmPassword = "dsflkfjDLSFKJ";
+            newLogin.Birth_Date = DateTime.Now.AddYears(-20);
+            newLogin.Role = "Student";
+            Assert.IsNotNull(newLogin);
+
+            CreateLogin.Login = newLogin;
+            await CreateLogin.OnPostAsync();
+            int postStudentLoginNum = _context.Login.Where(y => y.Role == "Student").Count();
+
+            Assert.AreEqual(preStudentLoginNum + 1, postStudentLoginNum);
+        }
+
+        [TestMethod]
+        public async Task CleanupTest()
+        {
+
+
+            int preInstructorLoginNum = _context.Login.Where(y => y.Role == "Instructor").Count();
+            Login newInstructor = (Login)_context.Login.Where(y => y.Email_Username == "092834024570487209548@gmail.com").FirstOrDefault();
+            Assert.IsNotNull(newInstructor);
+            _context.Login.Remove(newInstructor);
+            await _context.SaveChangesAsync();
+            int postInstructorLoginNum = _context.Login.Where(y => y.Role == "Instructor").Count();
+
+            Assert.AreEqual(postInstructorLoginNum + 1, preInstructorLoginNum);
+
+
+
+
+
+            int preStudentLoginNum = _context.Login.Where(y => y.Role == "Student").Count();
+            Login newStudent = (Login)_context.Login.Where(y => y.Email_Username == "0928340232131@gmail.com").FirstOrDefault();
+            Assert.IsNotNull(newStudent);
+            _context.Login.Remove(newStudent);
+            await _context.SaveChangesAsync();
+            int postStudentLoginNum = _context.Login.Where(y => y.Role == "Student").Count();
+
+            Assert.AreEqual(postStudentLoginNum + 1, preStudentLoginNum);
+
+
+
+        }
+    }
+}
