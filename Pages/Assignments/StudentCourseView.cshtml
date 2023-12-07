@@ -70,3 +70,73 @@
         }
     </tbody>
 </table>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function () {
+            var ctx = document.getElementById('pieChart').getContext('2d');
+            var averageGrade = @Model.AveragePercent; // Pass the average grade percent from the Model
+
+            var currentStudentGrade = @Model.YourPercent;
+
+            var difference = 100 - averageGrade; // Calculate the difference to 100% from the average grade
+
+            var data = {
+                labels: ['Your Percent', 'Average Percent More', 'Difference to 100%'],
+                datasets: [{
+                    data: [averageGrade, currentStudentGrade, difference],
+                    backgroundColor: [
+                        'rgba(255, 54, 9, 0.6)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 26, 86, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    // Additional options and styling for the chart
+                }
+            });
+
+            // Check if the current student's grade is higher or lower than the average
+            if (currentStudentGrade > averageGrade) {
+                var differenceTo100 = 100 - currentStudentGrade
+                myPieChart.data.datasets[0].data[2] = differenceTo100;
+
+                var differenceToCurrent = currentStudentGrade - averageGrade;
+                myPieChart.data.datasets[0].backgroundColor[0] = 'rgba(63, 214, 88, 0.2)';
+                myPieChart.data.datasets[0].borderColor[0] = 'rgba(63, 214, 88, 1)';
+                myPieChart.data.datasets[0].backgroundColor[1] = 'rgba(63, 214, 88, 0.5)';
+                myPieChart.data.datasets[0].borderColor[1] = 'rgba(63, 214, 88, 1)';
+
+                myPieChart.data.labels[0] = 'Average Percent';
+                myPieChart.data.labels[1] = 'Your Percent Better';
+                // Adjust the wedge 'b' (Difference to 100%) by subtracting the difference
+
+                myPieChart.data.datasets[0].data[1] = differenceToCurrent;
+            } else if (currentStudentGrade < averageGrade) {
+                var differenceFromAverage = averageGrade - currentStudentGrade;
+                // Adjust the wedge 'a' (Average Student Grade) by subtracting the difference
+                myPieChart.data.datasets[0].data[1] = differenceFromAverage;
+                myPieChart.data.datasets[0].data[0] -= differenceFromAverage;
+            }
+
+            // Update the chart
+            myPieChart.update();
+        });
+    </script>
+</head>
+
+<body>
+    <canvas id="pieChart" width="100" height="100"></canvas>
+</body>
