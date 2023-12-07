@@ -28,7 +28,8 @@ namespace Assignment1v3.Pages.Assignments
         
         public double YourPercent { get; set; }
         public double AveragePercent { get; set; }
-
+        public decimal Grade { get; set; }
+        public string LetterGrade {  get; set; }
 
         public async Task<IActionResult> OnGetAsync(int courseId)
         {
@@ -79,8 +80,6 @@ namespace Assignment1v3.Pages.Assignments
 
             YourPercent = (YourPercent / maxPointTotal) * 100;
 
-
-
             maxPointTotal = 0;
             var students = await _context.StudSched.Where(s => s.CourseId == courseId).ToListAsync();
             foreach (var student in students)
@@ -103,9 +102,67 @@ namespace Assignment1v3.Pages.Assignments
 
             AveragePercent = (AveragePercent / maxPointTotal) * 100;
 
-
+            if(YourPercent > 0)
+            {
+                decimal temp = (Convert.ToDecimal(YourPercent));
+                Grade = Math.Round(temp, 2);
+                SetLetterGrade();
+            }
+            
 
             return Page();
+        }
+
+        public void SetLetterGrade()
+        {
+            if(Grade >= 94)
+            {
+                LetterGrade = "A";
+            }
+            else if (Grade > 90 && Grade < 94)
+            {
+                LetterGrade = "A-";
+            }
+            else if (Grade > 87 && Grade < 90)
+            {
+                LetterGrade = "B+";
+            }
+            else if (Grade > 84 && Grade < 87)
+            {
+                LetterGrade = "B";
+            }
+            else if (Grade > 80 && Grade < 84)
+            {
+                LetterGrade = "B-";
+            }
+            else if (Grade > 77 && Grade < 80)
+            {
+                LetterGrade = "C+";
+            }
+            else if (Grade > 74 && Grade < 77)
+            {
+                LetterGrade = "C";
+            }
+            else if (Grade > 70 && Grade < 74)
+            {
+                LetterGrade = "C-";
+            }
+            else if (Grade > 67 && Grade < 70)
+            {
+                LetterGrade = "D+";
+            }
+            else if (Grade > 64 && Grade < 67)
+            {
+                LetterGrade = "D";
+            }
+            else if (Grade > 60 && Grade < 64)
+            {
+                LetterGrade = "D-";
+            }
+            else
+            {
+                LetterGrade = "F";
+            }
         }
     }
 }
