@@ -91,16 +91,21 @@ namespace Assignment1v3.Pages.Registrations
 
             Course = await coursesIQ.AsNoTracking().ToListAsync();
         }
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync(StudSched sched)
         {
-            /// = Request.Cookies["AuthCookie"];
-            var newsched = new StudSched
+            var newsched = new StudSched();
+            if (sched.StudId == null || sched.StudId == 0)
             {
-                Email_Username = this.User.Claims.ElementAt(1).ToString(),
-                CourseNum = course.CourseNumber,
-                StudId = int.Parse(this.User.Claims.ElementAt(3).Value),
-                CourseId = course.Id
-            };
+                /// = Request.Cookies["AuthCookie"];
+                newsched.Email_Username = this.User.Claims.ElementAt(1).ToString();
+                newsched.CourseNum = course.CourseNumber;
+                newsched.StudId = int.Parse(this.User.Claims.ElementAt(3).Value);
+                newsched.CourseId = course.Id;
+            }
+            else
+            {
+                newsched = sched;
+            }
             _context.StudSched.Add(newsched);
 
             await _context.SaveChangesAsync();
@@ -113,11 +118,18 @@ namespace Assignment1v3.Pages.Registrations
                 startRecur = course.StartRecur,
                 endRecur = course.EndRecur,
                 daysOfWeek = course.ClassDays,
-                userId = this.User.Claims.ElementAt(1).ToString(),
                 courseId = course.Id,
                 studSchedId = newsched.Id,
                 url = "/Home/StudentDashboard",
             };
+            if(sched.StudId == null || sched.StudId == 0)
+            {
+                newevent.userId = this.User.Claims.ElementAt(1).ToString();
+            }
+            else
+            {
+                newevent.userId = sched.StudId.ToString();
+            }
             _context.Event.Add(newevent);
 
             await _context.SaveChangesAsync();
