@@ -24,6 +24,7 @@ namespace Assignment1v3.Pages.Assignments
         public IList<Assignment> Assignments { get; set; } = new List<Assignment>();
         public Course SelectedCourse { get; set; }
         public List<Assignment> Assignment { get; private set; }
+        public Dictionary<int, int?> HighestGrades { get; set; } = new Dictionary<int, int?>();
 
         public async Task<IActionResult> OnGetAsync(int courseId)
         {
@@ -35,6 +36,9 @@ namespace Assignment1v3.Pages.Assignments
                 Assignment = await _context.Assignment.ToListAsync();
                 System.Diagnostics.Debug.WriteLine(Assignment);
             }
+
+            int StudentID = int.Parse(this.User.Claims.ElementAt(3).Value);
+
 
             SelectedCourse = await _context.Course
                 .Where(c => c.Id == courseId)
@@ -52,6 +56,14 @@ namespace Assignment1v3.Pages.Assignments
                 .ToListAsync();
             System.Diagnostics.Debug.WriteLine(Assignment);
 
+            foreach (var assignment in Assignment)
+            {
+                var highestGrade = await _context.Submission
+                    .Where(s => s.AssignmentID == assignment.ID && s.UserID == StudentID)
+                    .MaxAsync(s => (int?)s.PointsEarned);
+
+                HighestGrades[assignment.ID] = highestGrade;
+            }
 
             return Page();
         }
