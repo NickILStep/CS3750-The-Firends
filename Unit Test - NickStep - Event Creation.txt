@@ -1,0 +1,176 @@
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Assignment1v3.Pages.Account;
+using Assignment1v3.Pages.Courses;
+using Microsoft.EntityFrameworkCore;
+
+namespace Nick_UnitTest
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        Assignment1v3Context _context;
+        public UnitTest1()
+        {
+            DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder(options);
+            SqlServerDbContextOptionsExtensions.UseSqlServer(builder, "Server=tcp:the-firends.database.windows.net,1433;Initial Catalog=TheFirends;Persist Security Info=False;User ID=WeTheFirends;Password=#TheFirendsSuperSecurePassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", null);
+            _context = new Assignment1v3Context((DbContextOptions<Assignment1v3Context>)builder.Options);
+        }
+
+        [TestMethod]
+        public async Task EventIsCreatedOnCourseCreation()
+        {
+            string username = "instructorTest@testing.test";
+            string password = "TESTING";
+
+            int instructorId = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorId);
+            int preEventNum = _context.Event.Count();
+
+            var createCourse = new Assignment1v3.Pages.Courses.CreateModel(_context);
+            Assert.IsNotNull(createCourse);
+
+            #region Create new Course
+            Course newCourse = new Course();
+            newCourse.ClassDays = "[0]";
+            newCourse.CreditHours = 0;
+            newCourse.CourseName = "Nick-UnitTest";
+            newCourse.CourseNumber = 69;
+            newCourse.Description = "Event Creation Unit Testing";
+            newCourse.Location = "Calendar";
+            newCourse.School = new Schools().strings[0];
+            newCourse.StartRecur = DateTime.Now;
+            newCourse.EndRecur = DateTime.Now.AddDays(28);
+            newCourse.StartTime = DateTime.Now;
+            newCourse.EndTime = DateTime.Now.AddHours(2.5);
+            #endregion
+            Assert.IsNotNull(newCourse);
+
+            createCourse.Course = newCourse;
+            await createCourse.OnPostAsync(instructorId);
+
+            int postEventNum = _context.Event.Count();
+
+            Assert.AreEqual(1, postEventNum - preEventNum);
+
+            _context.Course.Remove(newCourse);
+            await _context.SaveChangesAsync();
+        }
+
+        [TestMethod]
+        public async Task EventIsCreatedOnCourseRegistration()
+        {
+            string username = "studentTest@testing.test";
+            string password = "TESTING";
+
+            int studentId = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(studentId);
+
+            var createSched = new Assignment1v3.Pages.Registrations.IndexModel(_context);
+            Assert.IsNotNull(createSched);
+
+            #region Create new Course
+            string instUsername = "instructorTest@testing.test";
+            string instPassword = "TESTING";
+
+            int instructorId = _context.Login.Where(x => x.Email_Username == instUsername && x.Password == instPassword).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorId);
+
+            var createCourse = new Assignment1v3.Pages.Courses.CreateModel(_context);
+            Assert.IsNotNull(createCourse);
+
+            Course newCourse = new Course();
+            newCourse.ClassDays = "[0]";
+            newCourse.CreditHours = 0;
+            newCourse.CourseName = "Nick-UnitTest";
+            newCourse.CourseNumber = 69;
+            newCourse.Description = "Event Creation Unit Testing";
+            newCourse.Location = "Calendar";
+            newCourse.School = new Schools().strings[0];
+            newCourse.StartRecur = DateTime.Now;
+            newCourse.EndRecur = DateTime.Now.AddDays(28);
+            newCourse.StartTime = DateTime.Now;
+            newCourse.EndTime = DateTime.Now.AddHours(2.5);
+            Assert.IsNotNull(newCourse);
+            await _context.SaveChangesAsync();
+
+            createCourse.Course = newCourse;
+            await createCourse.OnPostAsync(instructorId);
+            #endregion
+
+            int preEventNum = _context.Event.Count();
+
+            #region Create new StudSched
+            StudSched newSched = new StudSched();
+            newSched.CourseId = newCourse.Id;
+            newSched.Email_Username = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress: " + username;
+            newSched.StudId = studentId;
+            newSched.CourseNum = newCourse.CourseNumber;
+            #endregion
+            Assert.IsNotNull(newSched);
+
+            createSched.Stud = newSched;
+            createSched.course = newCourse;
+            await createSched.OnPostAsync(newSched);
+
+            int postEventNum = _context.Event.Count();
+
+            Assert.AreEqual(1, postEventNum - preEventNum);
+
+            _context.Course.Remove(newCourse);
+            await _context.SaveChangesAsync();
+
+            _context.StudSched.Remove(newSched);
+            await _context.SaveChangesAsync();
+        }
+
+        [TestMethod]
+        public async Task EventIsDeletedOnCourseDeletion()
+        {
+            #region Create new Course
+            string instUsername = "instructorTest@testing.test";
+            string instPassword = "TESTING";
+
+            int instructorId = _context.Login.Where(x => x.Email_Username == instUsername && x.Password == instPassword).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorId);
+
+            var createCourse = new Assignment1v3.Pages.Courses.CreateModel(_context);
+            Assert.IsNotNull(createCourse);
+
+            Course newCourse = new Course();
+            newCourse.ClassDays = "[0]";
+            newCourse.CreditHours = 0;
+            newCourse.CourseName = "Nick-UnitTest";
+            newCourse.CourseNumber = 69;
+            newCourse.Description = "Event Creation Unit Testing";
+            newCourse.Location = "Calendar";
+            newCourse.School = new Schools().strings[0];
+            newCourse.StartRecur = DateTime.Now;
+            newCourse.EndRecur = DateTime.Now.AddDays(28);
+            newCourse.StartTime = DateTime.Now;
+            newCourse.EndTime = DateTime.Now.AddHours(2.5);
+            Assert.IsNotNull(newCourse);
+            await _context.SaveChangesAsync();
+
+            createCourse.Course = newCourse;
+            await createCourse.OnPostAsync(instructorId);
+            #endregion
+
+            int preEventNum = _context.Event.Count();
+
+            _context.Course.Remove(newCourse);
+            await _context.SaveChangesAsync();
+
+            int postEventNum = _context.Event.Count();
+
+            Assert.IsTrue(preEventNum > postEventNum);
+        }
+
+        [TestMethod]
+        public void TestMethod()
+        {
+
+        }
+    }
+}
