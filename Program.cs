@@ -8,8 +8,10 @@ using Stripe;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddRazorPages();
-StripeConfiguration.ApiKey = "sk_test_51Ny4RlB0mWSJyvtEF6kjAFRYirP53gUXjltsjcI2iMjbQmedAr1zFvqBa9TdFDQ7crej0BI1dEK5r5l21k64Jf1L00G9IYoBmH";
+builder.Services.AddControllers();
+
 
 
 builder.Services.AddDbContext<Assignment1v3Context>(options =>
@@ -43,11 +45,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints => {  endpoints.MapRazorPages(); });
+app.UseEndpoints(endpoints => {  endpoints.MapRazorPages();
+    endpoints.MapControllers();
+});
 
 app.MapRazorPages();
 
