@@ -10,14 +10,16 @@ using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace Assignment1v3.Pages.Registrations
 {
     [Authorize(policy: "MustBeStudent")]
     public class IndexModel : PageModel
     {
-        private readonly Assignment1v3.Data.Assignment1v3Context _context;
-        public IndexModel(Assignment1v3.Data.Assignment1v3Context context)
+        private readonly Assignment1v3Context _context;
+
+        public IndexModel(Assignment1v3Context context)
         {
             _context = context;
         }
@@ -38,9 +40,8 @@ namespace Assignment1v3.Pages.Registrations
         public StudSched Stud { get; set; } = default!;
         [BindProperty]
         public Course course { get; set; }
-  
 
-        public async Task OnGetAsync(string sortOrder,  string searchString, string deptOrder)
+        public async Task OnGetAsync(string sortOrder, string searchString, string deptOrder)
         {
             Schools list = new Schools();
             Items = list.strings.Select(a =>
@@ -50,53 +51,66 @@ namespace Assignment1v3.Pages.Registrations
                                               Text = a
                                           }).ToList();
 
-            // using System;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
             DeptSort = deptOrder;
 
             CurrentFilter = searchString;
-            studScheds = await _context.StudSched.ToListAsync();
 
-            IQueryable<Course> coursesIQ = from s in _context.Course
-                                             select s;
-            if (!String.IsNullOrEmpty(searchString) || !String.IsNullOrEmpty(deptOrder))
+            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+
+            if (userEmailClaim != null)
             {
-                if(searchString == null)
-                {
-                    coursesIQ = coursesIQ.Where(c => c.School.Contains(deptOrder));
-                }
-                else
-                {
-                    coursesIQ = coursesIQ.Where(s => s.CourseName.Contains(searchString)
-                                       || s.Description.Contains(searchString));
-                }
-            }
+                var userEmailClaimValue = userEmailClaim.Value;
 
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    coursesIQ = coursesIQ.OrderByDescending(s => s.CourseName);
-                    break;
-                case "Date":
-                    coursesIQ = coursesIQ.OrderBy(s => s.StartTime);
-                    break;
-                case "date_desc":
-                    coursesIQ = coursesIQ.OrderByDescending(s => s.StartTime);
-                    break;
-                default:
-                    coursesIQ = coursesIQ.OrderBy(s => s.CourseNumber);
-                    break;
-            }
+                var userCourse = await _context.UserCourse
+                    .Include(uc => uc.Course)
+                    .Where(uc => uc.Email_Username == userEmailClaimValue)
+                    .ToListAsync();
 
-            Course = await coursesIQ.AsNoTracking().ToListAsync();
+                studScheds = userCourse.ToList();
+
+                IQueryable<Course> coursesIQ = from s in _context.Course
+                                               select s;
+                if (!String.IsNullOrEmpty(searchString) || !String.IsNullOrEmpty(deptOrder))
+                {
+                    if (searchString == null)
+                    {
+                        coursesIQ = coursesIQ.Where(c => c.School.Contains(deptOrder));
+                    }
+                    else
+                    {
+                        coursesIQ = coursesIQ.Where(s => s.CourseName.Contains(searchString)
+                                           || s.Description.Contains(searchString));
+                    }
+                }
+
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        coursesIQ = coursesIQ.OrderByDescending(s => s.CourseName);
+                        break;
+                    case "Date":
+                        coursesIQ = coursesIQ.OrderBy(s => s.StartTime);
+                        break;
+                    case "date_desc":
+                        coursesIQ = coursesIQ.OrderByDescending(s => s.StartTime);
+                        break;
+                    default:
+                        coursesIQ = coursesIQ.OrderBy(s => s.CourseNumber);
+                        break;
+                }
+
+                Course = await coursesIQ.AsNoTracking().ToListAsync();
+            }
         }
+
         public async Task<IActionResult> OnPostAsync(StudSched sched)
         {
             var newsched = new StudSched();
+
             if (sched.StudId == null || sched.StudId == 0)
             {
-                /// = Request.Cookies["AuthCookie"];
                 newsched.Email_Username = this.User.Claims.ElementAt(1).ToString();
                 newsched.CourseNum = course.CourseNumber;
                 newsched.StudId = int.Parse(this.User.Claims.ElementAt(3).Value);
@@ -106,6 +120,7 @@ namespace Assignment1v3.Pages.Registrations
             {
                 newsched = sched;
             }
+
             _context.StudSched.Add(newsched);
 
             await _context.SaveChangesAsync();
@@ -122,7 +137,7 @@ namespace Assignment1v3.Pages.Registrations
                 studSchedId = newsched.Id,
                 url = "/Home/StudentDashboard",
             };
-            if(sched.StudId == null || sched.StudId == 0)
+            if (sched.StudId == null || sched.StudId == 0)
             {
                 newevent.userId = this.User.Claims.ElementAt(1).ToString();
             }
@@ -135,6 +150,5 @@ namespace Assignment1v3.Pages.Registrations
             await _context.SaveChangesAsync();
             return RedirectToPage("/Registrations/Index");
         }
-
     }
 }
