@@ -24,6 +24,7 @@ namespace Assignment1v3.Pages
         public List<Submission> add { get; set; } = default!;
         
         public List<Assignment> Assignment { get; set; } = default!;
+        
         public async Task<IActionResult> OnGetAsync()
         {
             Submission = new List<Submission>();
@@ -51,7 +52,7 @@ namespace Assignment1v3.Pages
                         count2++;
                     }
 
-                    
+                  
                 }
                 var Submissionlist = _context.Submission
                .Where(a => a.UserID == studentid && a.Graded == true && a.modified_date <= DateTime.Now && a.modified_date >= DateTime.Now.AddDays(-1)).ToList();

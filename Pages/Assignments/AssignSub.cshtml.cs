@@ -1,10 +1,15 @@
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Assignment1v3.Pages.Assignments
 {
@@ -126,7 +131,7 @@ namespace Assignment1v3.Pages.Assignments
                 
             }
             await _context.SaveChangesAsync();
-            return Page();
+            return RedirectToPage("./StudentCourseViewDetails", new { id = Submission.AssignmentID.ToString()}); 
 
         }
 	}

@@ -17,7 +17,7 @@
     {
         <li class="divider"></li>
         <div class="notifications-wrapper">
-            <a class="content" style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/StudentCourseViewDetails" asp-route-id="@assignment.ID">
+            <a class="content" style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/StudentCourseView" asp-route-courseId="@assignment.course">
                 <div id="i" class="notification-item">
                     <h4 class="item-title">@assignment.name</h4>
                     <p class="item-info">@assignment.description</p>
