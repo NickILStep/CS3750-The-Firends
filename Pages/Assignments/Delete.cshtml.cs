@@ -23,6 +23,9 @@ namespace Assignment1v3.Pages.Assignments
 
         [BindProperty]
       public Assignment Assignment { get; set; } = default!;
+        [BindProperty]
+        public string courseId { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +42,7 @@ namespace Assignment1v3.Pages.Assignments
             }
             else 
             {
+                courseId = assignment.course.ToString();
                 Assignment = assignment;
             }
             return Page();
@@ -51,7 +55,7 @@ namespace Assignment1v3.Pages.Assignments
                 return NotFound();
             }
             var assignment = await _context.Assignment.FindAsync(id);
-            string courseId = Assignment.course.ToString();
+            courseId = assignment.course.ToString();
 
             if (assignment != null)
             {                
@@ -60,7 +64,7 @@ namespace Assignment1v3.Pages.Assignments
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./InstructorCourseView", new { CourseId = courseId });
+            return RedirectToPage("./InstructorCourseView", new { CourseId= courseId });
         }
     }
 }
