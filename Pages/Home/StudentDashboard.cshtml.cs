@@ -26,11 +26,36 @@ namespace Assignment1v3.Pages.Home
 
         public List<Course> Course { get; set; }
         public List<Assignment> TO_DO { get; set; }
-        public List<UserCourse> UserCourses { get; set; }
-        
+
 
         public async Task OnGetAsync()
         {
+            /* Old Code
+            Course = new List<Course>();
+            TO_DO = new List<Assignment>();
+
+            // Get the currently authenticated user's email address claim
+            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+            //System.Diagnostics.Debug.WriteLine(user);
+            if (userEmailClaim != null)
+            {
+                var userEmailClaimValue = userEmailClaim.Value;
+                var studentCourses = await _context.StudSched.Where(x => x.Email_Username.Contains(userEmailClaimValue)).ToListAsync();
+                //var studentCourses = await _context.StudSched.Where(x => x.ide.Contains(userEmailClaimValue)).ToListAsync();
+                //System.Diagnostics.Debug.WriteLine(studentCourses);
+
+                foreach (var tempcourse in studentCourses)
+                {
+                    var matchingCourses = _context.Course.Where(x => x.CourseNumber == tempcourse.CourseNum).ToList();
+
+                    if (matchingCourses.Count > 0)
+                    {
+                        Course myCourse = matchingCourses[0];
+                        Course.Add(myCourse);
+                    }
+
+                }
+            */
             Course = new List<Course>();
             TO_DO = new List<Assignment>();
 
@@ -40,43 +65,34 @@ namespace Assignment1v3.Pages.Home
             {
                 var userEmailClaimValue = userEmailClaim.Value;
 
-                // Query the UserCourse table to get the user's enrolled courses
-                var studentCourses = await _context.UserCourse
-                    .Include(uc => uc.Course)
-                    .Where(uc => uc.Email_Username == userEmailClaimValue)
+                // Eager loading to include related Course entities
+                var studentCourses = await _context.StudSched
+                    .Where(x => x.Email_Username.Contains(userEmailClaimValue))
+                    .Include(s => s.CourseId) // Eager loading
                     .ToListAsync();
 
-                // Populate the Course property with the retrieved courses
-                Course = studentCourses.Select(uc => uc.Course).ToList();
-
-
-                /* old code
-                // Get the currently authenticated user's email address claim
-                var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-                //System.Diagnostics.Debug.WriteLine(user);
-                if (userEmailClaim != null)
+                foreach (var tempcourse in studentCourses)
                 {
-                    var userEmailClaimValue = userEmailClaim.Value;
-                    var studentCourses = await _context.StudSched.Where(x => x.Email_Username.Contains(userEmailClaimValue)).ToListAsync();
-                    //var studentCourses = await _context.StudSched.Where(x => x.ide.Contains(userEmailClaimValue)).ToListAsync();
-                    //System.Diagnostics.Debug.WriteLine(studentCourses);
+                    // Access the CourseId without additional queries
+                    int? courseId = tempcourse.CourseId;
 
-                    foreach (var tempcourse in studentCourses)
+                    if (courseId.HasValue)
                     {
-                        var matchingCourses = _context.Course.Where(x => x.CourseNumber == tempcourse.CourseNum).ToList();
+                        // Fetch the associated Course directly using the CourseId
+                        var matchingCourse = _context.Course.Find(courseId);
 
-                        if (matchingCourses.Count > 0)
+                        if (matchingCourse != null)
                         {
-                            Course myCourse = matchingCourses[0];
-                            Course.Add(myCourse);
+                            // Add the Course to your list
+                            Course.Add(matchingCourse);
                         }
-
                     }
-                */
+                }
+
 
                 foreach (var tempcourse in studentCourses)//TODO section
                 {
-                   
+
 
                     var matchingAssignments = await (
                         from assignment in _context.Assignment
@@ -98,15 +114,14 @@ namespace Assignment1v3.Pages.Home
 
                 }
                 TO_DO = TO_DO.OrderBy(x => x.dueDate).ToList();
-                
+
 
 
 
                 // System.Diagnostics.Debug.WriteLine(Course);
-            
 
             }
-            
+
         }
 
     }
