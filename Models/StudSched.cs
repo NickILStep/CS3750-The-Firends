@@ -11,7 +11,6 @@ namespace Assignment1v3.Models
         public int StudId { get; set; }
         public int? CourseId {  get; set; }
 
-      //  public UserCourse UserCourse { get; set; }
 
     }
 }
