@@ -35,7 +35,8 @@ namespace Assignment1v3.Pages.Account
             var UNameList = _context.Login.Where(x => x.Email_Username == Credential.Username).ToList();
             if (UNameList.Count <= 0)
             {
-                return NotFound();
+                
+                return RedirectToPage(this.Page);
             }
             else
             {
