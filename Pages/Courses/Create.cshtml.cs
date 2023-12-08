@@ -104,7 +104,7 @@ namespace Assignment1v3.Pages.Courses
             _context.Event.Add(newevent);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Home/InstructorDashboard");
         }
     }
 }
