@@ -51,7 +51,7 @@ namespace Assignment1v3.Pages.Assignments
             _context.Assignment.Add(Assignment);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorCourseView", new { CourseId = Assignment.course.ToString() });
         }
     }
 }
