@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Web;
+
 using Stripe;
 using Stripe.Checkout;
 
@@ -18,6 +20,10 @@ public class StripeOptions
 
 namespace Assignment1v3.Pages.Payment
 {
+
+    
+
+
     public class PaymentModel : PageModel
     {
         public void OnGet()
@@ -56,9 +62,13 @@ namespace Assignment1v3.Pages.Payment
     [ApiController]
     public class CheckoutApiController : Controller
     {
+        
+
+
         [HttpPost]
         public ActionResult Create()
         {
+            var url = Request.Scheme + "://" + Request.Host.Value;
             var options = new SessionCreateOptions
             {
                 LineItems = new List<SessionLineItemOptions>
@@ -67,59 +77,30 @@ namespace Assignment1v3.Pages.Payment
           {
             PriceData = new SessionLineItemPriceDataOptions
             {
-              UnitAmount = 2000, // Account balance
+              UnitAmount = 346700, // Account balance
               Currency = "usd",
               ProductData = new SessionLineItemPriceDataProductDataOptions
               {
-                Name = "T-shirt", // First and last name of student + Tuition payment
+                Name = "Tuition Payment", // First and last name of student + Tuition payment
               },
             },
             Quantity = 1,
           },
-        },
+        },      
                 Mode = "payment",
-                SuccessUrl = "http://localhost:4242/success",
-                CancelUrl = "http://localhost:4242/cancel",
+                SuccessUrl = url + "/Payment/Success",
+                CancelUrl = url + "/Payment/Cancel",
             };
 
             var service = new SessionService();
             Session session = service.Create(options);
 
-            Response.Headers.Add("Location", session.Url);
-            return new StatusCodeResult(303);
-        }
-
-        [HttpPost("create-checkout-session")]
-        public ActionResult CreateCheckoutSession()
-        {
-            var options = new SessionCreateOptions
-            {
-                LineItems = new List<SessionLineItemOptions>
-        {
-          new SessionLineItemOptions
-          {
-            PriceData = new SessionLineItemPriceDataOptions
-            {
-              UnitAmount = 2000,
-              Currency = "usd",
-              ProductData = new SessionLineItemPriceDataProductDataOptions
-              {
-                Name = "T-shirt",
-              },
-            },
-            Quantity = 1,
-          },
-        },
-                Mode = "payment",
-                SuccessUrl = "http://localhost:4242/success",
-                CancelUrl = "http://localhost:4242/cancel",
-            };
-
-            var service = new SessionService();
-            Session session = service.Create(options);
+            TempData["Session"] = session.Id;
 
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
         }
+
+        
     }
 }
