@@ -68,7 +68,7 @@ namespace Assignment1v3.Pages.Home
                 // Eager loading to include related Course entities
                 var studentCourses = await _context.StudSched
                     .Where(x => x.Email_Username.Contains(userEmailClaimValue))
-                    .Include(s => s.CourseId) // Eager loading
+                    //.Include(s => s.CourseId) // Eager loading
                     .ToListAsync();
 
                 foreach (var tempcourse in studentCourses)

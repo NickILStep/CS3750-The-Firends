@@ -26,6 +26,9 @@ namespace Assignment1v3.Pages.Assignments
         [BindProperty]
         public Assignment Assignment { get; set; } = default!;
 
+        [BindProperty]
+        public string CourseId { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Assignment == null)
@@ -39,7 +42,7 @@ namespace Assignment1v3.Pages.Assignments
                 return NotFound();
             }
             Assignment = assignment;
-
+            CourseId = assignment.course.ToString();
 
             Items = _context.Course.Select(a =>
                                           new SelectListItem
@@ -54,10 +57,22 @@ namespace Assignment1v3.Pages.Assignments
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+            if (_context.Assignment == null)
             {
-                return Page();
+                return NotFound();
             }
+
+            var assignment = _context.Assignment.Where(a => a.ID == Assignment.ID).FirstOrDefault();
+            CourseId = assignment.course.ToString();
+            Assignment.course = assignment.course;
+            Assignment.created_date = assignment.created_date;
+
+
+            _context.Entry(assignment).State = EntityState.Detached;
 
             _context.Attach(Assignment).State = EntityState.Modified;
 
@@ -77,7 +92,7 @@ namespace Assignment1v3.Pages.Assignments
                 }
             }
 
-            return RedirectToPage("./Index");
+            return Page(); 
         }
 
         private bool AssignmentExists(int id)

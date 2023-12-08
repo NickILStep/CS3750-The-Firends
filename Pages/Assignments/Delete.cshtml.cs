@@ -51,15 +51,16 @@ namespace Assignment1v3.Pages.Assignments
                 return NotFound();
             }
             var assignment = await _context.Assignment.FindAsync(id);
+            string courseId = Assignment.course.ToString();
 
             if (assignment != null)
-            {
+            {                
                 Assignment = assignment;
                 _context.Assignment.Remove(Assignment);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorCourseView", new { CourseId = courseId });
         }
     }
 }
