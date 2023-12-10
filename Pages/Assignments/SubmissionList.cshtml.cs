@@ -20,6 +20,8 @@ namespace Assignment1v3.Pages.Assignments
         }
 
         public IList<Submission> Submissions { get; set; }
+        public Course Course { get; set; }
+        public Assignment Assignment { get; set; }
 
         public async Task OnGetAsync(int assignmentId)
         {
@@ -28,6 +30,13 @@ namespace Assignment1v3.Pages.Assignments
                 .Include(s => s.User) // Include the User navigation property
                 .Where(s => s.AssignmentID == assignmentId)
                 .ToListAsync();
+
+            if (assignmentId != 0) {
+                Assignment = await _context.Assignment.FirstOrDefaultAsync(a => a.ID == assignmentId);
+                if (Assignment != null) {
+                    Course = await _context.Course.FirstOrDefaultAsync(c => c.Id == Assignment.course);
+                }
+            }
         }
     }
 }
