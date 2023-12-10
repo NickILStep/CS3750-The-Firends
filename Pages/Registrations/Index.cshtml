@@ -9,7 +9,7 @@
     <div class="form-actions no-color">
         <p>
             Filter by Dept:
-            <select name="deptOrder" asp-items="@Model.Items" value="@Model.DeptSort"></select>
+            <select name="deptOrder" asp-items="@Model.Items" asp-for="@Model.DeptSort"></select>
         </p>
         <p>
             Find by name:
