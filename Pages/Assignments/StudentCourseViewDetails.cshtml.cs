@@ -7,6 +7,7 @@ using Assignment1v3.Data;
 using Assignment1v3.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace Assignment1v3.Pages.Assignments
 {

@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
 
 namespace Assignment1v3.Pages
 {
