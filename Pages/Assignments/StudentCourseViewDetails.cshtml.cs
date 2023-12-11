@@ -44,7 +44,10 @@ namespace Assignment1v3.Pages.Assignments
             .Where(s => s.AssignmentID == assignment.ID && s.UserID == CurrentStudentID)
             .MaxAsync(s => (int?)s.PointsEarned);
 
-            HighestGradePer = ((double)HighestGrade / (double)assignment.maxPoints) * 100;//getting percent
+            if (HighestGrade.HasValue)
+            {
+                HighestGradePer = ((double)HighestGrade / (double)assignment.maxPoints) * 100;//getting percent
+            }
 
             //Get List of each submission that's been graded
             var highestGradesForEachUser = _context.Submission
