@@ -56,16 +56,14 @@ namespace Assignment1v3.Pages.Assignments
 			return Page();
 		}
 		public async Task<IActionResult> OnPostAsync(IFormFile fileUpload)
-		{
-            if(!unitTesting)
-            {
+        {
             int classid = 0;
+            if (!unitTesting)
+            {
             var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             System.Diagnostics.Debug.WriteLine(userEmailClaim);
             if (userEmailClaim != null)
             {
-                var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-                System.Diagnostics.Debug.WriteLine(userEmailClaim);
             
                 if (userEmailClaim != null)
                 {
@@ -109,11 +107,6 @@ namespace Assignment1v3.Pages.Assignments
 					}
 					uniquefilename = uniqueFileName;
 
-                    
-                    
-
-                    
-
                 }
                 Submission.Upload = uniquefilename;
                 Submission.TextBox = Submission.TextBox;
@@ -121,9 +114,8 @@ namespace Assignment1v3.Pages.Assignments
                 Submission.AssignmentID = Assignment.ID;
                 Submission.submissionType = "File Upload";
                 Submission.modified_date = DateTime.Now;
-                
 
-
+                classid = Submission.AssignmentID;
                 _context.Submission.Add(Submission);
             }
 			else {
