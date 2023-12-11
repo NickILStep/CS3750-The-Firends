@@ -26,7 +26,7 @@ namespace Assignment1v3.Pages.Payment
             {
                 // Set your secret key. Remember to switch to your live secret key in production!
                 // See your keys here: https://dashboard.stripe.com/apikeys
-                StripeConfiguration.ApiKey = "sk_test_51OKONWAS497TmhytInIMuFE6WdVMvDQTh6wOJkssav192WqnV75467GBESUGFv2hVBQqdRya0ZnBSoicbZMzSCFp00yVMHlM6U";
+                StripeConfiguration.ApiKey = "sk_test_51Ny4RlB0mWSJyvtEF6kjAFRYirP53gUXjltsjcI2iMjbQmedAr1zFvqBa9TdFDQ7crej0BI1dEK5r5l21k64Jf1L00G9IYoBmH";
                 _context = context;
             }
 
