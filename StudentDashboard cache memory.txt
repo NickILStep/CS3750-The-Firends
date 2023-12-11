@@ -1,0 +1,118 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Assignment1v3.Data;
+using Assignment1v3.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
+using Stripe;
+using Microsoft.Extensions.Caching.Memory;
+
+namespace Assignment1v3.Pages.Home
+{
+    [Authorize(Policy = "MustBeStudent")]
+    public class StudentDashboardModel : PageModel
+    {
+        private readonly Assignment1v3Context _context;
+        private readonly IMemoryCache _cache;
+
+        public StudentDashboardModel(Assignment1v3Context context, IMemoryCache cache)
+        {
+            _context = context;
+            _cache = cache;
+        }
+
+        public List<Course> Course { get; set; }
+        public List<Assignment> TO_DO { get; set; }
+
+        public async Task OnGetAsync()
+        {
+            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+
+            if (userEmailClaim != null)
+            {
+                var userEmailClaimValue = userEmailClaim.Value;
+
+                // Check if courses are already in cache
+                if (!_cache.TryGetValue("StudentCourses_" + userEmailClaimValue, out List<Course> courses))
+                {
+                    // If not in cache, query from the database and store in cache
+                    var studentCourses = await _context.StudSched
+                        .Where(x => x.Email_Username.Contains(userEmailClaimValue))
+                        .ToListAsync();
+
+                    courses = new List<Course>();
+
+                    foreach (var tempcourse in studentCourses)
+                    {
+                        int? courseId = tempcourse.CourseId;
+
+                        if (courseId.HasValue)
+                        {
+                            if (!_cache.TryGetValue("Course_" + courseId, out Course matchingCourse))
+                            {
+                                matchingCourse = _context.Course.Find(courseId);
+
+                                if (matchingCourse != null)
+                                {
+                                    _cache.Set("Course_" + courseId, matchingCourse, TimeSpan.FromMinutes(10)); // Adjust the cache duration as needed
+                                }
+                            }
+
+                            if (matchingCourse != null)
+                            {
+                                courses.Add(matchingCourse);
+                            }
+                        }
+                    }
+
+                    // Store courses in cache with a specific key
+                    _cache.Set("StudentCourses_" + userEmailClaimValue, courses, TimeSpan.FromMinutes(10)); // Adjust the cache duration as needed
+                }
+
+                Course = courses;
+
+                // Check if assignments are already in cache
+                if (!_cache.TryGetValue("ToDoAssignments_" + userEmailClaimValue, out List<Assignment> toDoAssignments))
+                {
+                    toDoAssignments = new List<Assignment>();
+
+                    foreach (var tempcourse in courses)
+                    {
+                        var matchingAssignments = await (
+                            from assignment in _context.Assignment
+                            join course in _context.Course on assignment.course equals course.Id
+                            where assignment.course == tempcourse.Id &&
+                                  assignment.startDate <= DateTime.Now &&
+                                  assignment.dueDate >= DateTime.Now &&
+                                  !_context.Submission.Any(s => s.AssignmentID == assignment.ID && s.UserID == int.Parse(this.User.Claims.ElementAt(3).Value))
+                            select new Assignment
+                            {
+                                ID = assignment.ID,
+                                description = course.CourseNumber.ToString() + "-" + course.CourseName.ToString(),
+                                name = assignment.name,
+                                maxPoints = assignment.maxPoints,
+                                startDate = assignment.startDate,
+                                dueDate = assignment.dueDate
+                            }).ToListAsync();
+
+                        toDoAssignments.AddRange(matchingAssignments);
+                    }
+
+                    // Order assignments by due date
+                    toDoAssignments = toDoAssignments.OrderBy(x => x.dueDate).ToList();
+
+                    // Store assignments in cache with a specific key
+                    _cache.Set("ToDoAssignments_" + userEmailClaimValue, toDoAssignments, TimeSpan.FromMinutes(10)); // Adjust the cache duration as needed
+                }
+
+                TO_DO = toDoAssignments;
+            }
+        }
+    }
+}

@@ -114,10 +114,6 @@ namespace Assignment1v3.Pages.Home
 
                 }
                 TO_DO = TO_DO.OrderBy(x => x.dueDate).ToList();
-
-
-
-
                 // System.Diagnostics.Debug.WriteLine(Course);
 
             }
