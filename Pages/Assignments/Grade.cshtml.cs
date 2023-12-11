@@ -8,6 +8,8 @@ namespace Assignment1v3.Pages.Assignments
     public class GradeModel : PageModel
     {
         private readonly Assignment1v3.Data.Assignment1v3Context _context;
+        public bool unitTesting = false;
+        public int unitTestPoints;
 
         public GradeModel(Assignment1v3.Data.Assignment1v3Context context)
         {
@@ -52,14 +54,24 @@ namespace Assignment1v3.Pages.Assignments
                 return NotFound();
             }
 
-            if (!int.TryParse(Request.Form["Submission.PointsEarned"], out int pointsEarned))
+            if(!unitTesting)
             {
-                ModelState.AddModelError("Submission.PointsEarned", "Invalid points earned value.");
-                return Page();
+                if (!int.TryParse(Request.Form["Submission.PointsEarned"], out int pointsEarned))
+                {
+                    ModelState.AddModelError("Submission.PointsEarned", "Invalid points earned value.");
+                    return Page();
+                }            
+                // Update the PointsEarned property
+                Submission.PointsEarned = pointsEarned;
+            }
+            else
+            {
+                Submission.PointsEarned = unitTestPoints;
             }
 
-            // Update the PointsEarned property
-            Submission.PointsEarned = pointsEarned;
+
+
+
 
             if (Submission.PointsEarned < 0 || Submission.PointsEarned > Submission.maxPoints)
             {

@@ -110,7 +110,7 @@ namespace Assignment1v3.Pages.Registrations
 
             await _context.SaveChangesAsync();
 
-            var newevent = new Event
+            Event newevent = new Event
             {
                 title = course.CourseNumber + ": " + course.CourseName,
                 startTime = course.StartTime,

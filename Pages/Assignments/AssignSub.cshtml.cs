@@ -21,6 +21,7 @@ namespace Assignment1v3.Pages.Assignments
 		public int userID;
 		public string uniquefilename;
         public int assignid;
+        public bool unitTesting = false;
 		public AssignSubModel(Assignment1v3.Data.Assignment1v3Context context, IWebHostEnvironment webHostEnvironment)
 		{
 			_context = context;
@@ -56,26 +57,29 @@ namespace Assignment1v3.Pages.Assignments
 		}
 		public async Task<IActionResult> OnPostAsync(IFormFile fileUpload)
 		{
-
-            var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-            System.Diagnostics.Debug.WriteLine(userEmailClaim);
-            if (userEmailClaim != null)
+            if(!unitTesting)
             {
-                var userEmailClaimValue = userEmailClaim.Value;
-
-                // Find the user by email address
-                var user = await _context.StudSched
-                    .FirstOrDefaultAsync(x => x.Email_Username.Contains(userEmailClaimValue));
-                System.Diagnostics.Debug.WriteLine(user);
-
-                if (user != null)
+                var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                System.Diagnostics.Debug.WriteLine(userEmailClaim);
+            
+                if (userEmailClaim != null)
                 {
-                    var userId = user.StudId;
-                    System.Diagnostics.Debug.WriteLine(userId);
+                    var userEmailClaimValue = userEmailClaim.Value;
 
-                    userID = userId;
+                    // Find the user by email address
+                    var user = await _context.StudSched
+                        .FirstOrDefaultAsync(x => x.Email_Username.Contains(userEmailClaimValue));
+                    System.Diagnostics.Debug.WriteLine(user);
+
+                    if (user != null)
+                    {
+                        var userId = user.StudId;
+                        System.Diagnostics.Debug.WriteLine(userId);
+
+                        userID = userId;
 
 
+                    }
                 }
             }
 

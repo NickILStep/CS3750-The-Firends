@@ -15,7 +15,7 @@ namespace TestProject1
         IWebHostEnvironment _webHostEnvironment;
 
         Assignment newAssignment;
-        Submission newSubmission;
+
         public UnitTest1()
         {
             DbContextOptions<Assignment1v3Context> options = new DbContextOptions<Assignment1v3Context>();
@@ -335,6 +335,143 @@ namespace TestProject1
             int postEventNum = _context.Event.Count();
 
             Assert.IsTrue(preEventNum > postEventNum);
+        }
+
+        [TestMethod]
+        public async Task StudentCanRegisterForCourses()
+        {
+            var student = _context.Login.Where(s => s.Id == 9).First();
+            var testcourse = _context.Course.Where(d => d.Location == "In the Deep Dark Recessess of my mind").First();
+
+            var createSched = new Assignment1v3.Pages.Registrations.IndexModel(_context);
+            Assert.IsNotNull(createSched);
+
+            #region Create new StudSched
+            StudSched newSched = new StudSched();
+            newSched.CourseId = testcourse.Id;
+            newSched.Email_Username = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress: " + student.Email_Username;
+            newSched.StudId = student.Id;
+            newSched.CourseNum = testcourse.CourseNumber;
+            #endregion
+            Assert.IsNotNull(newSched);
+
+            createSched.Stud = newSched;
+            createSched.course = testcourse;
+            await createSched.OnPostAsync(newSched);
+
+            var registrationCount = _context.StudSched.Where(s => s.CourseNum == testcourse.CourseNumber && s.StudId == student.Id && s.CourseId == testcourse.Id);
+            Assert.AreEqual(1, registrationCount.Count());
+
+            _context.StudSched.Remove(newSched);
+            await _context.SaveChangesAsync();
+        }
+
+        [TestMethod]
+        public async Task StudentCanSubmitAssignment()
+        {
+            #region Creating an Assignment
+            Assignment newAssignment = new Assignment();
+            newAssignment.course = 126;
+            newAssignment.created_date = DateTime.Now;
+            newAssignment.description = "Testing for submission";
+            newAssignment.dueDate = new DateTime(2023, 12, 15, 11, 59, 59);
+            newAssignment.maxPoints = 100;
+            newAssignment.name = "Submission Test";
+            newAssignment.startDate = new DateTime(2023, 12, 1, 12, 0, 0);
+            newAssignment.uploadType = "Text Box";
+            #endregion
+            Assert.IsNotNull(newAssignment);
+
+            var createAssignmentPage = new Assignment1v3.Pages.Assignments.CreateModel(_context);
+            Assert.IsNotNull(createAssignmentPage); 
+            
+            string username = "instructorTest@testing.test";
+            string password = "TESTING";
+
+            int instructorID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorID);
+
+            createAssignmentPage.Assignment = newAssignment;
+            await createAssignmentPage.OnPostAsync(instructorID);
+            Assert.AreEqual(1, _context.Assignment.Count(a => a.name == newAssignment.name));
+
+            var submitpage = new Assignment1v3.Pages.Assignments.AssignSubModel(_context, _webHostEnvironment);
+            submitpage.Assignment = newAssignment;
+            submitpage.userID = 9;
+            Submission submission = new Submission();
+            submission.TextBox = "SUBMIT";
+            submitpage.Submission = submission;
+            submitpage.unitTesting = true;
+
+            await submitpage.OnPostAsync(null);
+            Assert.AreEqual(1, _context.Submission.Count(s => s.UserID == 9));
+
+            //Clean up!
+            _context.Assignment.Remove(newAssignment);
+            _context.Submission.Remove(submitpage.Submission);
+            await _context.SaveChangesAsync();
+
+            Assert.AreEqual(0, _context.Submission.Count(s => s.UserID == 9));
+        }
+
+        [TestMethod]
+        public async Task InstructorCanGradeAssignments()
+        {
+            #region Creating an Assignment
+            Assignment newAssignment = new Assignment();
+            newAssignment.course = 126;
+            newAssignment.created_date = DateTime.Now;
+            newAssignment.description = "Testing for submission";
+            newAssignment.dueDate = new DateTime(2023, 12, 15, 11, 59, 59);
+            newAssignment.maxPoints = 100;
+            newAssignment.name = "Submission Test";
+            newAssignment.startDate = new DateTime(2023, 12, 1, 12, 0, 0);
+            newAssignment.uploadType = "Text Box";
+            #endregion
+            Assert.IsNotNull(newAssignment);
+
+            var createAssignmentPage = new Assignment1v3.Pages.Assignments.CreateModel(_context);
+            Assert.IsNotNull(createAssignmentPage);
+
+            string username = "instructorTest@testing.test";
+            string password = "TESTING";
+
+            int instructorID = _context.Login.Where(x => x.Email_Username == username && x.Password == password).FirstOrDefault().Id;
+            Assert.IsNotNull(instructorID);
+
+            createAssignmentPage.Assignment = newAssignment;
+            await createAssignmentPage.OnPostAsync(instructorID);
+            Assert.AreEqual(1, _context.Assignment.Count(a => a.name == newAssignment.name));
+
+            var submitpage = new Assignment1v3.Pages.Assignments.AssignSubModel(_context, _webHostEnvironment);
+            submitpage.Assignment = newAssignment;
+            submitpage.userID = 9;
+            Submission submission = new Submission();
+            submission.TextBox = "SUBMIT";
+            submission.maxPoints = newAssignment.maxPoints;
+            submitpage.Submission = submission;
+            submitpage.unitTesting = true;
+
+            await submitpage.OnPostAsync(null);
+            Assert.AreEqual(1, _context.Submission.Count(s => s.UserID == 9));
+
+            var assertPoints = _context.Submission.Where(s => s.UserID == 9).First();
+
+            var gradingPage = new Assignment1v3.Pages.Assignments.GradeModel(_context);
+            gradingPage.Assignment = newAssignment;
+            gradingPage.unitTesting = true;
+            gradingPage.unitTestPoints = 100;
+            await gradingPage.OnPostAsync(assertPoints.ID);
+
+            Assert.AreEqual(100, assertPoints.PointsEarned);
+            Assert.IsTrue(assertPoints.Graded);
+
+            //Clean up!
+            _context.Assignment.Remove(newAssignment);
+            _context.Submission.Remove(submitpage.Submission);
+            await _context.SaveChangesAsync();
+
+            Assert.AreEqual(0, _context.Submission.Count(s => s.UserID == 9));
         }
     }
 }
