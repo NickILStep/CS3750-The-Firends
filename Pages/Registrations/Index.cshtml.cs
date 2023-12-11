@@ -120,7 +120,7 @@ namespace Assignment1v3.Pages.Registrations
                 daysOfWeek = course.ClassDays,
                 courseId = course.Id,
                 studSchedId = newsched.Id,
-                url = "/Home/StudentDashboard",
+                url = "/Assignments/StudentCourseView?courseId=" + course.Id.ToString(),
             };
             if (sched.StudId == null || sched.StudId == 0)
             {

@@ -89,7 +89,7 @@ namespace Assignment1v3.Pages.Courses
                 daysOfWeek = Course.ClassDays,
                 courseId = Course.Id,
                 studSchedId = null,
-                url = "/Home/InstructorDashboard",
+                url = "/Assignments/InstructorCourseView?courseId=" + Course.Id.ToString(),
             };
 
             if(instID == null || instID == 0)
