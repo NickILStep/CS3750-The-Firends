@@ -130,6 +130,15 @@
                 // Adjust the wedge 'a' (Average Student Grade) by subtracting the difference
                 myPieChart.data.datasets[0].data[1] = differenceFromAverage;
                 myPieChart.data.datasets[0].data[0] -= differenceFromAverage;
+            } else if (currentStudentGrade == averageGrade) {
+                myPieChart.data.datasets[0].backgroundColor[0] = 'rgba(63, 214, 88, 0.2)';
+                myPieChart.data.datasets[0].borderColor[0] = 'rgba(63, 214, 88, 1)';
+                myPieChart.data.datasets[0].backgroundColor[1] = 'rgba(63, 214, 88, 0)';
+                myPieChart.data.datasets[0].borderColor[1] = 'rgba(63, 214, 88, 0)';
+                myPieChart.data.datasets[0].data[1] = 0;
+                myPieChart.data.labels[0] = 'You and the average percent';
+                myPieChart.data.labels[1] = '';
+
             }
 
             // Update the chart
