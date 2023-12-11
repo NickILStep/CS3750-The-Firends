@@ -69,8 +69,16 @@ namespace Assignment1v3.Pages.Assignments
                     total += item.HighestGrade;
                 }
             }
-            AverageGradePer = ((total /  highestGradesForEachUser.Count)/assignment.maxPoints)*100;//getting percent
+            if(total == 0)
+            {
+                AverageGradePer = 0;
+            }
+            else
+            {
+                AverageGradePer = ((total / highestGradesForEachUser.Count) / assignment.maxPoints) * 100;//getting percent
+            }
             
+
 
 
             return Page();

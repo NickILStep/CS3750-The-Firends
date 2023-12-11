@@ -79,7 +79,7 @@ namespace Assignment1v3.Pages.Assignments
             }
 
             YourPercent = (YourPercent / maxPointTotal) * 100;
-
+            AveragePercent = 0;
             maxPointTotal = 0;
             var students = await _context.StudSched.Where(s => s.CourseId == courseId).ToListAsync();
             foreach (var student in students)
