@@ -56,7 +56,7 @@ namespace Assignment1v3.Pages.Assignments
 		}
 		public async Task<IActionResult> OnPostAsync(IFormFile fileUpload)
 		{
-
+            int classid = 0;
             var userEmailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             System.Diagnostics.Debug.WriteLine(userEmailClaim);
             if (userEmailClaim != null)
@@ -124,14 +124,26 @@ namespace Assignment1v3.Pages.Assignments
                 Submission.submissionType = "Text Box";
                 Submission.modified_date = DateTime.Now;
 
-
+                classid = Submission.AssignmentID;
                 _context.Submission.Add(Submission);
 
                 
                 
             }
+            var assign =await _context.Assignment.Where(x => x.ID == classid).ToListAsync();
+            foreach(var assignment in assign)
+            {
+                classid = assignment.course;
+            }
+            var course = await _context.Course.Where(x => x.CourseNumber == classid).ToListAsync();
+            var test = Assignment.course;
+            foreach (var student in course)
+            {
+                classid = student.Id;
+            }
+
             await _context.SaveChangesAsync();
-            return RedirectToPage("./StudentCourseViewDetails", new { id = Submission.AssignmentID.ToString()}); 
+            return RedirectToPage("./StudentCourseView", new { courseid = classid.ToString()}); 
 
         }
 	}
