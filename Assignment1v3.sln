@@ -12,10 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllorynUnitTesting", "..\Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Christian-UnitTest", "..\Christian-UnitTest\Christian-UnitTest.csproj", "{1CCC7125-9B37-46C2-A3D9-586D16C4A3B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "..\TestProject1\TestProject1.csproj", "{091B4498-9CE1-4569-AB2F-D161BD291F41}"
-=======
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "..\TestProject1\TestProject1.csproj", "{54AA2FEE-A243-4A85-B9F6-7125F4E20308}"
->>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
