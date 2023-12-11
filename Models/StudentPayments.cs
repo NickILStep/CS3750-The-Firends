@@ -7,6 +7,6 @@ namespace Assignment1v3.Models
         public int Id { get; set; }
         public Double PaymentAmount { get; set; }
         public int StudentId { get; set;}
-        public DateTime PaymentDate = DateTime.UtcNow;
+        public DateTime PaymentDate = System.DateTime.Now;
     }
 }
