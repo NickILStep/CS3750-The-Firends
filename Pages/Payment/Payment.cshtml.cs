@@ -12,24 +12,55 @@ using System.Web;
 
 using Stripe;
 using Stripe.Checkout;
+using Assignment1v3.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System;
 
 public class StripeOptions
 {
     public string option { get; set; }
 }
 
+
 namespace Assignment1v3.Pages.Payment
 {
-
+    
     
 
 
     public class PaymentModel : PageModel
     {
+        private readonly Assignment1v3.Data.Assignment1v3Context _context;
+        public PaymentModel(Assignment1v3.Data.Assignment1v3Context context)
+        {
+            _context = context;
+        }
+
+        public string StudentBallance { get; set; }
+        public string Services { get; set; }
+
+        
+
         public void OnGet()
         {
-            static void Main(string[] args)
+            int studentId = int.Parse(this.User.Claims.ElementAt(3).Value);
+            int costPerCourse = 2355; //Used Average current cost 
+            Login Student = _context.Login.Where(a => a.Id == studentId).FirstOrDefault();
+            string ProductDataName = Student.Name_First + " " + Student.Name_Last + "'s Tuition Payment";
+            List<StudentPayments> List = _context.StudentPayments.Where(a => a.StudentId == studentId).ToList();
+            Double PreviousPayments = 0;
+            foreach (StudentPayments studentPayments in List)
             {
+                PreviousPayments += studentPayments.PaymentAmount;
+            }
+            long studentBallance = (long)((_context.StudSched.Where(a => a.StudId == studentId).Count() * costPerCourse) - PreviousPayments);
+
+            StudentBallance = studentBallance.ToString();
+            Services = ProductDataName;
+
+            static void Main(string[] args)
+            {    
                 WebHost.CreateDefaultBuilder(args)
                   .UseWebRoot("public")
                   .UseStartup<Startup>()
@@ -62,31 +93,51 @@ namespace Assignment1v3.Pages.Payment
     [ApiController]
     public class CheckoutApiController : Controller
     {
+        private readonly Assignment1v3.Data.Assignment1v3Context _context;
+        public CheckoutApiController(Assignment1v3.Data.Assignment1v3Context context)
+        {
+            _context = context;
+        }
         
-
+        public string StudentBallance { get; set; }
+        public string Services { get; set; }
 
         [HttpPost]
         public ActionResult Create()
         {
+            int studentId = int.Parse(this.User.Claims.ElementAt(3).Value);
+            int costPerCourse = 2355; //Used Average current cost 
+            Login Student = _context.Login.Where(a => a.Id == studentId).FirstOrDefault();
+            string ProductDataName = Student.Name_First + " " + Student.Name_Last + "'s Tuition Payment";
+            List<StudentPayments> List = _context.StudentPayments.Where(a => a.StudentId == studentId).ToList();
+            Double PreviousPayments = 0;
+            foreach (StudentPayments studentPayments in List)
+            {
+                PreviousPayments += studentPayments.PaymentAmount;
+            }
+            long studentBallance = (long)(((_context.StudSched.Where(a => a.StudId == studentId).Count() * costPerCourse) - PreviousPayments) *100);//*100 for the cents
+
+
+
             var url = Request.Scheme + "://" + Request.Host.Value;
             var options = new SessionCreateOptions
             {
                 LineItems = new List<SessionLineItemOptions>
-        {
-          new SessionLineItemOptions
-          {
-            PriceData = new SessionLineItemPriceDataOptions
-            {
-              UnitAmount = 346700, // Account balance
-              Currency = "usd",
-              ProductData = new SessionLineItemPriceDataProductDataOptions
-              {
-                Name = "Tuition Payment", // First and last name of student + Tuition payment
-              },
-            },
-            Quantity = 1,
-          },
-        },      
+                {
+                  new SessionLineItemOptions
+                  {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                      UnitAmount = studentBallance, // Account balance
+                      Currency = "usd",
+                      ProductData = new SessionLineItemPriceDataProductDataOptions
+                      {
+                        Name = ProductDataName , // First and last name of student + Tuition payment
+                      },
+                    },
+                    Quantity = 1,
+                  },
+                },      
                 Mode = "payment",
                 SuccessUrl = url + "/Payment/Success",
                 CancelUrl = url + "/Payment/Cancel",
