@@ -22,20 +22,10 @@
                     <h4 class="item-title">@assignment.name</h4>
                     <p class="item-info">@assignment.description</p>
                     <h6>Has been created</h6>
-                    
-                    <a class="bi bi-trash-fill" onclick="remove()"></a>
 
                 </div>
 
             </a>
-            
-
-            <script>
-                function remove() {
-                    const element = document.getElementById("i");
-                    element.parentNode.removeChild(element);
-                }
-            </script>
         </div>
     }
 }
@@ -47,24 +37,13 @@
         <div class="notifications-wrapper">
             <a class="content" style="font-weight: bold; font-size: 25px;" asp-page="/Assignments/StudentCourseViewDetails" asp-route-id="@submission.AssignmentID">
                 <div id="i" class="notification-item">
-                    <h4 class="item-title">A assignment has been graded</h4>
-
-                    <a class="bi bi-trash-fill" onclick="remove()"></a>
+                    <h4 class="item-title">An assignment has been graded</h4>
 
                 </div>
 
             </a>
-
-
-            <script>
-                function remove() {
-                    const element = document.getElementById("i");
-                    element.parentNode.removeChild(element);
-                }
-            </script>
         </div>
     }
 }
 
-    <li class="divider"></li>
-    <div class="notification-footer"><h4 class="menu-title">View all<i class="bi bi-arrow-right-circle-fill"></i></h4></div>
+    <br />
