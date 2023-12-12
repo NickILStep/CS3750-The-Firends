@@ -126,15 +126,16 @@ namespace Assignment1v3.Pages.Payment
                 {
                   new SessionLineItemOptions
                   {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                      UnitAmount = studentBallance, // Account balance
-                      Currency = "usd",
-                      ProductData = new SessionLineItemPriceDataProductDataOptions
-                      {
-                        Name = ProductDataName , // First and last name of student + Tuition payment
-                      },
-                    },
+                    //PriceData = new SessionLineItemPriceDataOptions
+                    //{
+                    //  UnitAmount = studentBallance, // Account balance
+                    //  Currency = "usd",
+                    //  ProductData = new SessionLineItemPriceDataProductDataOptions
+                    //  {
+                    //    Name = ProductDataName , // First and last name of student + Tuition payment
+                    //  },
+                    //},
+                    Price = "price_1OM4HnB0mWSJyvtEM4h4c7gN",
                     Quantity = 1,
                   },
                 },   
