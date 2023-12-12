@@ -63,7 +63,7 @@
     </form>
 </div>
 
-<h4>Welcome, @Model.Login.Name_First !</h4>
+<h4>Welcome, @Model.Login.Name_First!</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -130,24 +130,24 @@
                 <span asp-validation-for="Login.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group link-field">
-                <label asp-for="Login.Link1" class="control-label"></label>
-                <a  readonly href="Login.Link1" class="form-control link-text">@Model.Login.Link1</a>
-                <input id="link1" readonly asp-for="Login.Link1" class="form-control link-input" />
-                <span asp-validation-for="Login.Link1" class="text-danger"></span>
+                <label asp-for="@Model.Login.Link1" class="control-label"></label>
+                <a  readonly href="@Model.Login.Link1" class="form-control link-text">@Model.Login.Link1</a>
+                <input id="link1" readonly asp-for="@Model.Login.Link1" class="form-control link-input" />
+                <span asp-validation-for="@Model.Login.Link1" class="text-danger"></span>
             </div>
 
             <div class="form-group link-field">
-                <label asp-for="Login.Link2" class="control-label"></label>
-                <a  readonly href="Login.Link2" class="form-control link-text">@Model.Login.Link2</a>
-                <input id="link2" readonly asp-for="Login.Link2" class="form-control link-input" />
-                <span asp-validation-for="Login.Link2" class="text-danger"></span>
+                <label asp-for="@Model.Login.Link2" class="control-label"></label>
+                <a  readonly href="@Model.Login.Link2" class="form-control link-text">@Model.Login.Link2</a>
+                <input id="link2" readonly asp-for="@Model.Login.Link2" class="form-control link-input" />
+                <span asp-validation-for="@Model.Login.Link2" class="text-danger"></span>
             </div>
 
             <div class="form-group link-field">
-                <label asp-for="Login.Link3" class="control-label"></label>
-                <a  readonly href="Login.Link3" class="form-control link-text">@Model.Login.Link3</a>
-                <input id ="link3" readonly asp-for="Login.Link3" class="form-control link-input" />
-                <span asp-validation-for="Login.Link3" class="text-danger"></span>
+                <label asp-for="@Model.Login.Link3" class="control-label"></label>
+                <a readonly href="@Model.Login.Link3" class="form-control link-text">@Model.Login.Link3</a>
+                <input id="link3" readonly asp-for="@Model.Login.Link3" class="form-control link-input" />
+                <span asp-validation-for="@Model.Login.Link3" class="text-danger"></span>
             </div>
 
             <div class="form-group">
